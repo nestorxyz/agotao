@@ -17,6 +17,15 @@ const config = {
   eslint: {
     ignoreDuringBuilds: !!process.env.CI,
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "https://agotao.softr.app/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default config;
