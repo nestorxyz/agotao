@@ -4,7 +4,7 @@ import { ProductsAccordion } from "@/modules/checkout/components";
 
 const fakeCompany = {
   name: "Company Name",
-  logo: "https://images.unsplash.com/photo-1616489950003-8e1f2e1b2b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+  logo: "https://mir-s3-cdn-cf.behance.net/projects/404/d5f468144562697.Y3JvcCwxMzgwLDEwODAsMjcwLDA.jpg",
 };
 
 const fakeProduct = {
@@ -13,16 +13,16 @@ const fakeProduct = {
   price: 100,
   quantity: 2,
   image:
-    "https://images.unsplash.com/photo-1616489950003-8e1f2e1b2b1c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+    "https://mir-s3-cdn-cf.behance.net/projects/404/d5f468144562697.Y3JvcCwxMzgwLDEwODAsMjcwLDA.jpg",
 };
 
 const fakeProducts = Array.from({ length: 5 }, () => fakeProduct);
 
 const Checkout: React.FC = () => {
   return (
-    <div>
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="p-4">
+      <div className="flex-1 bg-[#FCFCFC] p-4">
         <ProductsAccordion
           companyLogo={fakeCompany.logo}
           companyName={fakeCompany.name}

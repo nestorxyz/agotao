@@ -18,7 +18,7 @@ const config = {
     ignoreDuringBuilds: !!process.env.CI,
   },
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "mir-s3-cdn-cf.behance.net"],
   },
 };
 
