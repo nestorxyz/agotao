@@ -17,6 +17,7 @@
     "@acme/tailwind-config": "*",
     "@radix-ui/react-accordion": "^1.0.1",
     "@radix-ui/react-icons": "^1.1.1",
+    "@radix-ui/react-label": "^2.0.0",
     "@stitches/react": "^1.2.8",
     "@tanstack/react-query": "^4.16.1",
     "@trpc/client": "^10.1.0",
@@ -27,6 +28,7 @@
     "next-auth": "^4.18.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.40.0",
     "zod": "^3.18.0"
   },
   "devDependencies": {

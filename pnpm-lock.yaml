@@ -83,6 +83,7 @@ importers:
       '@acme/tailwind-config': '*'
       '@radix-ui/react-accordion': ^1.0.1
       '@radix-ui/react-icons': ^1.1.1
+      '@radix-ui/react-label': ^2.0.0
       '@stitches/react': ^1.2.8
       '@tanstack/react-query': ^4.16.1
       '@trpc/client': ^10.1.0
@@ -100,6 +101,7 @@ importers:
       postcss: ^8.4.19
       react: 18.2.0
       react-dom: 18.2.0
+      react-hook-form: ^7.40.0
       tailwindcss: ^3.2.4
       typescript: ^4.9.3
       zod: ^3.18.0
@@ -110,6 +112,7 @@ importers:
       '@acme/tailwind-config': link:../../packages/config/tailwind
       '@radix-ui/react-accordion': 1.0.1_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-icons': 1.1.1_react@18.2.0
+      '@radix-ui/react-label': 2.0.0_biqbaboplfbrettd7655fr4n2y
       '@stitches/react': 1.2.8_react@18.2.0
       '@tanstack/react-query': 4.16.1_biqbaboplfbrettd7655fr4n2y
       '@trpc/client': 10.1.0_@trpc+server@10.1.0
@@ -120,6 +123,7 @@ importers:
       next-auth: 4.18.3_6jx7hpii6hgsrmhxgqrmo3277u
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
+      react-hook-form: 7.40.0_react@18.2.0
       zod: 3.19.1
     devDependencies:
       '@types/node': 18.8.0
@@ -2290,6 +2294,18 @@ packages:
       '@babel/runtime': 7.19.0
       '@radix-ui/react-use-layout-effect': 1.0.0_react@18.2.0
       react: 18.2.0
+    dev: false
+
+  /@radix-ui/react-label/2.0.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-7qCcZ3j2VQspWjy+gKR4W+V/z0XueQjeiZnlPOtsyiP9HaS8bfSU7ECoI3bvvdYntQj7NElW7OAYsYRW4MQvCg==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.19.0
+      '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /@radix-ui/react-presence/1.0.0_biqbaboplfbrettd7655fr4n2y:
@@ -7859,6 +7875,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-hook-form/7.40.0_react@18.2.0:
+    resolution: {integrity: sha512-0rokdxMPJs0k9bvFtY6dbcSydyNhnZNXCR49jgDr/aR03FDHFOK6gfh8ccqB3fl696Mk7lqh04xdm+agqWXKSw==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is/16.13.1:

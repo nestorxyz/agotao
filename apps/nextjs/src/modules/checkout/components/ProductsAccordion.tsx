@@ -22,7 +22,9 @@ export const ProductsAccordion: React.FC<ProductsAccordionProps> = (props) => {
   return (
     <Accordion
       activeTab={0}
-      setActiveTab={() => {}}
+      setActiveTab={() => {
+        console.log("Hi there!");
+      }}
       items={[
         {
           trigger: (

@@ -1,6 +1,9 @@
 // Components
 import { Header } from "@/shared/components";
-import { ProductsAccordion } from "@/modules/checkout/components";
+import {
+  ProductsAccordion,
+  PaymentElement,
+} from "@/modules/checkout/components";
 
 const fakeCompany = {
   name: "Company Name",
@@ -22,12 +25,15 @@ const Checkout: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex-1 bg-[#FCFCFC] p-4">
+      <div className="flex flex-1 flex-col gap-4 bg-[#FCFCFC] p-4">
         <ProductsAccordion
           companyLogo={fakeCompany.logo}
           companyName={fakeCompany.name}
           products={fakeProducts}
         />
+
+        <h2 className="font-semibold">Método de compra</h2>
+        <PaymentElement />
       </div>
     </div>
   );
