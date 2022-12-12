@@ -1,5 +1,6 @@
 // src/pages/_app.tsx
 import "@/shared/styles/globals.css";
+import "react-credit-cards/es/styles-compiled.css";
 import { SessionProvider } from "next-auth/react";
 import type { Session } from "next-auth";
 import type { AppType } from "next/app";
