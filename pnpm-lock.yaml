@@ -92,6 +92,7 @@ importers:
       '@trpc/react-query': ^10.1.0
       '@trpc/server': ^10.1.0
       '@types/node': ^18.0.0
+      '@types/payment': ^2.1.4
       '@types/react': ^18.0.25
       '@types/react-credit-cards': ^0.8.1
       '@types/react-dom': ^18.0.9
@@ -100,6 +101,7 @@ importers:
       eslint-config-next: 13.0.4
       next: ^13.0.6
       next-auth: ^4.18.3
+      payment: ^2.4.6
       postcss: ^8.4.19
       react: 18.2.0
       react-credit-cards: ^0.8.3
@@ -126,6 +128,7 @@ importers:
       '@types/react-credit-cards': 0.8.1
       next: 13.0.6_biqbaboplfbrettd7655fr4n2y
       next-auth: 4.18.3_6jx7hpii6hgsrmhxgqrmo3277u
+      payment: 2.4.6
       react: 18.2.0
       react-credit-cards: 0.8.3_react@18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -133,6 +136,7 @@ importers:
       zod: 3.19.1
     devDependencies:
       '@types/node': 18.8.0
+      '@types/payment': 2.1.4
       '@types/react': 18.0.25
       '@types/react-dom': 18.0.9
       autoprefixer: 10.4.13_postcss@8.4.19
@@ -2799,6 +2803,10 @@ packages:
 
   /@types/node/18.8.0:
     resolution: {integrity: sha512-u+h43R6U8xXDt2vzUaVP3VwjjLyOJk6uEciZS8OSyziUQGOwmk+l+4drxcsDboHXwyTaqS1INebghmWMRxq3LA==}
+
+  /@types/payment/2.1.4:
+    resolution: {integrity: sha512-FR9njCfl788PfIhjULwuyb0tpwh57g6uIWCZu+Mg69tQ/GyWoVL39+ugXn0LyqLhhUj/2qWKTRHX/Dqbhw6v7g==}
+    dev: true
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}

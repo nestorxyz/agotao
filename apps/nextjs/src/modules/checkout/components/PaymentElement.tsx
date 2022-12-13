@@ -41,9 +41,10 @@ export const PaymentElement: React.FC = () => {
 
       <Input
         id="cardNumber"
-        label="Card number"
+        label="Número de tarjeta"
         error={errors.number?.message}
         pattern="[\d| ]{16,22}"
+        placeholder="0000 0000 0000 0000"
         {...register("number")}
       />
     </form>

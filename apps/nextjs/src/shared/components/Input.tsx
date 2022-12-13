@@ -10,9 +10,19 @@ export const Input: React.FC<InputProps> = (props) => {
   const { label, ...rest } = props;
 
   return (
-    <div className="space-x-1">
-      {label && <Label.Root htmlFor={rest.id}>{label}</Label.Root>}
-      <input {...rest} />
+    <div className="flex flex-col space-y-1">
+      {label && (
+        <Label.Root
+          htmlFor={rest.id}
+          className="text-sm font-medium text-gray-600"
+        >
+          {label}
+        </Label.Root>
+      )}
+      <input
+        {...rest}
+        className="w-full rounded-md border border-gray-300 p-3 shadow-sm outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm"
+      />
     </div>
   );
 };

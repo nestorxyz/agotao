@@ -28,14 +28,14 @@ export const Accordion = ({
   setActiveTab,
 }: {
   items: { trigger: ReactNode; content: ReactNode }[];
-  activeTab: number;
-  setActiveTab: (index: number) => void;
+  activeTab?: number;
+  setActiveTab?: (index: number) => void;
 }) => {
   return (
     <AccordionPrimitive.Root
       type="single"
-      defaultValue={activeTab.toString()}
-      onValueChange={(value) => setActiveTab(Number(value))}
+      defaultValue={activeTab?.toString()}
+      onValueChange={(value) => setActiveTab?.(Number(value))}
       collapsible={true}
     >
       {items.map(({ trigger, content }, index) => (
