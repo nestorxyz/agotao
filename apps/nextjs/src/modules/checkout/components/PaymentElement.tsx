@@ -56,11 +56,11 @@ export const PaymentElement: React.FC = () => {
         tiltMaxAngleY={10}
       >
         <Cards
-          cvc={watch("cvc")}
-          expiry={watch("expiry")}
+          cvc={watch("cvc") ?? ""}
+          expiry={watch("expiry") ?? ""}
           focused={watch("focus") as Focused}
-          name={watch("name")}
-          number={watch("number")}
+          name={watch("name") ?? ""}
+          number={watch("number") ?? ""}
         />
       </Tilt>
 
@@ -105,7 +105,7 @@ export const PaymentElement: React.FC = () => {
               setValue("expiry", e.target.value);
             },
           })}
-          className="rounded-t-none"
+          inputClassName="rounded-t-none rounded-br-none"
         />
 
         <Input
@@ -120,6 +120,7 @@ export const PaymentElement: React.FC = () => {
               setValue("cvc", e.target.value);
             },
           })}
+          inputClassName="rounded-t-none rounded-bl-none"
         />
       </div>
 
