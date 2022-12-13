@@ -37,18 +37,14 @@ export function formatCreditCardNumber(value: string) {
   return nextValue.trim();
 }
 
-export function formatCVC(value, prevValue, allValues = {}) {
+export function formatCVC(value: string) {
   const clearValue = clearNumber(value);
   const maxLength = 3;
-
-  if (allValues.number) {
-    const issuer = Payment.fns.cardType(allValues.number);
-  }
 
   return clearValue.slice(0, maxLength);
 }
 
-export function formatExpirationDate(value) {
+export function formatExpirationDate(value: string) {
   const clearValue = clearNumber(value);
 
   if (clearValue.length >= 3) {
