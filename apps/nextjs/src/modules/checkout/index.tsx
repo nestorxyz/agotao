@@ -25,11 +25,12 @@ const Checkout: React.FC = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex flex-1 flex-col gap-4 bg-[#FCFCFC] p-4">
+      <div className="flex flex-1 flex-col bg-[#FCFCFC] p-4">
         <ProductsAccordion
           companyLogo={fakeCompany.logo}
           companyName={fakeCompany.name}
           products={fakeProducts}
+          className="mb-4"
         />
 
         <h2 className="font-semibold">Método de compra</h2>

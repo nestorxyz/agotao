@@ -26,10 +26,12 @@ export const Accordion = ({
   items,
   activeTab,
   setActiveTab,
+  className,
 }: {
   items: { trigger: ReactNode; content: ReactNode }[];
   activeTab?: number;
   setActiveTab?: (index: number) => void;
+  className?: string;
 }) => {
   return (
     <AccordionPrimitive.Root
@@ -37,6 +39,7 @@ export const Accordion = ({
       defaultValue={activeTab?.toString()}
       onValueChange={(value) => setActiveTab?.(Number(value))}
       collapsible={true}
+      className={className}
     >
       {items.map(({ trigger, content }, index) => (
         <AccordionPrimitive.Item

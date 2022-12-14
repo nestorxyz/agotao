@@ -14,13 +14,16 @@ export interface ProductsAccordionProps {
   companyLogo: string;
   companyName: string;
   products: ProductsAccordionItem[];
+
+  className?: string;
 }
 
 export const ProductsAccordion: React.FC<ProductsAccordionProps> = (props) => {
-  const { companyLogo, companyName, products } = props;
+  const { companyLogo, companyName, products, className } = props;
 
   return (
     <Accordion
+      className={className}
       items={[
         {
           trigger: (

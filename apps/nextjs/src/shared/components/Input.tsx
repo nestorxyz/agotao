@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import * as Label from "@radix-ui/react-label";
 
+import { ErrorMessage } from "@/shared/components/ErrorMessage";
+
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -9,10 +11,10 @@ export interface InputProps
 }
 
 export const Input: React.FC<InputProps> = (props) => {
-  const { label,inputClassName, ...rest } = props;
+  const { label, inputClassName, className, error, ...rest } = props;
 
   return (
-    <div className="flex flex-col space-y-1">
+    <div className={classNames(className, "flex flex-col space-y-1")}>
       {label && (
         <Label.Root
           htmlFor={rest.id}
@@ -23,8 +25,12 @@ export const Input: React.FC<InputProps> = (props) => {
       )}
       <input
         {...rest}
-        className={classNames(inputClassName,"w-full rounded-md border border-gray-300 p-3 shadow-sm outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm")}
+        className={classNames(
+          inputClassName,
+          "w-full rounded-md border border-gray-300 p-3 shadow-sm outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm",
+        )}
       />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
   );
 };
