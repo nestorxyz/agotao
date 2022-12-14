@@ -23,9 +23,12 @@ const fakeProducts = Array.from({ length: 5 }, () => fakeProduct);
 
 const Checkout: React.FC = () => {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div
+      id="checkout-container"
+      className="relative flex min-h-screen flex-col"
+    >
       <Header />
-      <div className="flex flex-1 flex-col bg-[#FCFCFC] p-4">
+      <div className="flex flex-1 flex-col p-4">
         <ProductsAccordion
           companyLogo={fakeCompany.logo}
           companyName={fakeCompany.name}
@@ -34,7 +37,12 @@ const Checkout: React.FC = () => {
         />
 
         <h2 className="font-semibold">Método de compra</h2>
-        <PaymentElement />
+        <PaymentElement
+          amount={fakeProducts.reduce(
+            (acc, product) => acc + product.price * product.quantity,
+            0,
+          )}
+        />
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
-import { Input, ErrorMessage } from "@/shared/components";
+import { Input, ErrorMessage, Portal } from "@/shared/components";
 
 // Utils
 import {
@@ -18,7 +18,14 @@ import {
 import type { Focused } from "react-credit-cards";
 import { paymentSchema } from "@/modules/checkout/types";
 
-export const PaymentElement: React.FC = () => {
+export interface PaymentElementProps {
+  amount: number;
+
+  className?: string;
+}
+
+export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
+  const { amount } = props;
   const {
     register,
     handleSubmit,
@@ -148,7 +155,17 @@ export const PaymentElement: React.FC = () => {
         </ErrorMessage>
       </div>
 
-      <button type="submit">Comprar</button>
+      <Portal wrapperId="checkout-container">
+        <div className="sticky bottom-0 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+          <div>
+            <p className="text-sm text-gray-500">Total</p>
+            <h3 className="truncate text-2xl font-semibold">S/ {amount}</h3>
+          </div>
+          <button className="flex h-14 w-full items-center justify-center rounded-full bg-[#43D890] px-5 text-lg font-semibold text-white transition-all hover:bg-[#0ebb75]">
+            Confirmar compra
+          </button>
+        </div>
+      </Portal>
     </form>
   );
 };
