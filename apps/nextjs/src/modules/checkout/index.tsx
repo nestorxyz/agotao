@@ -25,24 +25,26 @@ const Checkout: React.FC = () => {
   return (
     <div
       id="checkout-container"
-      className="relative flex min-h-screen flex-col"
+      className="relative flex min-h-screen flex-col md:bg-[#FCFCFC]"
     >
       <Header />
-      <div className="flex flex-1 flex-col p-4">
+      <div className="flex flex-1 flex-col p-4 md:my-6 md:mx-auto md:w-full md:max-w-5xl md:flex-row-reverse md:justify-center md:gap-4 md:p-0">
         <ProductsAccordion
           companyLogo={fakeCompany.logo}
           companyName={fakeCompany.name}
           products={fakeProducts}
-          className="mb-4"
+          className="mb-4 md:mb-0 md:w-full"
         />
 
-        <h2 className="font-semibold">Método de compra</h2>
-        <PaymentElement
-          amount={fakeProducts.reduce(
-            (acc, product) => acc + product.price * product.quantity,
-            0,
-          )}
-        />
+        <div className="w-full md:h-fit md:max-w-lg md:rounded-2xl md:bg-white md:px-6 md:py-8">
+          <h2 className="font-semibold">Método de compra</h2>
+          <PaymentElement
+            amount={fakeProducts.reduce(
+              (acc, product) => acc + product.price * product.quantity,
+              0,
+            )}
+          />
+        </div>
       </div>
     </div>
   );

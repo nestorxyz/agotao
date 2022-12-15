@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
-import { Input, ErrorMessage, Portal } from "@/shared/components";
+import { Input, ErrorMessage, Portal, Button } from "@/shared/components";
 
 // Utils
 import {
@@ -147,7 +147,6 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
             inputClassName="rounded-t-none rounded-bl-none"
           />
         </div>
-        {/* Show one error message at a time for each card field */}
         <ErrorMessage>
           {errors.number?.message ||
             errors.expiry?.message ||
@@ -156,14 +155,19 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
       </div>
 
       <Portal wrapperId="checkout-container">
-        <div className="sticky bottom-0 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+        <div className="sticky bottom-0 z-20 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] md:hidden">
           <div>
             <p className="text-sm text-gray-500">Total</p>
             <h3 className="truncate text-2xl font-semibold">S/ {amount}</h3>
           </div>
-          <button className="flex h-14 w-full items-center justify-center rounded-full bg-[#43D890] px-5 text-lg font-semibold text-white transition-all hover:bg-[#0ebb75]">
+          <Button
+            color="positive"
+            onClick={handleSubmit((data) => {
+              console.log(data);
+            })}
+          >
             Confirmar compra
-          </button>
+          </Button>
         </div>
       </Portal>
     </form>
