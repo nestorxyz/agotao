@@ -45,7 +45,7 @@ export const Accordion = ({
         <AccordionPrimitive.Item
           key={index}
           value={index.toString()}
-          className="overflow-hidden rounded-lg bg-white last:border-none"
+          className="overflow-hidden bg-white last:border-none"
         >
           <AccordionPrimitive.Header>
             <AccordionPrimitive.Trigger className="group flex w-full items-center justify-between border-b border-gray-100 py-3 ">

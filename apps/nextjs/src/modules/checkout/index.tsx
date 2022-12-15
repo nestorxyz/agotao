@@ -1,18 +1,18 @@
 // Components
-import { Header } from "@/shared/components";
+import { Header, Divider } from "@/shared/components";
 import {
   ProductsAccordion,
   PaymentElement,
 } from "@/modules/checkout/components";
 
 const fakeCompany = {
-  name: "Company Name",
+  name: "Nike",
   logo: "https://mir-s3-cdn-cf.behance.net/projects/404/d5f468144562697.Y3JvcCwxMzgwLDEwODAsMjcwLDA.jpg",
 };
 
 const fakeProduct = {
   id: "1",
-  name: "Product Name",
+  name: "Nike Air Max 270",
   price: 100,
   quantity: 2,
   image:
@@ -28,15 +28,18 @@ const Checkout: React.FC = () => {
       className="relative flex min-h-screen flex-col md:bg-[#FCFCFC]"
     >
       <Header />
-      <div className="flex flex-1 flex-col p-4 md:my-6 md:mx-auto md:w-full md:max-w-5xl md:flex-row-reverse md:justify-center md:gap-4 md:p-0">
-        <ProductsAccordion
-          companyLogo={fakeCompany.logo}
-          companyName={fakeCompany.name}
-          products={fakeProducts}
-          className="mb-4 md:mb-0 md:w-full"
-        />
+      <div className="flex flex-1 flex-col p-4 md:my-6 md:mx-auto md:w-full md:max-w-5xl md:flex-row-reverse md:justify-center md:gap-8 md:p-0">
+        <div className="h-fit w-full flex-col gap-4 divide-gray-100 rounded-2xl bg-white md:flex md:divide-y md:p-6 md:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+          <div id="purchase-container"></div>
+          <ProductsAccordion
+            companyLogo={fakeCompany.logo}
+            companyName={fakeCompany.name}
+            products={fakeProducts}
+            className="mb-4"
+          />
+        </div>
 
-        <div className="w-full md:h-fit md:max-w-lg md:rounded-2xl md:bg-white md:px-6 md:py-8">
+        <div className="w-full md:h-fit md:max-w-lg md:rounded-2xl md:bg-white md:px-6 md:py-8 md:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
           <h2 className="font-semibold">Método de compra</h2>
           <PaymentElement
             amount={fakeProducts.reduce(
