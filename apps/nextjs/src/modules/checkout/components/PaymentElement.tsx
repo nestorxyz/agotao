@@ -169,6 +169,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           </div>
           <Button
             color="positive"
+            size="large"
             onClick={handleSubmit((data) => {
               console.log(data);
             })}

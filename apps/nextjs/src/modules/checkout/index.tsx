@@ -1,8 +1,8 @@
 // Components
-import { Header, Divider } from "@/shared/components";
 import {
   ProductsAccordion,
   PaymentElement,
+  CheckoutHeader,
 } from "@/modules/checkout/components";
 
 const fakeCompany = {
@@ -27,7 +27,7 @@ const Checkout: React.FC = () => {
       id="checkout-container"
       className="relative flex min-h-screen flex-col md:bg-[#FCFCFC]"
     >
-      <Header />
+      <CheckoutHeader />
       <div className="flex flex-1 flex-col p-4 md:my-6 md:mx-auto md:w-full md:max-w-5xl md:flex-row-reverse md:justify-center md:gap-8 md:p-0">
         <div className="h-fit w-full flex-col gap-4 divide-gray-100 rounded-2xl bg-white md:flex md:divide-y md:p-6 md:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
           <div id="purchase-container"></div>
