@@ -24,13 +24,13 @@ export const CheckoutHeader: React.FC = () => {
             color="black"
             size="small"
             onClick={() => handleClick("login")}
+            light
           >
             Iniciar sesión
           </Button>
           <Button
             color="black"
             size="small"
-            light
             onClick={() => handleClick("register")}
           >
             Crear cuenta
