@@ -25,13 +25,15 @@ export const Button: React.FC<ButtonProps> = (props) => {
       {...rest}
       className={classNames(
         className,
-        !light && color === "black" && "bg-black hover:bg-[#1a1a1a]",
-        !light && color === "positive" && "bg-[#43D890] hover:bg-[#0ebb75]",
+        !light && color === "black" && "bg-black text-white hover:bg-[#1a1a1a]",
+        !light &&
+          color === "positive" &&
+          "bg-[#43D890] text-white hover:bg-[#0ebb75]",
         light && color === "black" && "bg-white text-black hover:bg-[#f5f5f5]",
         size === "small" && "h-10 text-sm",
         size === "medium" && "h-12 text-base",
         size === "large" && "h-14 text-lg",
-        "flex w-full items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold text-white transition-all ",
+        "flex w-full items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all ",
       )}
     >
       {children}

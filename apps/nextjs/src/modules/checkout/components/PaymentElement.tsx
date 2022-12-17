@@ -162,7 +162,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
       <Portal
         wrapperId={width > 768 ? "purchase-container" : "checkout-container"}
       >
-        <div className="sticky bottom-0 z-20 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] md:z-0 md:flex md:p-0 md:shadow-none">
+        <div className="sticky bottom-0 z-10 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] md:z-0 md:flex md:p-0 md:shadow-none">
           <div>
             <p className="text-sm text-gray-500">Total</p>
             <h3 className="truncate text-2xl font-semibold">S/ {amount}</h3>

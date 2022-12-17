@@ -68,16 +68,14 @@ export function Modal({
   ) {
     const offset = info.offset.y;
     const velocity = info.velocity.y;
-    if (mobileModalRef.current) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const height = (mobileModalRef.current as any).getBoundingClientRect()
-        .height;
-      if (offset > height / 2 || velocity > 800) {
-        await controls.start({ y: "100%", transition: transitionProps });
-        closeModal();
-      } else {
-        controls.start({ y: 0, transition: transitionProps });
-      }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const height = (mobileModalRef.current as any).getBoundingClientRect()
+      .height;
+    if (offset > height / 2 || velocity > 800) {
+      await controls.start({ y: "100%", transition: transitionProps });
+      closeModal();
+    } else {
+      controls.start({ y: 0, transition: transitionProps });
     }
   }
 
@@ -90,7 +88,7 @@ export function Modal({
               ref={mobileModalRef}
               key="mobile-modal"
               className="group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab active:cursor-grabbing sm:hidden"
-              initial={{ y: "100%" }}
+              initial={{ y: "0%" }}
               animate={controls}
               exit={{ y: "100%" }}
               transition={transitionProps}

@@ -1,12 +1,9 @@
-import { useState } from "react";
-
 // Components
-import { Header, Button, Modal } from "@/shared/components";
 import {
   ProductsAccordion,
   PaymentElement,
+  CheckoutHeader,
 } from "@/modules/checkout/components";
-import { AuthContent } from "@/modules/auth/components";
 
 const fakeCompany = {
   name: "Nike",
@@ -25,31 +22,13 @@ const fakeProduct = {
 const fakeProducts = Array.from({ length: 5 }, () => fakeProduct);
 
 const Checkout: React.FC = () => {
-  const [open, setOpen] = useState(false);
-
   return (
     <div
       id="checkout-container"
       className="relative min-h-screen md:bg-[#FCFCFC]"
     >
-      <Modal showModal={open} setShowModal={setOpen}>
-        <AuthContent />
-      </Modal>
-      <Header>
-        <div className="flex gap-2">
-          <Button color="black" size="small" onClick={() => setOpen(true)}>
-            Iniciar sesión
-          </Button>
-          <Button
-            color="black"
-            size="small"
-            light
-            onClick={() => setOpen(true)}
-          >
-            Crear cuenta
-          </Button>
-        </div>
-      </Header>
+      <CheckoutHeader />
+
       <div className="flex flex-1 flex-col p-4 md:my-6 md:mx-auto md:w-full md:max-w-5xl md:flex-row-reverse md:justify-center md:gap-8 md:p-0">
         <div className="h-fit w-full flex-col gap-4 divide-gray-100 rounded-2xl bg-white md:flex md:divide-y md:p-6 md:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
           <div id="purchase-container"></div>

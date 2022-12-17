@@ -1,24 +1,42 @@
 import { useState } from "react";
 
+// Components
 import { Header, Button, Modal } from "@/shared/components";
 import { AuthContent } from "@/modules/auth/components";
 
 export const CheckoutHeader: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+
+  const handleClick = (tab: "login" | "register") => {
+    setOpen(true);
+    setActiveTab(tab);
+  };
 
   return (
-    <Header>
-      <div className="flex gap-2">
-        <Button color="black" size="small" onClick={() => setOpen(true)}>
-          Iniciar sesión
-        </Button>
-        <Button color="black" size="small" light onClick={() => setOpen(true)}>
-          Crear cuenta
-        </Button>
-        <Modal showModal={open} setShowModal={setOpen}>
-          <AuthContent />
-        </Modal>
-      </div>
-    </Header>
+    <>
+      <Modal showModal={open} setShowModal={setOpen}>
+        <AuthContent initTab={activeTab} />
+      </Modal>
+      <Header>
+        <div className="flex gap-2">
+          <Button
+            color="black"
+            size="small"
+            onClick={() => handleClick("login")}
+          >
+            Iniciar sesión
+          </Button>
+          <Button
+            color="black"
+            size="small"
+            light
+            onClick={() => handleClick("register")}
+          >
+            Crear cuenta
+          </Button>
+        </div>
+      </Header>
+    </>
   );
 };
