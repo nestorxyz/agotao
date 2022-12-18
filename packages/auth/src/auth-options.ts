@@ -1,18 +1,45 @@
 import { type NextAuthOptions } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
 
 import { prisma } from "@acme/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { loginSchema } from "./utils/validations";
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    DiscordProvider({
-      clientId: process.env.DISCORD_CLIENT_ID as string,
-      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        const creds = await loginSchema.parseAsync(credentials);
+
+        const user = await prisma.user.findUnique({
+          where: {
+            email: creds.email,
+          },
+        });
+
+        if (!user) return null;
+
+        if (!user.password) return null;
+
+        const isValid = await bcrypt.compare(creds.password, user.password);
+
+        if (!isValid) return null;
+
+        return {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+        };
+      },
     }),
-    // ...add more providers here
   ],
   callbacks: {
     session({ session, user }) {
