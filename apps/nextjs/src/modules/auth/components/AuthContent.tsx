@@ -62,6 +62,11 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
           >
             <div className="space-y-4">
               <Input label="Email" {...register("email")} />
+              <Input
+                label="Contraseña"
+                type="password"
+                {...register("password")}
+              />
               <Button color="black">Iniciar sesión</Button>
 
               <p className="text-sm">
@@ -84,6 +89,11 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
           >
             <div className="space-y-4">
               <Input label="Email" {...register("email")} />
+              <Input
+                label="Contraseña"
+                type="password"
+                {...register("password")}
+              />
               <Button color="black">Regístrate</Button>
               <p className="text-sm">
                 ¿Ya tienes una cuenta de Agotao?{" "}
