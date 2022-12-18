@@ -81,6 +81,7 @@ importers:
       '@acme/auth': '*'
       '@acme/db': '*'
       '@acme/tailwind-config': '*'
+      '@acme/validations': '*'
       '@hookform/resolvers': ^2.9.10
       '@radix-ui/react-accordion': ^1.0.1
       '@radix-ui/react-dialog': ^1.0.2
@@ -124,6 +125,7 @@ importers:
       '@acme/auth': link:../../packages/auth
       '@acme/db': link:../../packages/db
       '@acme/tailwind-config': link:../../packages/config/tailwind
+      '@acme/validations': link:../../packages/validations
       '@hookform/resolvers': 2.9.10_react-hook-form@7.40.0
       '@radix-ui/react-accordion': 1.0.1_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-dialog': 1.0.2_2zx2umvpluuhvlq44va5bta2da
@@ -168,6 +170,7 @@ importers:
     specifiers:
       '@acme/auth': '*'
       '@acme/db': '*'
+      '@acme/validations': '*'
       '@trpc/client': ^10.1.0
       '@trpc/server': ^10.1.0
       eslint: ^8.28.0
@@ -177,6 +180,7 @@ importers:
     dependencies:
       '@acme/auth': link:../auth
       '@acme/db': link:../db
+      '@acme/validations': link:../validations
       '@trpc/client': 10.1.0_@trpc+server@10.1.0
       '@trpc/server': 10.1.0
       superjson: 1.10.0
@@ -227,6 +231,17 @@ importers:
     devDependencies:
       dotenv-cli: 6.0.0
       prisma: 4.6.1
+      typescript: 4.9.3
+
+  packages/validations:
+    specifiers:
+      eslint: ^8.28.0
+      typescript: ^4.9.3
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.19.1
+    devDependencies:
+      eslint: 8.28.0
       typescript: 4.9.3
 
 packages:

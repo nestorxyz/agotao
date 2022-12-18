@@ -1,6 +1,13 @@
-import { useState } from "react";
+// Libraries
 import classNames from "classnames";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { signupSchema, ISignup } from "@acme/validations";
+
+// Services
+import { trpc } from "@/utils/trpc";
 
 // Components
 import { SocialButton } from "@/modules/auth/components";
@@ -15,6 +22,22 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
   const { initTab = "login", className } = props;
 
   const [activeTab, setActiveTab] = useState<"login" | "register">(initTab);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<ISignup>({
+    resolver: zodResolver(signupSchema),
+  });
+
+  const signupMutation = trpc.auth.signup.useMutation({
+    onSuccess(data, variables, context) {
+      console.log(data, variables, context);
+    },
+    onError(error, variables, context) {},
+  });
 
   return (
     <div
@@ -38,7 +61,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
             exit={{ x: "-100%" }}
           >
             <div className="space-y-4">
-              <Input label="Email" />
+              <Input label="Email" {...register("email")} />
               <Button color="black">Iniciar sesión</Button>
 
               <p className="text-sm">
@@ -60,7 +83,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
             exit={{ x: "100%" }}
           >
             <div className="space-y-4">
-              <Input label="Email" />
+              <Input label="Email" {...register("email")} />
               <Button color="black">Regístrate</Button>
               <p className="text-sm">
                 ¿Ya tienes una cuenta de Agotao?{" "}

@@ -5,11 +5,5 @@
     "index.ts",
     "transformer.ts",
     "node_modules/@acme/auth/next-auth.d.ts"
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  }
+  ]
 }

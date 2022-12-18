@@ -3,10 +3,10 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 
 // tRPC
-import { router, publicProcedure } from "@/trpc";
+import { router, publicProcedure } from "../../trpc";
 
 // Validators
-import { signupSchema } from "@/modules/auth/validations";
+import { signupSchema } from "@acme/validations";
 
 export const authRouter = router({
   getSession: publicProcedure.query(({ ctx }) => {

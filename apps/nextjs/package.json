@@ -15,6 +15,7 @@
     "@acme/auth": "*",
     "@acme/db": "*",
     "@acme/tailwind-config": "*",
+    "@acme/validations": "*",
     "@hookform/resolvers": "^2.9.10",
     "@radix-ui/react-accordion": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.2",
