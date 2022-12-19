@@ -33,7 +33,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         size === "small" && "h-10 text-sm",
         size === "medium" && "h-12 text-base",
         size === "large" && "h-14 text-lg",
-        "flex w-full items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all ",
+        "flex items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all ",
       )}
     >
       {children}
