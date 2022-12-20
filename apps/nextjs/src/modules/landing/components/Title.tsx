@@ -36,7 +36,7 @@ export const Title: React.FC = () => {
   }, [index, setIndex]);
 
   return (
-    <div className="relative my-4 max-w-[800px] text-center text-4xl font-extrabold md:text-6xl">
+    <div className="relative my-4 max-w-[800px] text-center text-4xl font-extrabold sm:text-5xl md:text-6xl">
       Acepta pagos en tu
       <AnimatePresence>
         <motion.h1

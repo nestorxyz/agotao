@@ -13,7 +13,6 @@ export interface HeaderProps {
 export const Header: React.FC<HeaderProps> = (props) => {
   const { className } = props;
   const { width } = useViewportSize();
-  console.log(width);
 
   return (
     <header
