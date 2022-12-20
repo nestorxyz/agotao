@@ -33,7 +33,7 @@ export const ProductsAccordion: React.FC<ProductsAccordionProps> = (props) => {
                 <Image
                   src={companyLogo}
                   alt={companyName}
-                  fill
+                  layout="fill"
                   className="rounded-full object-cover"
                 />
               </div>

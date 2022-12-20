@@ -173,6 +173,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
             onClick={handleSubmit((data) => {
               console.log(data);
             })}
+            className="flex-1"
           >
             Confirmar compra
           </Button>

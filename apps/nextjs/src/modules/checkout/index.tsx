@@ -6,20 +6,19 @@ import {
 } from "@/modules/checkout/components";
 
 const fakeCompany = {
-  name: "Nike",
-  logo: "https://mir-s3-cdn-cf.behance.net/projects/404/d5f468144562697.Y3JvcCwxMzgwLDEwODAsMjcwLDA.jpg",
+  name: "Naiki",
+  logo: "https://images.squarespace-cdn.com/content/v1/5c08276ada02bc6f72ea0cfe/1594373937107-9TY8XMZIBBN8TAT817ZR/logo+design",
 };
 
 const fakeProduct = {
   id: "1",
-  name: "Nike Air Max 270",
+  name: "Naiki Hoddie Max 270",
   price: 100,
   quantity: 2,
-  image:
-    "https://mir-s3-cdn-cf.behance.net/projects/404/d5f468144562697.Y3JvcCwxMzgwLDEwODAsMjcwLDA.jpg",
+  image: "https://i.linio.com/p/b3b1a3fbb8ec9970c82c16d31ace87e1-product.webp",
 };
 
-const fakeProducts = Array.from({ length: 5 }, () => fakeProduct);
+const fakeProducts = Array.from({ length: 1 }, () => fakeProduct);
 
 const Checkout: React.FC = () => {
   return (
