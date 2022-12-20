@@ -10,8 +10,8 @@ export const paymentSchema = z.object({
     .max(50, "El nombre del titular debe tener máximo 50 caracteres"),
   expiry: z
     .string({ required_error: "La fecha de expiración es requerida" })
-    .min(4, "La fecha de expiración debe tener 4 caracteres")
-    .max(4, "La fecha de expiración debe tener 4 caracteres"),
+    .min(5, "La fecha de expiración debe tener 4 caracteres")
+    .max(5, "La fecha de expiración debe tener 4 caracteres"),
   cvc: z
     .string({ required_error: "El código de seguridad es requerido" })
     .min(3, "El código de seguridad debe tener 3 caracteres")

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Cards from "react-credit-cards";
 import Tilt from "react-parallax-tilt";
 import classNames from "classnames";
@@ -5,7 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 // Components
-import { Input, ErrorMessage, Portal, Button } from "@/shared/components";
+import {
+  Input,
+  ErrorMessage,
+  Portal,
+  Button,
+  Spinner,
+} from "@/shared/components";
 
 // Utils
 import {
@@ -30,6 +37,7 @@ export interface PaymentElementProps {
 export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
   const { amount } = props;
   const { width } = useViewportSize();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -54,12 +62,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit((data) => {
-        console.log(data);
-      })}
-      className="flex flex-col space-y-4"
-    >
+    <form className="flex flex-col space-y-4">
       <div>
         <Tilt
           glareEnable={true}
@@ -170,12 +173,22 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           <Button
             color="positive"
             size="large"
-            onClick={handleSubmit((data) => {
-              console.log(data);
+            onClick={handleSubmit(() => {
+              setIsSubmitting(true);
+              setTimeout(() => {
+                setIsSubmitting(false);
+              }, 3000);
             })}
             className="flex-1"
           >
-            Confirmar compra
+            {isSubmitting ? (
+              <>
+                <Spinner className="mr-2" />
+                Procesando compra
+              </>
+            ) : (
+              <>Confirmar compra</>
+            )}
           </Button>
         </div>
       </Portal>

@@ -7,6 +7,7 @@ export interface ButtonProps
   className?: string;
   color?: "primary" | "positive" | "black";
   disabled?: boolean;
+  loading?: boolean;
   size?: "small" | "medium" | "large";
   light?: boolean;
 }
@@ -17,6 +18,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     className,
     color = "primary",
     disabled = false,
+    loading = false,
     size = "medium",
     light = false,
     ...rest
@@ -25,7 +27,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
   return (
     <button
       {...rest}
-      disabled={disabled}
+      disabled={disabled || loading}
       className={classNames(
         className,
         disabled && "cursor-default opacity-50",

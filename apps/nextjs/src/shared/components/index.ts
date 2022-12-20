@@ -7,3 +7,4 @@ export * from "./buttons";
 export * from "./Divider";
 export * from "./overlays";
 export * from "./seo";
+export * from "./loaders";
