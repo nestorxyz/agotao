@@ -32,16 +32,16 @@ export const Title: React.FC = () => {
         next = 0;
       }
       setIndex(next);
-    }, 3 * 1500);
+    }, 3 * 1200);
   }, [index, setIndex]);
 
   return (
-    <div className="relative my-4 max-w-[800px] text-center text-6xl font-extrabold">
+    <div className="relative my-4 max-w-[800px] text-center text-4xl font-extrabold md:text-6xl">
       Acepta pagos en tu
       <AnimatePresence>
         <motion.h1
           key={customers[index]}
-          className="absolute left-0 right-0 mt-2 bg-gradient-to-r from-[#FF00B4] to-primary bg-clip-text py-2 text-transparent"
+          className="absolute left-0 right-0 bg-gradient-to-r from-[#FF00B4] to-primary bg-clip-text py-2 text-transparent md:mt-2"
           variants={variants}
           initial="enter"
           animate="center"

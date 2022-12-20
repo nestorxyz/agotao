@@ -3,12 +3,17 @@ import Image from "next/image";
 
 import { Button } from "@/shared/components";
 
+// Hooks
+import useViewportSize from "@/shared/hooks/use-viewport-size";
+
 export interface HeaderProps {
   className?: string;
 }
 
 export const Header: React.FC<HeaderProps> = (props) => {
   const { className } = props;
+  const { width } = useViewportSize();
+  console.log(width);
 
   return (
     <header
@@ -16,18 +21,23 @@ export const Header: React.FC<HeaderProps> = (props) => {
     >
       <div className="mx-auto flex w-full max-w-5xl justify-between">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
-        <div className="flex items-center gap-4">
-          <Button color="black" light size="large">
+        <div className="hidden items-center gap-4 md:flex">
+          <Button color="black" light size="large" disabled>
             Wallet
           </Button>
-          <Button color="black" light size="large">
+          <Button color="black" light size="large" disabled>
             Developers
           </Button>
-          <Button color="black" light size="large">
+          <Button color="black" light size="large" disabled>
             Precios
           </Button>
         </div>
-        <Button color="black" size="large" className="px-8">
+        <Button
+          color="black"
+          size={width > 768 ? "large" : "medium"}
+          className="px-8"
+          disabled
+        >
           Ingresar
         </Button>
       </div>

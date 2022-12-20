@@ -15,7 +15,7 @@ import {
 } from "@/modules/checkout/utils";
 
 // Hooks
-import useViewportSize from "@/modules/checkout/hooks/use-viewport-size";
+import useViewportSize from "@/shared/hooks/use-viewport-size";
 
 // Types
 import type { Focused } from "react-credit-cards";
