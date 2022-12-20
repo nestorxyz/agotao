@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
     <header
       className={classNames(className, "flex items-center bg-white py-5 px-4")}
     >
-      <div className="mx-auto flex w-full max-w-5xl justify-between">
+      <div className="mx-auto flex w-full max-w-6xl justify-between">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
         <div className="hidden items-center gap-4 md:flex">
           <Button color="black" light size="large" disabled>

@@ -1,6 +1,6 @@
 // Components
 import { DefaultHead } from "@/shared/components";
-import { Header, Title, Cards } from "@/modules/landing/components";
+import { Header, Title, Cards, Preview } from "@/modules/landing/components";
 
 // Types
 import type { NextPage, GetServerSideProps } from "next";
@@ -22,11 +22,12 @@ const Home: NextPage = () => {
 
       <Header />
 
-      <main className="mx-auto flex w-full max-w-5xl flex-col items-center justify-center px-4 md:px-0">
+      <main className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center px-4 xl:px-0">
         <Title />
 
-        <div className="mt-16 md:mt-24">
+        <div className="mt-16 flex w-full flex-col-reverse justify-between gap-8 md:mt-24 lg:flex-row lg:items-center">
           <Cards />
+          <Preview />
         </div>
       </main>
     </>

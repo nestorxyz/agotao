@@ -16,7 +16,7 @@ const variants: Variants = {
 
 export const Cards: React.FC = () => {
   return (
-    <section className="grid max-w-sm gap-4">
+    <section className="grid gap-4 md:grid-cols-3 lg:max-w-sm lg:grid-cols-1">
       <motion.article
         variants={variants}
         initial="enter"
