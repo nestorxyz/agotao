@@ -16,10 +16,12 @@ import { Input, Button, Divider } from "@/shared/components";
 export interface AuthContentProps {
   className?: string;
   initTab?: "login" | "register";
+  onSuccess?: () => void;
+  usingFor?: "modal" | "page";
 }
 
 export const AuthContent: React.FC<AuthContentProps> = (props) => {
-  const { initTab = "login", className } = props;
+  const { initTab = "login", className, onSuccess, usingFor = "modal" } = props;
 
   const [activeTab, setActiveTab] = useState<"login" | "register">(initTab);
 
@@ -33,17 +35,24 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
   });
 
   const signupMutation = trpc.auth.signup.useMutation({
-    onSuccess(data, variables, context) {
-      console.log(data, variables, context);
+    onSuccess() {
+      onSuccess?.();
     },
-    onError(error, variables, context) {},
+    onError(error) {
+      console.log(error);
+      setError("email", {
+        type: "manual",
+        message: error.message,
+      });
+    },
   });
 
   return (
-    <div
+    <form
       className={classNames(
         className,
-        "inline-block w-full transform overflow-hidden bg-white px-4 py-6 align-middle shadow-xl transition-all sm:max-w-md sm:rounded-2xl sm:border sm:border-gray-200 sm:py-10 sm:px-6",
+        usingFor === "modal" && "shadow-xl",
+        "inline-block w-full transform overflow-hidden bg-white px-4 py-6 align-middle transition-all sm:max-w-md sm:rounded-2xl sm:border sm:border-gray-200 sm:py-10 sm:px-6",
       )}
     >
       <div className="mb-16 space-y-2">
@@ -61,11 +70,17 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
             exit={{ x: "-100%" }}
           >
             <div className="space-y-4">
-              <Input label="Email" {...register("email")} />
+              <Input
+                label="Email"
+                type="email"
+                {...register("email")}
+                error={errors.email?.message}
+              />
               <Input
                 label="Contraseña"
                 type="password"
                 {...register("password")}
+                error={errors.password?.message}
               />
               <Button color="black" className="w-full">
                 Iniciar sesión
@@ -90,13 +105,24 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
             exit={{ x: "100%" }}
           >
             <div className="space-y-4">
-              <Input label="Email" {...register("email")} />
+              <Input
+                label="Email"
+                type="email"
+                {...register("email")}
+                error={errors.email?.message}
+              />
+
               <Input
                 label="Contraseña"
                 type="password"
                 {...register("password")}
+                error={errors.password?.message}
               />
-              <Button color="black" className="w-full">
+              <Button
+                color="black"
+                className="w-full"
+                onClick={handleSubmit((data) => signupMutation.mutate(data))}
+              >
                 Regístrate
               </Button>
               <p className="text-sm">
@@ -122,6 +148,6 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
           <SocialButton social="google" />
         </div>
       </div>
-    </div>
+    </form>
   );
 };

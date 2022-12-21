@@ -6,6 +6,10 @@ import { AuthContent } from "@/modules/auth/components";
 import { DefaultHead } from "@/shared/components";
 
 const JoinPage: NextPage = () => {
+  const handleSuccess = () => {
+    console.log("success");
+  };
+
   return (
     <>
       <DefaultHead siteName="Ingresar" />
@@ -17,7 +21,11 @@ const JoinPage: NextPage = () => {
             </Link>
           </div>
         </header>
-        <AuthContent className="mx-auto mb-4" />
+        <AuthContent
+          className="mx-auto mb-4"
+          usingFor="page"
+          onSuccess={handleSuccess}
+        />
       </div>
     </>
   );
