@@ -30,7 +30,7 @@ const Home: NextPage = () => {
           <div className="flex w-full flex-col gap-4">
             <Preview />
 
-            <p>
+            <p className="text-sm text-gray-600 md:text-base">
               ¿Necesitas una nueva solución?{" "}
               <a
                 href="https://twitter.com/nestoredduardo"
