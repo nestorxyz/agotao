@@ -62,7 +62,7 @@ export const DefaultHead = ({
 
       <link rel="canonical" href={canonical ?? DOMAIN} />
 
-      <link rel="shortcut icon" href="/favicon.ico" />
+      <link rel="shortcut icon" href="/favicon.svg" />
     </Head>
   );
 };
