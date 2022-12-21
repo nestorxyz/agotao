@@ -8,10 +8,13 @@ export interface InputProps
   label?: string;
   error?: string;
   inputClassName?: string;
+  name?: string;
+  register?: any;
 }
 
 export const Input: React.FC<InputProps> = (props) => {
-  const { label, inputClassName, className, error, ...rest } = props;
+  const { label, inputClassName, name, register, className, error, ...rest } =
+    props;
 
   return (
     <div className={classNames(className, "flex flex-col space-y-1")}>
@@ -24,6 +27,7 @@ export const Input: React.FC<InputProps> = (props) => {
         </Label.Root>
       )}
       <input
+        {...register(name)}
         {...rest}
         className={classNames(
           inputClassName,
