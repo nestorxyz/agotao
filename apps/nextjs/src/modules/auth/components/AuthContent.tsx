@@ -67,7 +67,9 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
                 type="password"
                 {...register("password")}
               />
-              <Button color="black">Iniciar sesión</Button>
+              <Button color="black" className="w-full">
+                Iniciar sesión
+              </Button>
 
               <p className="text-sm">
                 ¿Nuevo en Agotao?{" "}
@@ -94,7 +96,9 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
                 type="password"
                 {...register("password")}
               />
-              <Button color="black">Regístrate</Button>
+              <Button color="black" className="w-full">
+                Regístrate
+              </Button>
               <p className="text-sm">
                 ¿Ya tienes una cuenta de Agotao?{" "}
                 <button

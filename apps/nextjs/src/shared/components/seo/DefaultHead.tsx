@@ -6,7 +6,7 @@ const DEFAULT_OG_IMAGE = "https://agotao.com/og.png";
 export const DefaultHead = ({
   title = "Agotao",
   description = "Procesamiento de pagos sin complicaciones",
-  siteName = "Agotao",
+  siteName = "",
   canonical = DOMAIN,
   ogImage = DEFAULT_OG_IMAGE,
   ogType = "website",
@@ -14,7 +14,7 @@ export const DefaultHead = ({
 }) => {
   return (
     <Head>
-      <title key="title">{`${title} – ${siteName}`}</title>
+      <title key="title">{`${title} ${siteName && " - " + siteName}`}</title>
       <meta name="description" content={description} />
       <meta key="og_type" property="og:type" content={ogType} />
       <meta key="og_title" property="og:title" content={title} />
@@ -35,7 +35,7 @@ export const DefaultHead = ({
       <meta
         key="og_image:alt"
         property="og:image:alt"
-        content={`${title} | ${siteName}`}
+        content={`${title} ${siteName && " | " + siteName}`}
       />
       <meta key="og_image:width" property="og:image:width" content="1200" />
       <meta key="og_image:height" property="og:image:height" content="630" />
