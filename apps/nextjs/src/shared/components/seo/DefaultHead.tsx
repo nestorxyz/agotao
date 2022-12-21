@@ -1,7 +1,7 @@
 import Head from "next/head";
 
-const DOMAIN = "https://www.agotao.com";
-const DEFAULT_OG_IMAGE = "/og.png";
+const DOMAIN = "https://agotao.com";
+const DEFAULT_OG_IMAGE = "https://agotao.com/og.png";
 
 export const DefaultHead = ({
   title = "Agotao",
