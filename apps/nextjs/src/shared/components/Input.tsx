@@ -26,14 +26,17 @@ export const Input: React.FC<InputProps> = (props) => {
           {label}
         </Label.Root>
       )}
-      <input
-        {...register(name)}
-        {...rest}
-        className={classNames(
-          inputClassName,
-          "w-full rounded-md border border-gray-300 p-3 shadow-sm outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm",
-        )}
-      />
+      <div className="relative">
+        <input
+          {...(register && register(name))}
+          {...rest}
+          className={classNames(
+            inputClassName,
+            "w-full rounded-md border border-gray-300 p-3 shadow-sm outline-none transition-all focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm",
+          )}
+        />
+      </div>
+
       {error && <ErrorMessage>{error}</ErrorMessage>}
     </div>
   );

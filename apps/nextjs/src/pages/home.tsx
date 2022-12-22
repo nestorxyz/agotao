@@ -4,9 +4,10 @@ import { useRouter } from "next/router";
 
 // Components
 import { Button, DefaultHead, Dots } from "@/shared/components";
+import { CreateCompanyButton } from "@/modules/home/components";
 
 const HomePage: NextPage = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const router = useRouter();
 
   if (status === "loading") {
@@ -29,8 +30,8 @@ const HomePage: NextPage = () => {
   return (
     <>
       <DefaultHead title="Home" />
-      <div>
-        <Button>Crear Negocio</Button>
+      <div className="relative min-h-screen">
+        <CreateCompanyButton />
         <Button
           onClick={() =>
             signOut({
