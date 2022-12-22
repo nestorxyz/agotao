@@ -3,9 +3,10 @@ import classNames from "classnames";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { FcGoogle } from "react-icons/fc";
 
 // Components
-import { SocialButton } from "@/modules/auth/components";
+import { Button } from "@/shared/components";
 
 // Utils
 import { env } from "@/env/client.mjs";
@@ -14,11 +15,17 @@ export interface AuthContentProps {
   className?: string;
   initTab?: "login" | "register";
   onSuccess?: () => void;
+  callbackUrl?: string;
   usingFor?: "modal" | "page";
 }
 
 export const AuthContent: React.FC<AuthContentProps> = (props) => {
-  const { initTab = "login", className, onSuccess, usingFor = "modal" } = props;
+  const {
+    initTab = "login",
+    className,
+    callbackUrl,
+    usingFor = "modal",
+  } = props;
 
   const [activeTab, setActiveTab] = useState<"login" | "register">(initTab);
   const router = useRouter();
@@ -43,31 +50,42 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         <h1 className="text-3xl font-bold">
           {activeTab === "login" ? "Iniciar sesión" : "Crear cuenta"}
         </h1>
+        <p className="text-sm text-gray-500">
+          {activeTab === "login"
+            ? "Ingresa con tu cuenta de Google"
+            : "Crea una cuenta con tu cuenta de Google"}
+        </p>
       </div>
 
-      <SocialButton
-        social="google"
+      <Button
+        className="mb-4 w-full"
+        size="large"
+        color="black"
         onClick={() =>
           signIn("google", {
-            callbackUrl: `${env.NEXT_PUBLIC_APP_URL}/home`,
+            callbackUrl: `${env.NEXT_PUBLIC_APP_URL}/${callbackUrl}`,
           })
         }
-      />
+      >
+        <FcGoogle className="mr-2 h-6 w-6" />
+        Google
+      </Button>
 
-      {/* {activeTab === "register" ? (
-        <Signup onSuccess={onSuccess} onChangeTab={onChangeTab} />
+      {activeTab === "register" ? (
+        <p className="text-sm">
+          ¿Ya tienes una cuenta de Agotao?{" "}
+          <button className="font-medium text-primary" onClick={onChangeTab}>
+            Inicia sesión aquí
+          </button>
+        </p>
       ) : (
-        <Login onSuccess={onSuccess} onChangeTab={onChangeTab} />
-      )} */}
-
-      {/* <div className="mt-24">
-        <Divider className="mb-4">
-          <p className="text-sm font-semibold">O Ingresa con</p>
-        </Divider>
-        <div className="grid grid-cols-2 gap-2">
-          <SocialButton social="facebook" />
-        </div>
-      </div> */}
+        <p className="text-sm">
+          ¿Nuevo en Agotao?{" "}
+          <button className="font-medium text-primary" onClick={onChangeTab}>
+            Crea una cuenta gratis aquí
+          </button>
+        </p>
+      )}
     </div>
   );
 };
