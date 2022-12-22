@@ -3,17 +3,7 @@ import { DefaultHead } from "@/shared/components";
 import { Header, Title, Cards, Preview } from "@/modules/landing/components";
 
 // Types
-import type { NextPage, GetServerSideProps } from "next";
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const subdomain = context.req.headers.host?.split(".")[0];
-
-  console.log(subdomain);
-
-  return {
-    props: {},
-  };
-};
+import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   return (
