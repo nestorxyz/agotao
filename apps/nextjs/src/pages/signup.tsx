@@ -26,6 +26,7 @@ const SignupPage: NextPage = () => {
           usingFor="page"
           initTab="register"
           onSuccess={handleSuccess}
+          callbackUrl="/home"
         />
       </div>
     </>

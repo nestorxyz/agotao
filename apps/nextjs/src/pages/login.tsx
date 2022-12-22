@@ -26,6 +26,7 @@ const LoginPage: NextPage = () => {
           usingFor="page"
           initTab="login"
           onSuccess={handleSuccess}
+          callbackUrl="/home"
         />
       </div>
     </>
