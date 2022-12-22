@@ -48,7 +48,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         <Login onSuccess={onSuccess} onChangeTab={onChangeTab} />
       )}
 
-      <div className="mt-24">
+      {/* <div className="mt-24">
         <Divider className="mb-4">
           <p className="text-sm font-semibold">O Ingresa con</p>
         </Divider>
@@ -56,7 +56,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
           <SocialButton social="facebook" />
           <SocialButton social="google" />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
