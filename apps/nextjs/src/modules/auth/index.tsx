@@ -1,11 +1,14 @@
 // Libraries
 import classNames from "classnames";
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
 // Components
-import { SocialButton, Signup, Login } from "@/modules/auth/components";
-import { Divider } from "@/shared/components";
+import { SocialButton } from "@/modules/auth/components";
+
+// Utils
+import { env } from "@/env/client.mjs";
 
 export interface AuthContentProps {
   className?: string;
@@ -22,7 +25,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
 
   const onChangeTab = () => {
     if (usingFor === "page") {
-      router.push(activeTab === "login" ? "/auth/signup" : "/auth/login");
+      router.push(activeTab === "login" ? "/signup" : "/login");
     } else {
       setActiveTab((prev) => (prev === "login" ? "register" : "login"));
     }
@@ -42,11 +45,20 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         </h1>
       </div>
 
-      {activeTab === "register" ? (
+      <SocialButton
+        social="google"
+        onClick={() =>
+          signIn("google", {
+            callbackUrl: `${env.NEXT_PUBLIC_APP_URL}/home`,
+          })
+        }
+      />
+
+      {/* {activeTab === "register" ? (
         <Signup onSuccess={onSuccess} onChangeTab={onChangeTab} />
       ) : (
         <Login onSuccess={onSuccess} onChangeTab={onChangeTab} />
-      )}
+      )} */}
 
       {/* <div className="mt-24">
         <Divider className="mb-4">
@@ -54,7 +66,6 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         </Divider>
         <div className="grid grid-cols-2 gap-2">
           <SocialButton social="facebook" />
-          <SocialButton social="google" />
         </div>
       </div> */}
     </div>
