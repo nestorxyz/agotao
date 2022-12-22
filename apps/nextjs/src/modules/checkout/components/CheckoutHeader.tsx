@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Components
 import { Header, Button, Modal } from "@/shared/components";
-import { AuthContent } from "@/modules/auth/components";
+import { AuthContent } from "@/modules/auth";
 
 export const CheckoutHeader: React.FC = () => {
   const [open, setOpen] = useState(false);
