@@ -18,7 +18,7 @@ export const Signup: React.FC<SignupProps> = (props) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     setError,
   } = useForm<ISignup>({
     resolver: zodResolver(signupSchema),
@@ -58,9 +58,9 @@ export const Signup: React.FC<SignupProps> = (props) => {
         color="black"
         className="w-full"
         onClick={handleSubmit((data) => signupMutation.mutate(data))}
-        loading={isSubmitting}
+        loading={signupMutation.isLoading}
       >
-        {isSubmitting ? <Spinner className="mr-2" /> : null}
+        {signupMutation.isLoading ? <Spinner className="mr-2" /> : null}
         Regístrate
       </Button>
 
