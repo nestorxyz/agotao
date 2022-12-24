@@ -1,10 +1,13 @@
-// src/pages/_app.tsx
-import "@/shared/styles/globals.css";
-import "react-credit-cards/es/styles-compiled.css";
 import { SessionProvider } from "next-auth/react";
 import type { Session } from "next-auth";
 import type { AppType } from "next/app";
+import { Toaster } from "react-hot-toast";
 
+// Styles
+import "@/shared/styles/globals.css";
+import "react-credit-cards/es/styles-compiled.css";
+
+// Utils
 import { trpc } from "../utils/trpc";
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -13,6 +16,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
+      <Toaster />
       <Component {...pageProps} />
     </SessionProvider>
   );

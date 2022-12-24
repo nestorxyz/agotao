@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createCompanySchema, ICreateCompany } from "@acme/validations";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
+import toast from "react-hot-toast";
 
 // Services
 import { trpc } from "@/utils/trpc";
@@ -40,11 +41,12 @@ export const CreateCompanyButton: React.FC = () => {
   const createCompanyMutation = trpc.company.create.useMutation({
     onSuccess(data) {
       setLoading(false);
-      console.log(data);
+      toast.success(data.message);
+      setOpen(false);
     },
     onError(error) {
       setLoading(false);
-      console.log(error);
+      toast.error(error.message);
     },
   });
 
