@@ -9,7 +9,7 @@ export interface InputProps
   error?: string;
   inputClassName?: string;
   name?: string;
-  register?: any;
+  register?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
 export const Input: React.FC<InputProps> = (props) => {
@@ -28,6 +28,7 @@ export const Input: React.FC<InputProps> = (props) => {
       )}
       <div className="relative">
         <input
+          id={rest.id}
           {...(register && register(name))}
           {...rest}
           className={classNames(

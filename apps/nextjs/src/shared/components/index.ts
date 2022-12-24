@@ -9,3 +9,4 @@ export * from "./overlays";
 export * from "./seo";
 export * from "./loaders";
 export { default as Text } from "./Text";
+export * from "./inputs";

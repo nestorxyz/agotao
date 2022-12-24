@@ -11,6 +11,8 @@ import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 import type { PanInfo } from "framer-motion";
 
+import useViewportSize from "@/shared/hooks/use-viewport-size";
+
 export function Modal({
   children,
   showModal,
@@ -28,6 +30,7 @@ export function Modal({
   const { key } = router.query;
   const mobileModalRef = useRef(null);
   const desktopModalRef = useRef(null);
+  const { width } = useViewportSize();
 
   const closeModal = useCallback(
     (closeWithX?: boolean) => {
@@ -85,40 +88,43 @@ export function Modal({
         <FocusTrap focusTrapOptions={{ initialFocus: false }}>
           <div className="absolute">
             <motion.div
-              ref={mobileModalRef}
-              key="mobile-modal"
-              className="group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab active:cursor-grabbing sm:hidden"
-              initial={{ y: "0%" }}
-              animate={controls}
-              exit={{ y: "100%" }}
-              transition={transitionProps}
-              drag="y"
-              dragDirectionLock
-              onDragEnd={handleDragEnd}
-              dragElastic={{ top: 0, bottom: 1 }}
-              dragConstraints={{ top: 0, bottom: 0 }}
+              {...(width < 640
+                ? {
+                    ref: mobileModalRef,
+                    key: "mobile-modal",
+                    className:
+                      "group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab active:cursor-grabbing sm:hidden",
+                    initial: { y: "0%" },
+                    animate: controls,
+                    exit: { y: "100%" },
+                    transition: transitionProps,
+                    drag: "y",
+                    dragDirectionLock: true,
+                    onDragEnd: handleDragEnd,
+                    dragElastic: { top: 0, bottom: 1 },
+                    dragConstraints: { top: 0, bottom: 0 },
+                  }
+                : {
+                    ref: desktopModalRef,
+                    key: "desktop-modal",
+                    className:
+                      "fixed inset-0 z-40 hidden min-h-screen items-center justify-center sm:flex",
+                    initial: { scale: 0.95 },
+                    animate: { scale: 1 },
+                    exit: { scale: 0.95 },
+                    onMouseDown: (e) => {
+                      if (desktopModalRef.current === e.target) {
+                        closeModal(closeWithX);
+                      }
+                    },
+                  })}
             >
               <div
-                className={`h-7 ${bgColor} rounded-t-4xl -mb-1 flex w-full items-center justify-center border-t border-gray-200`}
+                className={`h-7 ${bgColor} rounded-t-4xl -mb-1 flex w-full items-center justify-center border-t border-gray-200 sm:hidden`}
               >
                 <div className="-mr-1 h-1 w-6 rounded-full bg-gray-300 transition-all group-active:rotate-12" />
                 <div className="h-1 w-6 rounded-full bg-gray-300 transition-all group-active:-rotate-12" />
               </div>
-              {children}
-            </motion.div>
-            <motion.div
-              ref={desktopModalRef}
-              key="desktop-modal"
-              className="fixed inset-0 z-40 hidden min-h-screen items-center justify-center sm:flex"
-              initial={{ scale: 0.95 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.95 }}
-              onMouseDown={(e) => {
-                if (desktopModalRef.current === e.target) {
-                  closeModal(closeWithX);
-                }
-              }}
-            >
               {children}
             </motion.div>
             <motion.div

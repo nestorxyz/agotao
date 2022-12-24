@@ -1,13 +1,77 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createCompanySchema, ICreateCompany } from "@acme/validations";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
-import { Modal, Text, Button, Input } from "@/shared/components";
+// Services
+import { trpc } from "@/utils/trpc";
+import { app } from "@/shared/utils/firebase";
 
-export interface CreateCompanyButtonProps {}
+// Constants
+import { env } from "@/env/client.mjs";
 
-export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
-  props,
-) => {
+// Components
+import {
+  Modal,
+  Text,
+  Button,
+  Input,
+  SquareFileInput,
+  ErrorMessage,
+  Spinner,
+} from "@/shared/components";
+
+export const CreateCompanyButton: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Pick<ICreateCompany, "name">>({
+    resolver: zodResolver(createCompanySchema.pick({ name: true })),
+  });
+
+  const createCompanyMutation = trpc.company.create.useMutation({
+    onSuccess(data) {
+      setLoading(false);
+      console.log(data);
+    },
+    onError(error) {
+      setLoading(false);
+      console.log(error);
+    },
+  });
+
+  const uploadFile = async (file: File) => {
+    const storage = getStorage(app);
+
+    const storageRef = ref(
+      storage,
+      `companies/${uuidv4()}.${file.name.split(".").pop()}`,
+    );
+
+    const snapshot = await uploadBytes(storageRef, file);
+
+    return snapshot.metadata.fullPath;
+  };
+
+  const handleCreateCompany = async (data: Pick<ICreateCompany, "name">) => {
+    setLoading(true);
+    const { name } = data;
+
+    if (!file) return setFileError("Debes subir un logo para tu negocio");
+
+    const imagePath = await uploadFile(file);
+    const image = `https://storage.googleapis.com/${env.NEXT_PUBLIC_STORAGE_BUCKET}/${imagePath}`;
+
+    createCompanyMutation.mutate({ name, image });
+  };
 
   return (
     <>
@@ -16,9 +80,38 @@ export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
           <Text.H1 className="mb-12">Crear negocio</Text.H1>
 
           <div className="space-y-4">
-            <Input label="Nombre" placeholder="ej. Facebook" />
-            <Button size="large" color="black" className="w-full">
-              Crear negocio
+            <div className="space-y-1">
+              <SquareFileInput
+                label="Logo"
+                file={file}
+                setFile={setFile}
+                setErrorMessage={setFileError}
+              />
+              {fileError && <ErrorMessage>{fileError}</ErrorMessage>}
+            </div>
+            <Input
+              id="company-name"
+              label="Nombre"
+              placeholder="ej. Facebook"
+              name="name"
+              register={register}
+              error={errors.name?.message}
+            />
+            <Button
+              size="large"
+              color="black"
+              className="w-full"
+              loading={loading}
+              onClick={handleSubmit(handleCreateCompany)}
+            >
+              {loading ? (
+                <>
+                  <Spinner className="mr-2" />
+                  Creando negocio
+                </>
+              ) : (
+                <>Crear negocio</>
+              )}
             </Button>
           </div>
         </div>
