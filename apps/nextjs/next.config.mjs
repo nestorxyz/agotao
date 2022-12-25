@@ -28,6 +28,7 @@ const config = {
       "mir-s3-cdn-cf.behance.net",
       "images.squarespace-cdn.com",
       "i.linio.com",
+      "lh3.googleusercontent.com",
     ],
   },
 };

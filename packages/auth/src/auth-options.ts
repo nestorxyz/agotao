@@ -1,8 +1,10 @@
 import { type NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-import { prisma } from "@acme/db";
+import { prisma, User } from "@acme/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+
+import { GoogleProfile } from "./types";
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
@@ -16,7 +18,24 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session({ session, user }) {
       session.user.id = user.id;
+      session.user.username = (user as User).username;
       return session;
+    },
+    async signIn({ user, account, profile }) {
+      if (account?.provider === "google" && !(user as User).username) {
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            username: profile?.email?.split("@")[0],
+            emailVerified: (profile as GoogleProfile).email_verified
+              ? new Date()
+              : null,
+          },
+        });
+      }
+      return true;
     },
   },
   pages: {
