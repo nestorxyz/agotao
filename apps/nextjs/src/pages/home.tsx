@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 // Components
-import { Button, DefaultHead, Dots, User } from "@/shared/components";
-import { CreateCompanyButton } from "@/modules/home/components";
+import { DefaultHead, Dots } from "@/shared/components";
+import { Header, MyCompanies } from "@/modules/home/components";
 
 const HomePage: NextPage = () => {
   const { data, status } = useSession();
@@ -31,24 +31,10 @@ const HomePage: NextPage = () => {
     return (
       <>
         <DefaultHead title="Home" />
-        <div className="relative min-h-screen w-full">
-          <User
-            image={data.user.image}
-            name={data.user.name}
-            username={data.user.username}
-          />
-
-          <CreateCompanyButton />
-          <Button
-            onClick={() =>
-              signOut({
-                callbackUrl: "/",
-              })
-            }
-          >
-            Cerrar sesión
-          </Button>
-        </div>
+        <Header />
+        <main className="mx-auto mb-10 flex w-full max-w-5xl flex-col items-center justify-center px-4 xl:px-0">
+          <MyCompanies />
+        </main>
       </>
     );
   }

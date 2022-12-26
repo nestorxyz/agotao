@@ -1,17 +1,24 @@
 import Image from "next/image";
+import classNames from "classnames";
 import { PersonIcon } from "@radix-ui/react-icons";
 
 export interface UserProps {
   image?: string;
   name: string;
   username: string;
+
+  className?: string;
+  onClick?: () => void;
 }
 
 export const User: React.FC<UserProps> = (props) => {
-  const { image, name, username } = props;
+  const { image, name, username, className, onClick } = props;
 
   return (
-    <div className="space-x-2">
+    <div
+      className={classNames(className, "flex space-x-2 p-3")}
+      onClick={onClick}
+    >
       {image ? (
         <Image
           src={image}

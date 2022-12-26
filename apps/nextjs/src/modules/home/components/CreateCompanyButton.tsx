@@ -67,7 +67,11 @@ export const CreateCompanyButton: React.FC = () => {
     setLoading(true);
     const { name } = data;
 
-    if (!file) return setFileError("Debes subir un logo para tu negocio");
+    if (!file) {
+      setLoading(false);
+
+      return setFileError("Debes subir un logo para tu negocio");
+    }
 
     const imagePath = await uploadFile(file);
     const image = `https://storage.googleapis.com/${env.NEXT_PUBLIC_STORAGE_BUCKET}/${imagePath}`;
@@ -118,7 +122,9 @@ export const CreateCompanyButton: React.FC = () => {
           </div>
         </div>
       </Modal>
-      <Button onClick={() => setOpen(true)}>Crear Negocio</Button>
+      <Button onClick={() => setOpen(true)} color="black">
+        Crear Negocio
+      </Button>
     </>
   );
 };
