@@ -19,12 +19,14 @@ export function Modal({
   setShowModal,
   bgColor = "bg-white",
   closeWithX,
+  disableClose,
 }: {
   children: React.ReactNode;
   showModal: boolean;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   bgColor?: string;
   closeWithX?: boolean;
+  disableClose?: boolean;
 }) {
   const router = useRouter();
   const { key } = router.query;
@@ -34,6 +36,8 @@ export function Modal({
 
   const closeModal = useCallback(
     (closeWithX?: boolean) => {
+      if (disableClose) return;
+
       if (closeWithX) {
         return;
       } else if (key) {
@@ -42,14 +46,19 @@ export function Modal({
         setShowModal(false);
       }
     },
-    [key, router, setShowModal],
+    [key, router, setShowModal, disableClose],
   );
 
-  const onKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === "Escape" && !closeWithX) {
-      setShowModal(false);
-    }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const onKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !closeWithX) {
+        if (disableClose) return;
+
+        setShowModal(false);
+      }
+    },
+    [disableClose, closeWithX, setShowModal],
+  );
 
   useEffect(() => {
     document.addEventListener("keydown", onKeyDown);

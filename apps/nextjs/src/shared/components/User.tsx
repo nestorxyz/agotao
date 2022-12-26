@@ -15,10 +15,7 @@ export const User: React.FC<UserProps> = (props) => {
   const { image, name, username, className, onClick } = props;
 
   return (
-    <div
-      className={classNames(className, "flex space-x-2 p-3")}
-      onClick={onClick}
-    >
+    <div className={classNames(className, "flex gap-2 p-3")} onClick={onClick}>
       {image ? (
         <Image
           src={image}
@@ -33,7 +30,7 @@ export const User: React.FC<UserProps> = (props) => {
         </div>
       )}
       <div>
-        <div className="font-semibold">{name}</div>
+        <div className="truncate font-semibold">{name}</div>
         <div className="text-gray-500">@{username}</div>
       </div>
     </div>

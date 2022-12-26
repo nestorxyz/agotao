@@ -9,7 +9,9 @@ export interface ButtonProps
   disabled?: boolean;
   loading?: boolean;
   size?: "small" | "medium" | "large";
+  filled?: boolean;
   light?: boolean;
+  outline?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -20,7 +22,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
     disabled = false,
     loading = false,
     size = "medium",
+    filled = false,
     light = false,
+    outline = false,
     ...rest
   } = props;
 
@@ -31,15 +35,18 @@ export const Button: React.FC<ButtonProps> = (props) => {
       className={classNames(
         className,
         disabled && "cursor-default opacity-50",
-        !light &&
+        filled &&
           color === "black" &&
           "bg-black text-white hover:bg-[#1a1a1a] disabled:bg-black",
-        !light &&
+        filled &&
           color === "positive" &&
           "bg-[#43D890] text-white hover:bg-[#0ebb75] disabled:bg-[#43D890]",
         light &&
           color === "black" &&
           "bg-white text-black hover:bg-[#f5f5f5] disabled:bg-white",
+        outline &&
+          color === "black" &&
+          "border border-black bg-white text-black hover:bg-[#f5f5f5] disabled:bg-white",
         size === "small" && "h-10 text-sm",
         size === "medium" && "h-12 text-base",
         size === "large" && "h-14 text-lg",

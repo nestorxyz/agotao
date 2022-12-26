@@ -13,16 +13,30 @@ export const companyRouter = router({
     .mutation(async ({ input, ctx }) => {
       const { name, image } = input;
 
+      let companyUsername = name.toLowerCase().replace(/\s/g, "");
+
+      const usernameTaken = await ctx.prisma.company.findFirst({
+        where: {
+          username: companyUsername,
+        },
+      });
+
+      if (usernameTaken)
+        companyUsername = `${companyUsername}${Math.floor(
+          Math.random() * 1000000,
+        )}`;
+
       const company = await ctx.prisma.company.create({
         data: {
           name,
           image,
-          username: name.toLowerCase().replace(/\s/g, ""),
+          username: companyUsername,
           admin_id: ctx.session.user.id,
         },
         select: {
           id: true,
           name: true,
+          username: true,
           image: true,
         },
       });
@@ -39,4 +53,29 @@ export const companyRouter = router({
         result: company,
       };
     }),
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    const companies = await ctx.prisma.company.findMany({
+      where: {
+        admin_id: ctx.session.user.id,
+      },
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        image: true,
+      },
+    });
+
+    if (!companies)
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "No se pudo obtener las empresas",
+      });
+
+    return {
+      status: 200,
+      message: "Empresas obtenidas correctamente",
+      result: companies,
+    };
+  }),
 });

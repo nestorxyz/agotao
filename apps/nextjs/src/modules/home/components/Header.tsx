@@ -20,13 +20,13 @@ export const Header: React.FC<HeaderProps> = (props) => {
     <header
       className={classNames(className, "flex items-center bg-white py-5 px-4")}
     >
-      <div className="mx-auto flex w-full max-w-6xl justify-between">
+      <div className="mx-auto flex w-full max-w-6xl flex-col justify-between sm:flex-row">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
         <User
           image={data.user.image}
           name={data.user.name}
           username={data.user.username}
-          className="rounded-full px-5 transition-all"
+          className="rounded-full transition-all"
         />
         <Button
           onClick={() =>

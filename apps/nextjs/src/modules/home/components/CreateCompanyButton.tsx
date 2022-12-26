@@ -24,7 +24,16 @@ import {
   Spinner,
 } from "@/shared/components";
 
-export const CreateCompanyButton: React.FC = () => {
+export interface CreateCompanyButtonProps {
+  onCreated?: () => void;
+  className?: string;
+}
+
+export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
+  props,
+) => {
+  const { onCreated } = props;
+
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -40,6 +49,7 @@ export const CreateCompanyButton: React.FC = () => {
 
   const createCompanyMutation = trpc.company.create.useMutation({
     onSuccess(data) {
+      onCreated?.();
       setLoading(false);
       toast.success(data.message);
       setOpen(false);
@@ -109,6 +119,7 @@ export const CreateCompanyButton: React.FC = () => {
               className="w-full"
               loading={loading}
               onClick={handleSubmit(handleCreateCompany)}
+              filled
             >
               {loading ? (
                 <>
@@ -122,7 +133,7 @@ export const CreateCompanyButton: React.FC = () => {
           </div>
         </div>
       </Modal>
-      <Button onClick={() => setOpen(true)} color="black">
+      <Button filled onClick={() => setOpen(true)} color="black">
         Crear Negocio
       </Button>
     </>

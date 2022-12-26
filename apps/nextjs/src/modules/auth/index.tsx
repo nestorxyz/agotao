@@ -58,6 +58,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
       </div>
 
       <Button
+        filled
         className="mb-4 w-full"
         size="large"
         color="black"
