@@ -12,6 +12,7 @@ export interface ButtonProps
   filled?: boolean;
   light?: boolean;
   outline?: boolean;
+  soft?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = (props) => {
@@ -25,6 +26,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     filled = false,
     light = false,
     outline = false,
+    soft = false,
     ...rest
   } = props;
 
@@ -47,10 +49,13 @@ export const Button: React.FC<ButtonProps> = (props) => {
         outline &&
           color === "black" &&
           "border border-black bg-white text-black hover:bg-[#f5f5f5] disabled:bg-white",
+        soft &&
+          color === "black" &&
+          "bg-[#f5f5f5] text-black hover:bg-[#e5e5e5] disabled:bg-[#f5f5f5]",
         size === "small" && "h-10 text-sm",
         size === "medium" && "h-12 text-base",
         size === "large" && "h-14 text-lg",
-        "flex items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all ",
+        "flex items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all active:scale-[0.99]",
       )}
     >
       {children}

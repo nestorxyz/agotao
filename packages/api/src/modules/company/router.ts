@@ -63,6 +63,14 @@ export const companyRouter = router({
         name: true,
         username: true,
         image: true,
+        products: {
+          select: {
+            id: true,
+            name: true,
+            image: true,
+            price: true,
+          },
+        },
       },
     });
 
