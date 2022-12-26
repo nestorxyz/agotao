@@ -74,7 +74,7 @@ export const MyCompanies: React.FC = () => {
                         size="small"
                         onClick={() => {
                           copyToClipboard({
-                            text: `${env.NEXT_PUBLIC_APP_URL}/${product.id}`,
+                            text: `${env.NEXT_PUBLIC_APP_URL}/${company.username}/${product.id}`,
                             onSuccess: () => {
                               toast.success("Copiado al portapapeles");
                             },
