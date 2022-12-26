@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { Button } from "@/shared/components";
 
@@ -12,7 +13,9 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = (props) => {
   const { className } = props;
+
   const { width } = useViewportSize();
+  const router = useRouter();
 
   return (
     <header
@@ -35,7 +38,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           color="black"
           size={width > 768 ? "large" : "medium"}
           className="px-8"
-          disabled
+          onClick={() => router.push("/login")}
         >
           Ingresar
         </Button>
