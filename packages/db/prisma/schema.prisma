@@ -54,6 +54,7 @@ model User {
     companies     Company[]
     colaborators  Colaborators[]
     products      Product[]
+    purchases     Purchase[]
 }
 
 model VerificationToken {
@@ -99,11 +100,53 @@ model Product {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    company Company @relation(fields: [company_id], references: [id])
-    user    User    @relation(fields: [created_by], references: [id])
+    company   Company    @relation(fields: [company_id], references: [id])
+    user      User       @relation(fields: [created_by], references: [id])
+    purchases Purchase[]
+}
+
+model Purchase {
+    id                String         @id @default(cuid())
+    name              String
+    email             String
+    user_id           String?
+    product_id        String
+    payment_method_id String
+    status            PurchaseStatus @default(VALIDATING)
+    createdAt         DateTime       @default(now())
+    updatedAt         DateTime       @updatedAt
+
+    user           User?         @relation(fields: [user_id], references: [id])
+    product        Product       @relation(fields: [product_id], references: [id])
+    payment_method PaymentMethod @relation(fields: [payment_method_id], references: [id])
+}
+
+model PaymentMethod {
+    id        String            @id @default(cuid())
+    name      String
+    type      PaymentMethodType
+    keyInfo   String
+    createdAt DateTime          @default(now())
+    updatedAt DateTime          @updatedAt
+
+    purchases Purchase[]
 }
 
 enum Role {
     ADMIN
     USER
+}
+
+enum PurchaseStatus {
+    VALIDATING
+    VALID
+    INVALID
+}
+
+enum PaymentMethodType {
+    BBVA
+    BCP
+    INTERBANK
+    YAPE
+    PLIN
 }

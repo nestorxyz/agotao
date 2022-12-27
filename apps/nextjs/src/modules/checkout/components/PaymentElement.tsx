@@ -1,9 +1,11 @@
 import { useState } from "react";
-import Cards from "react-credit-cards";
-import Tilt from "react-parallax-tilt";
+import Image from "next/image";
 import classNames from "classnames";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { IoCopy } from "react-icons/io5";
+import { toast } from "react-hot-toast";
+import z from "zod";
 
 // Components
 import {
@@ -12,186 +14,218 @@ import {
   Portal,
   Button,
   Spinner,
+  Label,
 } from "@/shared/components";
-
-// Utils
-import {
-  formatCVC,
-  formatCreditCardNumber,
-  formatExpirationDate,
-} from "@/modules/checkout/utils";
 
 // Hooks
 import useViewportSize from "@/shared/hooks/use-viewport-size";
 
 // Types
-import type { Focused } from "react-credit-cards";
-import { paymentSchema } from "@/modules/checkout/types";
+import { PaymentMethod } from "@acme/db";
+
+// Services
+import { trpc } from "@/utils/trpc";
+import { guestPurchaseDTO, GuestPurchaseDTO } from "@acme/validations";
 
 export interface PaymentElementProps {
   amount: number;
+  product_id: string;
+  paymentMethods: Array<
+    Pick<PaymentMethod, "id" | "name" | "type" | "keyInfo">
+  >;
 
   className?: string;
 }
 
 export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
-  const { amount } = props;
+  const { amount, product_id, paymentMethods } = props;
+
   const { width } = useViewportSize();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<Pick<
+    PaymentMethod,
+    "id" | "name" | "type" | "keyInfo"
+  > | null>(null);
+
+  const handleCopy = (
+    paymentMethod: Pick<PaymentMethod, "id" | "name" | "type" | "keyInfo">,
+  ) => {
+    navigator.clipboard.writeText(paymentMethod.keyInfo);
+    toast.success(`Copiado ${paymentMethod.name}`);
+  };
 
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(paymentSchema),
+    setValue,
+    clearErrors,
+  } = useForm<GuestPurchaseDTO & { accept_payment: boolean }>({
+    resolver: zodResolver(
+      guestPurchaseDTO.extend({
+        accept_payment: z
+          .boolean({
+            required_error: "Debes de confirmar que has realizado el pago",
+          })
+          .refine((value) => value === true, {
+            message: "Debes de confirmar que has realizado el pago",
+          }),
+      }),
+    ),
     defaultValues: {
-      cvc: "",
-      expiry: "",
-      focus: "",
-      number: "",
-      name: "",
+      product_id: product_id,
     },
   });
 
-  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
-    const { name } = e.target;
-    setValue("focus", name);
-  };
+  const guestPurchaseMutation = trpc.purchase.guest.useMutation({
+    onSuccess() {
+      toast.success(
+        "Compra realizada con éxito, recibirás un correo con los detalles",
+        {
+          duration: 10000,
+        },
+      );
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
 
   return (
-    <form className="flex flex-col space-y-4">
-      <div>
-        <Tilt
-          glareEnable={true}
-          glareMaxOpacity={0.3}
-          glareColor="#ffffff"
-          glarePosition="all"
-          glareBorderRadius="8px"
-          tiltMaxAngleX={10}
-          tiltMaxAngleY={10}
-          tiltReverse={true}
-          className="p-6"
-        >
-          <Cards
-            cvc={watch("cvc") ?? ""}
-            expiry={watch("expiry") ?? ""}
-            focused={watch("focus") as Focused}
-            name={watch("name") ?? ""}
-            number={watch("number") ?? ""}
-          />
-        </Tilt>
-
+    <div className="flex flex-col space-y-4">
+      <p className="mb-2 text-xl font-medium text-gray-800">
+        Información de compra
+      </p>
+      <div className="space-y-4">
         <Input
           id="name"
-          type="text"
-          label="Nombre en la tarjeta"
+          label="Nombres y apellidos"
+          name="name"
+          register={register}
           error={errors.name?.message}
-          placeholder="Nombre"
-          onFocus={handleInputFocus}
-          {...register("name", {
-            onChange: (e) => {
-              setValue("name", e.target.value);
-            },
-          })}
         />
-      </div>
-
-      <div className="flex flex-col">
         <Input
-          id="number"
-          label="Datos de la tarjeta"
-          pattern="[\d| ]{16,22}"
-          placeholder="0000 0000 0000 0000"
-          onFocus={handleInputFocus}
-          {...register("number", {
-            onChange: (e) => {
-              e.target.value = formatCreditCardNumber(e.target.value);
-              setValue("number", e.target.value);
-            },
-          })}
-          className={classNames(watch("focus") === "number" && "z-10")}
-          inputClassName="rounded-b-none"
+          id="email"
+          label="Correo electrónico"
+          type="email"
+          name="email"
+          register={register}
+          error={errors.email?.message}
         />
-
-        <div className="flex w-full">
-          <Input
-            id="expiry"
-            type="tel"
-            pattern="\d\d/\d\d"
-            placeholder="MM/AA"
-            onFocus={handleInputFocus}
-            {...register("expiry", {
-              onChange: (e) => {
-                e.target.value = formatExpirationDate(e.target.value);
-                setValue("expiry", e.target.value);
-              },
-            })}
-            className={classNames(
-              watch("focus") === "expiry" && "z-10",
-              "flex-1",
-            )}
-            inputClassName="rounded-t-none rounded-br-none"
-          />
-
-          <Input
-            id="cvc"
-            type="tel"
-            pattern="\d{3,4}"
-            placeholder="CVC"
-            onFocus={handleInputFocus}
-            {...register("cvc", {
-              onChange: (e) => {
-                e.target.value = formatCVC(e.target.value);
-                setValue("cvc", e.target.value);
-              },
-            })}
-            className={classNames(
-              watch("focus") === "cvc" && "z-10",
-              "w-full max-w-[100px]",
-            )}
-            inputClassName="rounded-t-none rounded-bl-none"
-          />
+        <div className="space-y-1">
+          <Label>Elige un método de pago</Label>
+          <div className="flex flex-wrap justify-center gap-3">
+            {paymentMethods.map((paymentMethod) => (
+              <Button
+                key={paymentMethod.type}
+                {...(selectedPaymentMethod?.type === paymentMethod.type
+                  ? { outline: true }
+                  : { light: true })}
+                color="positive"
+                style={{
+                  height: "75px",
+                  minWidth: "75px",
+                  width: "75px",
+                  padding: "0",
+                  borderRadius: "8px",
+                }}
+                className={classNames(
+                  selectedPaymentMethod?.type === paymentMethod.type
+                    ? "scale-105 border-2"
+                    : "opacity-50",
+                  "transition-all hover:scale-105",
+                )}
+                onClick={() => {
+                  setSelectedPaymentMethod(paymentMethod);
+                  setValue("payment_method_id", paymentMethod.id);
+                  clearErrors("payment_method_id");
+                }}
+              >
+                <Image
+                  src={`/images/payment/${paymentMethod.type.toLowerCase()}.png`}
+                  alt={paymentMethod.name}
+                  width={200}
+                  height={200}
+                  className="h-16 w-16 rounded-lg object-cover"
+                />
+              </Button>
+            ))}
+          </div>
+          {errors.payment_method_id?.message && (
+            <ErrorMessage>{errors.payment_method_id?.message}</ErrorMessage>
+          )}
         </div>
-        <ErrorMessage>
-          {errors.number?.message ||
-            errors.expiry?.message ||
-            errors.cvc?.message}
-        </ErrorMessage>
       </div>
+
+      {selectedPaymentMethod ? (
+        <div>
+          <div className="flex items-center gap-4">
+            <div className="flex w-full flex-col items-center justify-center">
+              <p className="mb-2 text-center text-lg">
+                {selectedPaymentMethod.type === "YAPE" ||
+                selectedPaymentMethod.type === "PLIN"
+                  ? `Envía el total de tu compra a este número con ${selectedPaymentMethod.name}`
+                  : `Realiza una transferencia a la siguiente cuenta ${selectedPaymentMethod.type}`}
+              </p>
+
+              <button
+                className="flex items-center gap-2 transition-all active:scale-95"
+                onClick={() => handleCopy(selectedPaymentMethod)}
+              >
+                <p className="text-xl font-semibold text-primary">
+                  {selectedPaymentMethod.keyInfo}
+                </p>
+                <IoCopy className="h-6 w-6 text-primary" />
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <Portal
         wrapperId={width > 768 ? "purchase-container" : "checkout-container"}
       >
-        <div className="sticky bottom-0 z-10 flex items-center space-x-8 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] md:z-0 md:flex md:p-0 md:shadow-none">
-          <div>
-            <p className="text-sm text-gray-500">Total</p>
-            <h3 className="truncate text-2xl font-semibold">S/ {amount}</h3>
+        <div className="sticky bottom-0 z-10 space-y-2 rounded-t-2xl bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px] md:z-0 md:p-0 md:shadow-none">
+          <div className="flex items-center space-x-8">
+            <div>
+              <p className="text-sm text-gray-500">Total</p>
+              <h3 className="truncate text-2xl font-semibold">S/ {amount}</h3>
+            </div>
+            <Button
+              key="confirm"
+              color="positive"
+              size="large"
+              className="flex-1"
+              filled
+              onClick={handleSubmit((data) => {
+                guestPurchaseMutation.mutate(data);
+              })}
+              disabled={guestPurchaseMutation.isLoading}
+            >
+              {guestPurchaseMutation.isLoading ? (
+                <>
+                  <Spinner className="mr-2" />
+                  Procesando compra
+                </>
+              ) : (
+                <>Confirmar compra</>
+              )}
+            </Button>
           </div>
-          <Button
-            color="positive"
-            size="large"
-            onClick={handleSubmit(() => {
-              setIsSubmitting(true);
-              setTimeout(() => {
-                setIsSubmitting(false);
-              }, 3000);
-            })}
-            className="flex-1"
-          >
-            {isSubmitting ? (
-              <>
-                <Spinner className="mr-2" />
-                Procesando compra
-              </>
-            ) : (
-              <>Confirmar compra</>
-            )}
-          </Button>
+
+          <div className="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="accept_payment"
+              className="h-4 w-4"
+              {...register("accept_payment")}
+            />
+            <p>He realizado el pago mediante {selectedPaymentMethod?.name}</p>
+          </div>
+          {errors.accept_payment?.message && (
+            <ErrorMessage>{errors.accept_payment?.message}</ErrorMessage>
+          )}
         </div>
       </Portal>
-    </form>
+    </div>
   );
 };

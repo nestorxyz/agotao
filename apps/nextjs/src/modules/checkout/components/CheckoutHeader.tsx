@@ -1,10 +1,17 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 // Components
 import { Header, Button, Modal } from "@/shared/components";
 import { AuthContent } from "@/modules/auth";
 
-export const CheckoutHeader: React.FC = () => {
+export interface CheckoutHeaderProps {
+  callbackUrl?: string;
+}
+
+export const CheckoutHeader: React.FC<CheckoutHeaderProps> = (props) => {
+  const { callbackUrl } = props;
+
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
@@ -16,10 +23,10 @@ export const CheckoutHeader: React.FC = () => {
   return (
     <>
       <Modal showModal={open} setShowModal={setOpen}>
-        <AuthContent initTab={activeTab} />
+        <AuthContent initTab={activeTab} callbackUrl={callbackUrl} />
       </Modal>
       <Header>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           <Button
             color="black"
             size="small"
@@ -32,10 +39,11 @@ export const CheckoutHeader: React.FC = () => {
             color="black"
             size="small"
             onClick={() => handleClick("register")}
+            filled
           >
             Crear cuenta
           </Button>
-        </div>
+        </div> */}
       </Header>
     </>
   );

@@ -105,6 +105,7 @@ importers:
       autoprefixer: ^10.4.13
       bcrypt: ^5.1.0
       classnames: ^2.3.2
+      csstype: ^3.1.1
       eslint: ^8.28.0
       eslint-config-next: 13.0.4
       firebase: ^9.15.0
@@ -116,7 +117,6 @@ importers:
       postcss: ^8.4.19
       prop-types: ^15.8.1
       react: 18.2.0
-      react-credit-cards: ^0.8.3
       react-dom: 18.2.0
       react-hook-form: ^7.40.0
       react-hot-toast: ^2.4.0
@@ -148,6 +148,7 @@ importers:
       '@types/react-credit-cards': 0.8.1
       bcrypt: 5.1.0
       classnames: 2.3.2
+      csstype: 3.1.1
       firebase: 9.15.0
       focus-trap-react: 10.0.2_v2m5e27vhdewzwhryxwfaorcca
       framer-motion: 7.10.2_biqbaboplfbrettd7655fr4n2y
@@ -156,10 +157,9 @@ importers:
       payment: 2.4.6
       prop-types: 15.8.1
       react: 18.2.0
-      react-credit-cards: 0.8.3_sh5qlbywuemxd2y3xkrw2y2kr4
       react-dom: 18.2.0_react@18.2.0
       react-hook-form: 7.40.0_react@18.2.0
-      react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
+      react-hot-toast: 2.4.0_owo25xnefcwdq3zjgtohz6dbju
       react-icons: 4.7.1_react@18.2.0
       react-parallax-tilt: 1.7.76_biqbaboplfbrettd7655fr4n2y
       uuid: 9.0.0
@@ -6466,10 +6466,12 @@ packages:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
 
-  /goober/2.1.11:
+  /goober/2.1.11_csstype@3.1.1:
     resolution: {integrity: sha512-5SS2lmxbhqH0u9ABEWq7WPU69a4i2pYcHeCxqaNq6Cw3mnrF0ghWNM4tEGid4dKy8XNIAUbuThuozDHHKJVh3A==}
     peerDependencies:
       csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.1
     dev: false
 
   /got/9.6.0:
@@ -9082,17 +9084,6 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
-  /react-credit-cards/0.8.3_sh5qlbywuemxd2y3xkrw2y2kr4:
-    resolution: {integrity: sha512-88XJErkkdDjeFevOxfWYV2dUs4ddNNXJMIgutqTlUH2pYfcaDeFv9MXNGCcJKvBv4+6GEnxbCToymNRNbEt/uw==}
-    peerDependencies:
-      prop-types: ^15.7.2
-      react: ^15.0.0 || ^16.0.0
-    dependencies:
-      payment: 2.4.6
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: false
-
   /react-devtools-core/4.26.1:
     resolution: {integrity: sha512-r1csa5n9nABVpSdAadwTG7K+SfgRJPc/Hdx89BkV5IlA1mEGgGi3ir630ST5D/xYlJQaY3VE75YGADgpNW7HIw==}
     dependencies:
@@ -9122,14 +9113,14 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-hot-toast/2.4.0_biqbaboplfbrettd7655fr4n2y:
+  /react-hot-toast/2.4.0_owo25xnefcwdq3zjgtohz6dbju:
     resolution: {integrity: sha512-qnnVbXropKuwUpriVVosgo8QrB+IaPJCpL8oBI6Ov84uvHZ5QQcTp2qg6ku2wNfgJl6rlQXJIQU5q+5lmPOutA==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
     dependencies:
-      goober: 2.1.11
+      goober: 2.1.11_csstype@3.1.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     transitivePeerDependencies:

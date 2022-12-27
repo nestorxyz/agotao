@@ -49,6 +49,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
         outline &&
           color === "black" &&
           "border border-black bg-white text-black hover:bg-[#f5f5f5] disabled:bg-white",
+        outline &&
+          color === "positive" &&
+          "border border-[#43D890] bg-white text-[#43D890] hover:bg-[#f5f5f5] disabled:bg-white",
         soft &&
           color === "black" &&
           "bg-[#f5f5f5] text-black hover:bg-[#e5e5e5] disabled:bg-[#f5f5f5]",

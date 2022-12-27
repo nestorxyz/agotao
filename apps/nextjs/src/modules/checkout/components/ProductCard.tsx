@@ -18,14 +18,13 @@ export const ProductCard: React.FC<ProductCardProps> = (props) => {
       className={classNames(className, "flex items-center justify-between p-4")}
     >
       <div className="flex items-center space-x-2">
-        <div className="relative h-[50px] w-[50px]">
-          <Image
-            src={image}
-            alt={name}
-            fill
-            className="rounded-lg object-cover"
-          />
-        </div>
+        <Image
+          src={image}
+          alt={name}
+          width={200}
+          height={200}
+          className="h-16 w-16 rounded-lg object-cover"
+        />
 
         <div>
           <p className="text-sm text-gray-500">S/ {price}</p>

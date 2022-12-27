@@ -5,7 +5,6 @@ import { Toaster } from "react-hot-toast";
 
 // Styles
 import "@/shared/styles/globals.css";
-import "react-credit-cards/es/styles-compiled.css";
 
 // Utils
 import { trpc } from "../utils/trpc";

@@ -29,14 +29,13 @@ export const ProductsAccordion: React.FC<ProductsAccordionProps> = (props) => {
         {
           trigger: (
             <div className="flex gap-2 p-3">
-              <div className="relative h-[50px] w-[50px]">
-                <Image
-                  src={companyLogo}
-                  alt={companyName}
-                  layout="fill"
-                  className="rounded-full object-cover"
-                />
-              </div>
+              <Image
+                src={companyLogo}
+                alt={companyName}
+                width={200}
+                height={200}
+                className="h-[50px] w-[50px] rounded-full object-cover"
+              />
 
               <div className="flex flex-col items-start">
                 <h3 className="font-medium">{companyName}</h3>
