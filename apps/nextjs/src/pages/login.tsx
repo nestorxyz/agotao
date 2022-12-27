@@ -6,10 +6,6 @@ import { AuthContent } from "@/modules/auth";
 import { DefaultHead } from "@/shared/components";
 
 const LoginPage: NextPage = () => {
-  const handleSuccess = () => {
-    console.log("success");
-  };
-
   return (
     <>
       <DefaultHead title="Iniciar sesión" />
@@ -25,7 +21,6 @@ const LoginPage: NextPage = () => {
           className="mx-auto mb-4"
           usingFor="page"
           initTab="login"
-          onSuccess={handleSuccess}
           callbackUrl="/home"
         />
       </div>

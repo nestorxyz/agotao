@@ -6,10 +6,6 @@ import { AuthContent } from "@/modules/auth";
 import { DefaultHead } from "@/shared/components";
 
 const SignupPage: NextPage = () => {
-  const handleSuccess = () => {
-    console.log("success");
-  };
-
   return (
     <>
       <DefaultHead title="Crear cuenta" />
@@ -25,7 +21,6 @@ const SignupPage: NextPage = () => {
           className="mx-auto mb-4"
           usingFor="page"
           initTab="register"
-          onSuccess={handleSuccess}
           callbackUrl="/home"
         />
       </div>

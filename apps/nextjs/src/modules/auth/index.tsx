@@ -14,7 +14,6 @@ import { env } from "@/env/client.mjs";
 export interface AuthContentProps {
   className?: string;
   initTab?: "login" | "register";
-  onSuccess?: () => void;
   callbackUrl?: string;
   usingFor?: "modal" | "page";
 }
