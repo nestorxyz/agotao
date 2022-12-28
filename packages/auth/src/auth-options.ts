@@ -16,10 +16,16 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, user }) {
-      session.user.id = user.id;
+    session({ session, user, token }) {
+      session.user.id = token.uid as string;
       session.user.username = (user as User).username;
       return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
     },
     async signIn({ user, account, profile }) {
       if (account?.provider === "google" && !(user as User).username) {
@@ -39,6 +45,9 @@ export const authOptions: NextAuthOptions = {
     },
   },
   secret: process.env.SECRET,
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     signIn: "/login",
     newUser: "/signup",
