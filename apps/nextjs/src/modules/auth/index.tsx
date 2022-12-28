@@ -63,7 +63,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         color="black"
         onClick={() =>
           signIn("google", {
-            callbackUrl: `${env.NEXT_PUBLIC_APP_URL}/${callbackUrl}`,
+            callbackUrl: `/${callbackUrl}`,
           })
         }
       >
