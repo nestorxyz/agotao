@@ -8,3 +8,4 @@ packages:
   - packages/validations
   - packages/emails
   - packages/firebase
+  - packages/firebase-admin

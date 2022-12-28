@@ -1,0 +1,19 @@
+{
+  "name": "@acme/firebase-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "Nestor Mamani",
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^9.15.0",
+    "firebase-admin": "^11.4.1"
+  }
+}

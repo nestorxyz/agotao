@@ -4,7 +4,7 @@ import nookies from "nookies";
 
 import { auth } from "@/shared/utils/firebase";
 
-const AuthContext = createContext<{ user: User | null }>({
+export const AuthContext = createContext<{ user: User | null }>({
   user: null,
 });
 

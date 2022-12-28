@@ -1,15 +1,22 @@
 // Libraries
 import classNames from "classnames";
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
+import { app } from "@acme/firebase";
+import {
+  GoogleAuthProvider,
+  getRedirectResult,
+  signInWithRedirect,
+  getAuth,
+} from "firebase/auth";
+
+import { useAuth } from "@/shared/hooks/useAuth";
 
 // Components
 import { Button } from "@/shared/components";
 
-// Utils
-import { env } from "@/env/client.mjs";
+const provider = new GoogleAuthProvider();
 
 export interface AuthContentProps {
   className?: string;
@@ -28,6 +35,9 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
 
   const [activeTab, setActiveTab] = useState<"login" | "register">(initTab);
   const router = useRouter();
+  const { user } = useAuth();
+
+  console.log(user);
 
   const onChangeTab = () => {
     if (usingFor === "page") {
@@ -35,6 +45,11 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
     } else {
       setActiveTab((prev) => (prev === "login" ? "register" : "login"));
     }
+  };
+
+  const onGoogleLogin = async () => {
+    const auth = getAuth(app);
+    await signInWithRedirect(auth, provider);
   };
 
   return (
@@ -61,11 +76,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         className="mb-4 w-full"
         size="large"
         color="black"
-        onClick={() =>
-          signIn("google", {
-            callbackUrl: `/${callbackUrl}`,
-          })
-        }
+        onClick={onGoogleLogin}
       >
         <FcGoogle className="mr-2 h-6 w-6" />
         Google

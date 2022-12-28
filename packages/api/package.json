@@ -14,7 +14,7 @@
     "@acme/db": "*",
     "@acme/validations": "*",
     "@acme/emails": "*",
-    "@acme/firebase": "*",
+    "@acme/firebase-admin": "*",
     "@trpc/client": "^10.1.0",
     "@trpc/server": "^10.1.0",
     "superjson": "^1.9.1",
