@@ -1,13 +1,14 @@
-import { getServerSession, type Session } from "@acme/auth";
 import { prisma } from "@acme/db";
 import { type inferAsyncReturnType } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+
+import { adminAuth, DecodedIdToken } from "@acme/firebase";
 
 /**
  * Replace this with an object if you want to pass things to createContextInner
  */
 type CreateContextOptions = {
-  session: Session | null;
+  session: DecodedIdToken | null;
 };
 
 /** Use this helper for:
@@ -27,7 +28,20 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (opts: CreateNextContextOptions) => {
-  const session = await getServerSession(opts);
+  async function getUserFromHeader() {
+    const authorization = opts.req.headers.authorization;
+    if (!authorization) return null;
+
+    const token = authorization.split(" ")[1];
+    if (!token) return null;
+
+    const decodedIdToken = await adminAuth.verifyIdToken(token);
+    if (!decodedIdToken) return null;
+
+    return decodedIdToken;
+  }
+
+  const session = await getUserFromHeader();
 
   return await createContextInner({
     session,

@@ -5,6 +5,8 @@ import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@acme/api";
 import { transformer } from "@acme/api/transformer";
 
+import { auth } from "@/shared/utils/firebase";
+
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
@@ -24,6 +26,11 @@ export const trpc = createTRPCNext<AppRouter>({
         }),
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
+          async headers() {
+            const token = await auth.currentUser?.getIdToken();
+
+            return token ? { authorization: `Bearer ${token}` } : {};
+          },
         }),
       ],
     };

@@ -1,5 +1,5 @@
 {
-  "name": "@acme/validations",
+  "name": "@acme/firebase",
   "version": "1.0.0",
   "description": "",
   "main": "./index.ts",
@@ -11,12 +11,9 @@
   },
   "keywords": [],
   "author": "Nestor Mamani",
-  "license": "MIT",
+  "license": "ISC",
   "dependencies": {
-    "zod": "^3.18.0"
-  },
-  "devDependencies": {
-    "eslint": "^8.28.0",
-    "typescript": "^4.9.3"
+    "firebase": "^9.15.0",
+    "firebase-admin": "^11.4.1"
   }
 }
