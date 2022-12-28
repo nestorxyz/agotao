@@ -1,46 +1,5 @@
 import NextAuth from "next-auth";
 
-import GoogleProvider from "next-auth/providers/google";
+import { authOptions } from "@acme/auth";
 
-import { prisma, User } from "@acme/db";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
-import { GoogleProfile } from "@acme/auth";
-
-export default NextAuth({
-  // Configure one or more authentication providers
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-  ],
-  callbacks: {
-    session({ session, user }) {
-      session.user.id = user.id;
-      session.user.username = (user as User).username;
-      return session;
-    },
-    async signIn({ user, account, profile }) {
-      if (account?.provider === "google" && !(user as User).username) {
-        await prisma.user.update({
-          where: {
-            id: user.id,
-          },
-          data: {
-            username: profile?.email?.split("@")[0],
-            emailVerified: (profile as GoogleProfile).email_verified
-              ? new Date()
-              : null,
-          },
-        });
-      }
-      return true;
-    },
-  },
-  secret: process.env.SECRET,
-  pages: {
-    signIn: "/login",
-  },
-});
+export default NextAuth(authOptions);
