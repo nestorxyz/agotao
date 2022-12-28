@@ -21,6 +21,12 @@ export const authOptions: NextAuthOptions = {
       session.user.username = (user as User).username;
       return session;
     },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
     async signIn({ user, account, profile }) {
       if (account?.provider === "google" && !(user as User).username) {
         await prisma.user.update({
@@ -37,6 +43,9 @@ export const authOptions: NextAuthOptions = {
       }
       return true;
     },
+  },
+  session: {
+    strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET as string,
   pages: {
