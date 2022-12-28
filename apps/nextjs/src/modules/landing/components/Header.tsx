@@ -35,6 +35,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
           </Button>
         </div>
         <Button
+          filled
           color="black"
           size={width > 768 ? "large" : "medium"}
           className="px-8"

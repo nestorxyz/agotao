@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Nestor Mamani",

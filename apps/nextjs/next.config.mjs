@@ -16,6 +16,7 @@ const config = {
       "@acme/auth",
       "@acme/db",
       "@acme/validations",
+      "@acme/emails",
     ],
   },
   // We already do linting on GH actions

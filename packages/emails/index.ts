@@ -3,19 +3,21 @@ import { buildSendMail } from "mailing-core";
 
 const transport = nodemailer.createTransport({
   pool: true,
-  host: "smtp.example.com",
-  port: 465,
+  host: "smtp-relay.sendinblue.com",
+  port: 587,
   secure: true, // use TLS
   auth: {
-    user: "username",
-    pass: "password",
+    user: "nestor@agotao.com",
+    pass: "xbtcmCHkKNWFrgPq",
   },
 });
 
 const sendMail = buildSendMail({
   transport,
-  defaultFrom: "replace@me.with.your.com",
+  defaultFrom: "nestor@agotao.com",
   configPath: "./mailing.config.json",
 });
 
 export default sendMail;
+
+export * from "./emails/Basic";

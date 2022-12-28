@@ -1,5 +1,6 @@
 // Libraries
 import { TRPCError } from "@trpc/server";
+import sendMail, { Basic } from "@acme/emails";
 
 // tRPC
 import { router, publicProcedure } from "../../trpc";
@@ -52,6 +53,20 @@ export const purchaseRouter = router({
           code: "INTERNAL_SERVER_ERROR",
           message: "No se pudo crear la compra",
         });
+
+      await sendMail({
+        subject: `Compra realizada por ${name}`,
+        to: "nmamanipantoja@gmail.com",
+        component: (
+          <Basic
+            name={name}
+            email={email}
+            product_name={product.name}
+            price={product.price}
+            payment_method={purchase.payment_method.name}
+          />
+        ),
+      });
 
       return {
         status: 201,
