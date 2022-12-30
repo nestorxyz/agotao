@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { getRedirectResult, getAdditionalUserInfo } from "firebase/auth";
 import nookies from "nookies";
 import Firebase from "@/shared/lib/firebase";
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
       setLoading(false);
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // force refresh the token every 10 minutes
   useEffect(() => {
