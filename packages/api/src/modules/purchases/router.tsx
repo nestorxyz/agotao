@@ -88,8 +88,14 @@ export const purchaseRouter = router({
         id: true,
         name: true,
         email: true,
-        product: true,
+        product: {
+          select: {
+            name: true,
+            price: true,
+          },
+        },
         payment_method: true,
+        updatedAt: true,
       },
     });
 

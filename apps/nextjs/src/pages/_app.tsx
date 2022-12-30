@@ -3,6 +3,7 @@ import { AuthProvider } from "@/shared/context/auth";
 
 // Styles
 import "@/shared/styles/globals.css";
+import "@tremor/react/dist/esm/tremor.css";
 
 // Utils
 import { trpc } from "../utils/trpc";

@@ -32,7 +32,7 @@ const HomePage: NextPage = () => {
       <>
         <DefaultHead title="Home" />
         <Header />
-        <main className="mx-auto mb-10 flex w-full max-w-3xl flex-col items-center justify-center px-4 xl:px-0">
+        <main className="mx-auto mb-10 flex w-full max-w-3xl flex-col items-center justify-center gap-4 px-4 xl:px-0">
           <MyCompanies />
           <MySales />
         </main>
