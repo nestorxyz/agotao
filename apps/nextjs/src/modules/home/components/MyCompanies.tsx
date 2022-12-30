@@ -91,6 +91,8 @@ export const MyCompanies: React.FC = () => {
                 </div>
               ))}
             </div>
+
+            <div></div>
           </article>
         ))}
       </section>

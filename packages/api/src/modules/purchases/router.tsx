@@ -74,53 +74,29 @@ export const purchaseRouter = router({
         result: purchase,
       };
     }),
-  getCompanySales: protectedProcedure
-    .input(getCompanySalesDTO)
-    .query(async ({ input, ctx }) => {
-      const { company_id } = input;
-
-      const company = await ctx.prisma.company.findUnique({
-        where: {
-          id: company_id,
-        },
-        select: {
-          id: true,
-          name: true,
-        },
-      });
-
-      if (!company)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "La compañía no existe",
-        });
-
-      const sales = await ctx.prisma.purchase.findMany({
-        where: {
-          product: {
-            company_id,
+  getUserSales: protectedProcedure.query(async ({ ctx }) => {
+    const sales = await ctx.prisma.purchase.findMany({
+      where: {
+        product: {
+          company: {
+            admin_id: ctx.session.uid,
           },
-          status: "VALID",
         },
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          product: true,
-          payment_method: true,
-        },
-      });
+        status: "VALID",
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        product: true,
+        payment_method: true,
+      },
+    });
 
-      if (!sales)
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "No se pudo obtener las ventas",
-        });
-
-      return {
-        status: 200,
-        message: "Ventas obtenidas con éxito",
-        result: sales,
-      };
-    }),
+    return {
+      status: 200,
+      message: "Ventas obtenidas con éxito",
+      result: sales,
+    };
+  }),
 });
