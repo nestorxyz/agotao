@@ -13,4 +13,8 @@ export const guestPurchaseDTO = z.object({
   }),
 });
 
-export interface GuestPurchaseDTO extends z.infer<typeof guestPurchaseDTO> {}
+export type GuestPurchaseDTO = z.infer<typeof guestPurchaseDTO>;
+
+export const getCompanySalesDTO = z.object({
+  company_id: z.string({ required_error: "El id de la empresa es requerido" }),
+});
