@@ -1,4 +1,3 @@
-import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/shared/context/auth";
 
@@ -9,13 +8,9 @@ import "@/shared/styles/globals.css";
 import { trpc } from "../utils/trpc";
 
 // Types
-import type { Session } from "next-auth";
 import type { AppType } from "next/app";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
     <AuthProvider>
       <Toaster

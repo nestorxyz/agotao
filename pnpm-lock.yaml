@@ -78,9 +78,7 @@ importers:
   apps/nextjs:
     specifiers:
       '@acme/api': '*'
-      '@acme/auth': '*'
       '@acme/db': '*'
-      '@acme/firebase': '*'
       '@acme/tailwind-config': '*'
       '@acme/validations': '*'
       '@hookform/resolvers': ^2.9.10
@@ -113,7 +111,6 @@ importers:
       focus-trap-react: ^10.0.2
       framer-motion: ^7.10.2
       next: ^13.0.6
-      next-auth: ^4.5.0
       nookies: ^2.5.2
       payment: ^2.4.6
       postcss: ^8.4.19
@@ -130,9 +127,7 @@ importers:
       zod: ^3.18.0
     dependencies:
       '@acme/api': link:../../packages/api
-      '@acme/auth': link:../../packages/auth
       '@acme/db': link:../../packages/db
-      '@acme/firebase': link:../../packages/firebase
       '@acme/tailwind-config': link:../../packages/config/tailwind
       '@acme/validations': link:../../packages/validations
       '@hookform/resolvers': 2.9.10_react-hook-form@7.40.0
@@ -156,7 +151,6 @@ importers:
       focus-trap-react: 10.0.2_v2m5e27vhdewzwhryxwfaorcca
       framer-motion: 7.10.2_biqbaboplfbrettd7655fr4n2y
       next: 13.0.6_biqbaboplfbrettd7655fr4n2y
-      next-auth: 4.18.3_6jx7hpii6hgsrmhxgqrmo3277u
       nookies: 2.5.2
       payment: 2.4.6
       prop-types: 15.8.1
@@ -184,7 +178,6 @@ importers:
 
   packages/api:
     specifiers:
-      '@acme/auth': '*'
       '@acme/db': '*'
       '@acme/emails': '*'
       '@acme/firebase-admin': '*'
@@ -196,7 +189,6 @@ importers:
       typescript: ^4.9.3
       zod: ^3.18.0
     dependencies:
-      '@acme/auth': link:../auth
       '@acme/db': link:../db
       '@acme/emails': link:../emails
       '@acme/firebase-admin': link:../firebase-admin
@@ -205,27 +197,6 @@ importers:
       '@trpc/server': 10.1.0
       superjson: 1.10.0
       zod: 3.19.1
-    devDependencies:
-      eslint: 8.28.0
-      typescript: 4.9.3
-
-  packages/auth:
-    specifiers:
-      '@acme/db': '*'
-      '@next-auth/prisma-adapter': ^1.0.5
-      eslint: ^8.28.0
-      next: ^13.0.6
-      next-auth: ^4.18.3
-      react: 18.2.0
-      react-dom: 18.2.0
-      typescript: ^4.9.3
-    dependencies:
-      '@acme/db': link:../db
-      '@next-auth/prisma-adapter': 1.0.5_next-auth@4.18.3
-      next: 13.0.6_biqbaboplfbrettd7655fr4n2y
-      next-auth: 4.18.3_6jx7hpii6hgsrmhxgqrmo3277u
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
     devDependencies:
       eslint: 8.28.0
       typescript: 4.9.3
@@ -267,14 +238,6 @@ importers:
       react-dom: 18.2.0_react@18.2.0
     devDependencies:
       mailing: 0.9.7_6jx7hpii6hgsrmhxgqrmo3277u
-
-  packages/firebase:
-    specifiers:
-      firebase: ^9.15.0
-      firebase-admin: ^11.4.1
-    dependencies:
-      firebase: 9.15.0
-      firebase-admin: 11.4.1
 
   packages/firebase-admin:
     specifiers:
@@ -2842,15 +2805,6 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@next-auth/prisma-adapter/1.0.5_next-auth@4.18.3:
-    resolution: {integrity: sha512-VqMS11IxPXrPGXw6Oul6jcyS/n8GLOWzRMrPr3EMdtD6eOalM6zz05j08PcNiis8QzkfuYnCv49OvufTuaEwYQ==}
-    peerDependencies:
-      '@prisma/client': '>=2.26.0 || >=3'
-      next-auth: ^4
-    dependencies:
-      next-auth: 4.18.3_6jx7hpii6hgsrmhxgqrmo3277u
-    dev: false
-
   /@next/env/13.0.6:
     resolution: {integrity: sha512-yceT6DCHKqPRS1cAm8DHvDvK74DLIkDQdm5iV+GnIts8h0QbdHvkUIkdOvQoOODgpr6018skbmSQp12z5OWIQQ==}
 
@@ -3001,10 +2955,6 @@ packages:
   /@panva/asn1.js/1.0.0:
     resolution: {integrity: sha512-UdkG3mLEqXgnlKsWanWcgb6dOjUzJ+XC5f+aWw30qrtjxeNUSfKX1cd5FBzOaXQumoe9nIqeZUvrRJS03HCCtw==}
     engines: {node: '>=10.13.0'}
-    dev: false
-
-  /@panva/hkdf/1.0.2:
-    resolution: {integrity: sha512-MSAs9t3Go7GUkMhpKC44T58DJ5KGk2vBo+h1cqQeqlMfdGkxaVB78ZWpv9gYi/g2fa4sopag9gJsNvS8XGgWJA==}
     dev: false
 
   /@peculiar/asn1-schema/2.3.3:
@@ -5521,6 +5471,7 @@ packages:
   /cookie/0.5.0:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
+    dev: true
 
   /copy-anything/3.0.2:
     resolution: {integrity: sha512-CzATjGXzUQ0EvuvgOCI6A4BGOo2bcVx8B+eC2nF862iv9fopnPQwlrbACakNCHRIJbCSBj+J/9JeDf60k64MkA==}
@@ -8450,10 +8401,6 @@ packages:
       '@panva/asn1.js': 1.0.0
     dev: false
 
-  /jose/4.10.0:
-    resolution: {integrity: sha512-KEhB/eLGLomWGPTb+/RNbYsTjIyx03JmbqAyIyiXBuNSa7CmNrJd5ysFhblayzs/e/vbOPMUaLnjHUMhGp4yLw==}
-    dev: false
-
   /js-beautify/1.14.7:
     resolution: {integrity: sha512-5SOX1KXPFKx+5f6ZrPsIPEY7NwKeQz47n3jm2i+XeHx9MoRsfQenlOP13FQhWvg8JRS0+XLO6XYUQ2GX+q+T9A==}
     engines: {node: '>=10'}
@@ -10080,32 +10027,6 @@ packages:
     resolution: {integrity: sha512-SrQrok4CATudVzBS7coSz26QRSmlK9TzzoFbeKfcPBUFPjcQM9Rqvr/DlJkOrwI/0KcgvMub1n1g5Jt9EgRn4A==}
     dev: false
 
-  /next-auth/4.18.3_6jx7hpii6hgsrmhxgqrmo3277u:
-    resolution: {integrity: sha512-oZrTPnaF7YCMm4T6+FY47+1wHacE7V6YX+MCuvRTZMca7zHAc2WPMdTED6eV3hkqp2znEdilhD4aXQ5BuCpYIw==}
-    engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0 || ^18.12.0}
-    peerDependencies:
-      next: ^12.2.5 || ^13
-      nodemailer: ^6.6.5
-      react: ^17.0.2 || ^18
-      react-dom: ^17.0.2 || ^18
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.19.0
-      '@panva/hkdf': 1.0.2
-      cookie: 0.5.0
-      jose: 4.10.0
-      next: 13.0.6_biqbaboplfbrettd7655fr4n2y
-      oauth: 0.9.15
-      openid-client: 5.2.0
-      preact: 10.11.2
-      preact-render-to-string: 5.2.5_preact@10.11.2
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      uuid: 8.3.2
-    dev: false
-
   /next/13.0.6_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-COvigvms2LRt1rrzfBQcMQ2GZd86Mvk1z+LOLY5pniFtL4VrTmhZ9salrbKfSiXbhsD01TrDdD68ec3ABDyscA==}
     engines: {node: '>=14.6.0'}
@@ -10291,10 +10212,6 @@ packages:
     resolution: {integrity: sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==}
     dev: false
 
-  /oauth/0.9.15:
-    resolution: {integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==}
-    dev: false
-
   /ob1/0.73.3:
     resolution: {integrity: sha512-KpCFQty/eGriUsF3tD4FybV2vsWNzID3Thq/3o0VzXn+rtcQdRk1r6USM5PddWaFjxZqbVXjlr6u7DJGhPz9xw==}
     dev: false
@@ -10310,11 +10227,6 @@ packages:
       copy-descriptor: 0.1.1
       define-property: 0.2.5
       kind-of: 3.2.2
-    dev: false
-
-  /object-hash/2.2.0:
-    resolution: {integrity: sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==}
-    engines: {node: '>= 6'}
     dev: false
 
   /object-hash/3.0.0:
@@ -10386,11 +10298,6 @@ packages:
       es-abstract: 1.20.3
     dev: true
 
-  /oidc-token-hash/5.0.1:
-    resolution: {integrity: sha512-EvoOtz6FIEBzE+9q253HsLCVRiK/0doEJ2HCvvqMQb3dHZrP3WlJKYtJ55CRTw4jmYomzH4wkPuCj/I3ZvpKxQ==}
-    engines: {node: ^10.13.0 || >=12.0.0}
-    dev: false
-
   /on-finished/2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
     engines: {node: '>= 0.8'}
@@ -10443,15 +10350,6 @@ packages:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
-
-  /openid-client/5.2.0:
-    resolution: {integrity: sha512-fswY95ZqQr8xBgnlcC9TBJs/QeZAANRaiDliIwHktvpxpWhv5+cfd41OFNflI/ycf09HnqEPWbGrmvSOPgD3HQ==}
-    dependencies:
-      jose: 4.10.0
-      lru-cache: 6.0.0
-      object-hash: 2.2.0
-      oidc-token-hash: 5.0.1
-    dev: false
 
   /optionator/0.8.3:
     resolution: {integrity: sha512-+IW9pACdk3XWmmTXG8m3upGUJst5XRGzxMRjXzAuJ1XnIFNvfhjjIuYkDvysnPQ7qzqVzLt78BCruntqRhWQbA==}
@@ -10886,19 +10784,6 @@ packages:
     transitivePeerDependencies:
       - debug
 
-  /preact-render-to-string/5.2.5_preact@10.11.2:
-    resolution: {integrity: sha512-rEBn42C3Wh+AjPxXUbDkb6xw0cTJQgxdYlp6ytUR1uBZF647Wn6ykkopMeQlRl7ggX+qnYYjZ4Hs1abZENl7ww==}
-    peerDependencies:
-      preact: '>=10'
-    dependencies:
-      preact: 10.11.2
-      pretty-format: 3.8.0
-    dev: false
-
-  /preact/10.11.2:
-    resolution: {integrity: sha512-skAwGDFmgxhq1DCBHke/9e12ewkhc7WYwjuhHB8HHS8zkdtITXLRmUMTeol2ldxvLwYtwbFeifZ9uDDWuyL4Iw==}
-    dev: false
-
   /prelude-ls/1.1.2:
     resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
     engines: {node: '>= 0.8.0'}
@@ -10949,10 +10834,6 @@ packages:
       '@jest/schemas': 29.0.0
       ansi-styles: 5.2.0
       react-is: 18.2.0
-    dev: false
-
-  /pretty-format/3.8.0:
-    resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
     dev: false
 
   /prisma/4.6.1:

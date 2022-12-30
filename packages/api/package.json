@@ -10,7 +10,6 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/auth": "*",
     "@acme/db": "*",
     "@acme/validations": "*",
     "@acme/emails": "*",

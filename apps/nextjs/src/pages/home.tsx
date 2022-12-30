@@ -1,16 +1,16 @@
 import { NextPage } from "next";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useAuth } from "@/shared/hooks/useAuth";
 
 // Components
 import { DefaultHead, Dots } from "@/shared/components";
 import { Header, MyCompanies } from "@/modules/home/components";
 
 const HomePage: NextPage = () => {
-  const { data, status } = useSession();
+  const { user, loading } = useAuth();
   const router = useRouter();
 
-  if (status === "loading") {
+  if (loading) {
     return (
       <>
         <DefaultHead title="Loading Home" />
@@ -21,13 +21,13 @@ const HomePage: NextPage = () => {
     );
   }
 
-  if (status === "unauthenticated") {
+  if (!user) {
     router.push("/login");
 
     return <></>;
   }
 
-  if (status === "authenticated" && data) {
+  if (user) {
     return (
       <>
         <DefaultHead title="Home" />

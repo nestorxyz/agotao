@@ -3,10 +3,9 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType,
 } from "next";
-import { useSession } from "next-auth/react";
 
 // Components
-import { DefaultHead, Dots } from "@/shared/components";
+import { DefaultHead } from "@/shared/components";
 import {
   ProductsAccordion,
   CheckoutHeader,
@@ -80,19 +79,6 @@ const ProductPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = (props) => {
   const { product, paymentMethods } = props;
-
-  const { status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <>
-        <DefaultHead title={`Loading ${product.name}`} />
-        <div className="flex h-screen w-full items-center justify-center">
-          <Dots />
-        </div>
-      </>
-    );
-  }
 
   return (
     <>

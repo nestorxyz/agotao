@@ -10,59 +10,19 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-// NextAuth.js Models
-// NOTE: When using postgresql, mysql or sqlserver, 
-// uncomment the @db.Text annotations below
-// @see https://next-auth.js.org/schemas/models
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model User {
-    id            String         @id @default(cuid())
-    name          String?
+    uid           String         @id
+    name          String
     username      String         @unique
     email         String         @unique
     emailVerified DateTime?
     password      String?
     image         String?
     role          Role           @default(USER)
-    accounts      Account[]
-    sessions      Session[]
     companies     Company[]
     colaborators  Colaborators[]
     products      Product[]
     purchases     Purchase[]
-}
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
 }
 
 model Company {
@@ -74,7 +34,7 @@ model Company {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    admin        User           @relation(fields: [admin_id], references: [id])
+    admin        User           @relation(fields: [admin_id], references: [uid])
     colaborators Colaborators[]
     products     Product[]
 }
@@ -86,7 +46,7 @@ model Colaborators {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    user    User    @relation(fields: [user_id], references: [id])
+    user    User    @relation(fields: [user_id], references: [uid])
     company Company @relation(fields: [company_id], references: [id])
 }
 
@@ -101,7 +61,7 @@ model Product {
     updatedAt  DateTime @updatedAt
 
     company   Company    @relation(fields: [company_id], references: [id])
-    user      User       @relation(fields: [created_by], references: [id])
+    user      User       @relation(fields: [created_by], references: [uid])
     purchases Purchase[]
 }
 
@@ -116,7 +76,7 @@ model Purchase {
     createdAt         DateTime       @default(now())
     updatedAt         DateTime       @updatedAt
 
-    user           User?         @relation(fields: [user_id], references: [id])
+    user           User?         @relation(fields: [user_id], references: [uid])
     product        Product       @relation(fields: [product_id], references: [id])
     payment_method PaymentMethod @relation(fields: [payment_method_id], references: [id])
 }

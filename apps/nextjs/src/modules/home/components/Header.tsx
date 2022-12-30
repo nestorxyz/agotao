@@ -1,6 +1,8 @@
 import classNames from "classnames";
 import Image from "next/image";
-import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+import { signOut } from "@/shared/utils/firebaseAuth";
+import { useAuth } from "@/shared/hooks/useAuth";
 
 import { Button, User } from "@/shared/components";
 
@@ -10,9 +12,11 @@ export interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = (props) => {
   const { className } = props;
-  const { data } = useSession();
 
-  if (!data) {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  if (!user) {
     return <></>;
   }
 
@@ -23,17 +27,16 @@ export const Header: React.FC<HeaderProps> = (props) => {
       <div className="mx-auto flex w-full max-w-6xl flex-col justify-between sm:flex-row">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
         <User
-          image={data.user.image}
-          name={data.user.name}
-          username={data.user.username}
+          image={user.image ?? ""}
+          name={user.name}
+          username={user.email}
           className="rounded-full transition-all"
         />
         <Button
-          onClick={() =>
-            signOut({
-              callbackUrl: "/",
-            })
-          }
+          onClick={async () => {
+            await signOut();
+            router.push("/login");
+          }}
           color="black"
           light
         >

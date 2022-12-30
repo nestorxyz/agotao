@@ -2,7 +2,7 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 
 // Services
-import { app } from "@/shared/utils/firebase";
+import Firebase from "@/shared/lib/firebase";
 
 // Constants
 import { env } from "@/env/client.mjs";
@@ -15,6 +15,7 @@ export interface UploadFileProps {
 export const uploadFile = async (props: UploadFileProps): Promise<string> => {
   const { file, directory } = props;
 
+  const app = Firebase.getInstance().getApp();
   const storage = getStorage(app);
 
   const storageRef = ref(

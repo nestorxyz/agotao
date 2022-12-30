@@ -1,30 +1,29 @@
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-
+/* import { useState } from "react";
+ */
 // Components
-import { Header, Button, Modal } from "@/shared/components";
-import { AuthContent } from "@/modules/auth";
+import { Header } from "@/shared/components";
+/* import { AuthContent } from "@/modules/auth"; */
 
 export interface CheckoutHeaderProps {
   callbackUrl?: string;
 }
 
-export const CheckoutHeader: React.FC<CheckoutHeaderProps> = (props) => {
-  const { callbackUrl } = props;
+export const CheckoutHeader: React.FC<CheckoutHeaderProps> = () => {
+  /* const { callbackUrl } = props; */
 
-  const [open, setOpen] = useState(false);
+  /* const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
 
   const handleClick = (tab: "login" | "register") => {
     setOpen(true);
     setActiveTab(tab);
-  };
+  }; */
 
   return (
     <>
-      <Modal showModal={open} setShowModal={setOpen}>
+      {/* <Modal showModal={open} setShowModal={setOpen}>
         <AuthContent initTab={activeTab} callbackUrl={callbackUrl} />
-      </Modal>
+      </Modal> */}
       <Header>
         {/* <div className="flex gap-2">
           <Button

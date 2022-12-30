@@ -19,7 +19,7 @@ export const productRouter = router({
           price: parseFloat(price),
           image,
           company_id,
-          created_by: ctx.session.user.id,
+          created_by: ctx.session.uid,
         },
         select: {
           id: true,

@@ -31,7 +31,7 @@ export const companyRouter = router({
           name,
           image,
           username: companyUsername,
-          admin_id: ctx.session.user.id,
+          admin_id: ctx.session.uid,
         },
         select: {
           id: true,
@@ -56,7 +56,7 @@ export const companyRouter = router({
   getAll: protectedProcedure.query(async ({ ctx }) => {
     const companies = await ctx.prisma.company.findMany({
       where: {
-        admin_id: ctx.session.user.id,
+        admin_id: ctx.session.uid,
       },
       select: {
         id: true,

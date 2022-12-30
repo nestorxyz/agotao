@@ -2,16 +2,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCompanySchema, ICreateCompany } from "@acme/validations";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { v4 as uuidv4 } from "uuid";
 import toast from "react-hot-toast";
 
 // Services
 import { trpc } from "@/utils/trpc";
-import { app } from "@/shared/utils/firebase";
-
-// Constants
-import { env } from "@/env/client.mjs";
+import { uploadFile } from "@/shared/utils/uploadFile";
 
 // Components
 import {
@@ -60,19 +55,6 @@ export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
     },
   });
 
-  const uploadFile = async (file: File) => {
-    const storage = getStorage(app);
-
-    const storageRef = ref(
-      storage,
-      `companies/${uuidv4()}.${file.name.split(".").pop()}`,
-    );
-
-    const snapshot = await uploadBytes(storageRef, file);
-
-    return snapshot.metadata.fullPath;
-  };
-
   const handleCreateCompany = async (data: Pick<ICreateCompany, "name">) => {
     setLoading(true);
     const { name } = data;
@@ -83,8 +65,7 @@ export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
       return setFileError("Debes subir un logo para tu negocio");
     }
 
-    const imagePath = await uploadFile(file);
-    const image = `https://storage.googleapis.com/${env.NEXT_PUBLIC_STORAGE_BUCKET}/${imagePath}`;
+    const image = await uploadFile({ file, directory: "companies" });
 
     createCompanyMutation.mutate({ name, image });
   };

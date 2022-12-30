@@ -44,7 +44,10 @@ export const MyCompanies: React.FC = () => {
                   <p className="text-gray-500">@{company.username}</p>
                 </div>
               </div>
-              <CreateProductButton companyId={company.id} />
+              <CreateProductButton
+                companyId={company.id}
+                onCreated={() => refetch()}
+              />
             </div>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">

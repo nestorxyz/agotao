@@ -13,11 +13,9 @@ const config = {
     // Enables hot-reload and easy integration for local packages
     transpilePackages: [
       "@acme/api",
-      "@acme/auth",
       "@acme/db",
       "@acme/validations",
       "@acme/emails",
-      "@acme/firebase",
     ],
   },
   // We already do linting on GH actions

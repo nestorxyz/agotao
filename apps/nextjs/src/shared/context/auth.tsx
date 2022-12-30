@@ -1,32 +1,86 @@
-import React, { createContext, useState, useEffect } from "react";
-import { User } from "firebase/auth";
+import React, { createContext, useState, useEffect, useCallback } from "react";
+import { getRedirectResult, getAdditionalUserInfo } from "firebase/auth";
 import nookies from "nookies";
+import Firebase from "@/shared/lib/firebase";
+import { User } from "@acme/db";
 
-import { auth } from "@/shared/utils/firebase";
+import { trpc } from "@/utils/trpc";
+import { v4 as uuidv4 } from "uuid";
 
-export const AuthContext = createContext<{ user: User | null }>({
+export const AuthContext = createContext<{
+  user: User | null;
+  loading: boolean;
+}>({
   user: null,
+  loading: false,
 });
 
 export interface AuthProviderProps {
   children: React.ReactNode;
 }
 
+const auth = Firebase.getInstance().getAuth();
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // listen for token changes
-  // call setUser and write new token as a cookie
+  const { data, refetch } = trpc.user.getLogged.useQuery(undefined, {
+    enabled: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const createUserMutation = trpc.user.create.useMutation({
+    onSuccess(data) {
+      setUser(data.data);
+    },
+    onError(error) {
+      console.log(error);
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      setUser(data.data);
+    }
+  }, [data]);
+
   useEffect(() => {
     return auth.onIdTokenChanged(async (user) => {
+      setLoading(true);
       if (!user) {
         setUser(null);
         nookies.set(undefined, "token", "", { path: "/" });
       } else {
         const token = await user.getIdToken();
-        setUser(user);
         nookies.set(undefined, "token", token, { path: "/" });
+
+        const userCredentials = await getRedirectResult(auth);
+        if (userCredentials) {
+          const additionalUserInfo = getAdditionalUserInfo(userCredentials);
+          const isNewUser = additionalUserInfo?.isNewUser;
+
+          if (isNewUser) {
+            const response = await createUserMutation.mutateAsync({
+              uid: user.uid,
+              name: user.displayName ?? "No Name",
+              username: user.email?.split("@")[0] ?? uuidv4(),
+              email: user.email ?? "No Email",
+              image: user.photoURL ?? "",
+              emailVerified: user.emailVerified
+                ? new Date().toISOString()
+                : undefined,
+            });
+
+            setUser(response.data);
+          } else {
+            await refetch();
+          }
+        } else {
+          await refetch();
+        }
       }
+      setLoading(false);
     });
   }, []);
 
@@ -42,6 +96,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading }}>
+      {children}
+    </AuthContext.Provider>
   );
 };

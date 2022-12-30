@@ -7,10 +7,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const adminApp = firebaseAdmin.initializeApp({
-  credential: firebaseAdmin.credential.cert(firebaseConfig),
-  databaseURL: `https://${process.env.NEXT_PUBLIC_PROJECT_ID}.firebaseio.com`,
-});
+let adminApp: firebaseAdmin.app.App;
+
+if (firebaseAdmin.apps.length === 0) {
+  adminApp = firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(firebaseConfig),
+    databaseURL: `https://${process.env.NEXT_PUBLIC_PROJECT_ID}.firebaseio.com`,
+  });
+} else {
+  adminApp = firebaseAdmin.app();
+}
 
 export const adminAuth = adminApp.auth();
 

@@ -3,20 +3,10 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
-import { app } from "@acme/firebase";
-import {
-  GoogleAuthProvider,
-  getRedirectResult,
-  signInWithRedirect,
-  getAuth,
-} from "firebase/auth";
-
-import { useAuth } from "@/shared/hooks/useAuth";
+import { signInWithGoogle } from "@/shared/utils/firebaseAuth";
 
 // Components
 import { Button } from "@/shared/components";
-
-const provider = new GoogleAuthProvider();
 
 export interface AuthContentProps {
   className?: string;
@@ -26,18 +16,10 @@ export interface AuthContentProps {
 }
 
 export const AuthContent: React.FC<AuthContentProps> = (props) => {
-  const {
-    initTab = "login",
-    className,
-    callbackUrl,
-    usingFor = "modal",
-  } = props;
+  const { initTab = "login", className, usingFor = "modal" } = props;
 
   const [activeTab, setActiveTab] = useState<"login" | "register">(initTab);
   const router = useRouter();
-  const { user } = useAuth();
-
-  console.log(user);
 
   const onChangeTab = () => {
     if (usingFor === "page") {
@@ -45,11 +27,6 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
     } else {
       setActiveTab((prev) => (prev === "login" ? "register" : "login"));
     }
-  };
-
-  const onGoogleLogin = async () => {
-    const auth = getAuth(app);
-    await signInWithRedirect(auth, provider);
   };
 
   return (
@@ -76,7 +53,7 @@ export const AuthContent: React.FC<AuthContentProps> = (props) => {
         className="mb-4 w-full"
         size="large"
         color="black"
-        onClick={onGoogleLogin}
+        onClick={signInWithGoogle}
       >
         <FcGoogle className="mr-2 h-6 w-6" />
         Google

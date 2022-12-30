@@ -3,12 +3,12 @@ import { buildSendMail } from "mailing-core";
 
 const transport = nodemailer.createTransport({
   pool: true,
-  host: "smtp-relay.sendinblue.com",
-  port: 587,
+  host: process.env.EMAIL_HOST as string,
+  port: process.env.EMAIL_PORT as unknown as number,
   secure: true, // use TLS
   auth: {
-    user: "nestor@agotao.com",
-    pass: "xbtcmCHkKNWFrgPq",
+    user: process.env.EMAIL_AUTH_USER,
+    pass: process.env.EMAIL_AUTH_PASSWORD,
   },
 });
 
