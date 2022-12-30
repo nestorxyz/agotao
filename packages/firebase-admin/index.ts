@@ -1,7 +1,9 @@
 import firebaseAdmin from "firebase-admin";
 
 const firebaseConfig = {
-  privateKey: process.env.FIREBASE_PRIVATE_KEY,
+  privateKey: process.env.FIREBASE_PRIVATE_KEY
+    ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n")
+    : undefined,
   clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
   projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
 };

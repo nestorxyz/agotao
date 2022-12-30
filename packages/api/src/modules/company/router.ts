@@ -69,6 +69,18 @@ export const companyRouter = router({
             name: true,
             image: true,
             price: true,
+            purchases: {
+              where: {
+                status: "VALID",
+              },
+              select: {
+                id: true,
+                name: true,
+                email: true,
+                payment_method: true,
+                updatedAt: true,
+              },
+            },
           },
         },
       },
