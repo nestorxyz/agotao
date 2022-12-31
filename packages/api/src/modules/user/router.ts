@@ -8,9 +8,21 @@ export const userRouter = router({
   create: publicProcedure
     .input(createUserDTO)
     .mutation(async ({ input, ctx }) => {
+      let username = input.username;
+
+      const usernameExists = await ctx.prisma.user.findUnique({
+        where: {
+          username: input.username,
+        },
+      });
+
+      if (usernameExists)
+        username = `${input.username}${Math.floor(Math.random() * 1000)}`;
+
       const user = await ctx.prisma.user.create({
         data: {
           ...input,
+          username,
         },
       });
 
