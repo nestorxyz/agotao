@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 // Components
 import { DefaultHead, Dots } from "@/shared/components";
-import { Payouts } from "@/modules/n/components";
+import NComponent from "@/modules/n";
 
 // Hooks
 import { useAuth } from "@/shared/hooks/useAuth";
@@ -36,7 +36,7 @@ const NPage: NextPage = () => {
   return (
     <div>
       N Page
-      <Payouts />
+      <NComponent />
     </div>
   );
 };
