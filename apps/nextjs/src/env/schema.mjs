@@ -12,6 +12,13 @@ export const serverSchema = z.object({
   FACEBOOK_CLIENT_SECRET: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  AGOTAO_ADMIN_ID: z.string(),
+  FIREBASE_PRIVATE_KEY: z.string(),
+  FIREBASE_CLIENT_EMAIL: z.string(),
+  EMAIL_HOST: z.string(),
+  EMAIL_PORT: z.string(),
+  EMAIL_AUTH_USER: z.string(),
+  EMAIL_AUTH_PASSWORD: z.string(),
 });
 
 /**
