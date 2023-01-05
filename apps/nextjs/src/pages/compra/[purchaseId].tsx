@@ -106,103 +106,127 @@ const PurchasePage: NextPage<
         title={`Compra de ${purchase.product.name}`}
       />
 
-      <header className="flex items-center bg-white py-5 px-4">
-        <div className="mx-auto flex w-full max-w-6xl justify-between">
-          <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
-        </div>
-      </header>
+      <div className="flex min-h-screen w-full flex-col">
+        <header className="flex items-center bg-white py-5 px-4">
+          <div className="mx-auto flex w-full max-w-5xl justify-between">
+            <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
+          </div>
+        </header>
 
-      <h1 className="relative my-4 max-w-[800px] text-center text-4xl font-extrabold sm:text-5xl md:text-6xl">
-        Hola {purchase.name.split(" ")[0]}, has comprado {purchase.product.name}
-      </h1>
+        <main className="mx-auto flex w-full flex-col gap-4 p-4 md:w-full md:max-w-5xl md:flex-row md:gap-10 lg:px-0">
+          <section className="w-full space-y-4">
+            <h1 className="text-2xl font-bold">
+              Hola {purchase.name.split(" ")[0]}, has comprado{" "}
+              {purchase.product.name}
+            </h1>
 
-      <main>
-        <section>
-          <h3>Identificador único de compra: {purchase.id}</h3>
-          {purchase.status === "VALID" ? (
-            <div>
-              <p>
-                Tu compra ha sido validada, {purchase.product.company.name} se
-                comunicará contigo, gracias por tu compra.
-              </p>
-              <p>
-                Si tienes alguna duda, puedes contactarnos a través de nuestro
-                correo electrónico:{" "}
-                <a
-                  href="mailto:
-                  nestor@agotao.com"
-                >
-                  nestor@agotao.com
-                </a>
-              </p>
-            </div>
-          ) : (
-            <div>
-              <p>
-                Tu pago está en validación, puede tomar de 1 a 5 minutos en
-                validarse
-              </p>
-              <p>
-                Si aún no realizas el pago, realizalo mediante tu medio de pago
-                seleccionado:
-              </p>
-              <div>
-                <Image
-                  src={`/images/payment/${purchase.payment_method.type.toLowerCase()}.png`}
-                  alt={purchase.payment_method.name}
-                  width={200}
-                  height={200}
-                  className="h-16 w-16 rounded-lg object-cover"
-                />
-                <div className="flex w-full flex-col items-center justify-center">
-                  <p className="mb-2 text-center text-lg">
-                    {purchase.payment_method.type === "YAPE" ||
-                    purchase.payment_method.type === "PLIN"
-                      ? `Envía el total de tu compra a este número con ${purchase.payment_method.name}`
-                      : `Número de cuenta ${purchase.payment_method.type}`}
+            <div className="rounded-lg border border-gray-100 px-6 py-4">
+              <h3 className="font-medium text-gray-600">Estado de la compra</h3>
+              {purchase.status === "VALID" ? (
+                <div>
+                  <p>
+                    Tu compra ha sido validada, {purchase.product.company.name}{" "}
+                    se comunicará contigo
                   </p>
-
-                  <button
-                    className="flex items-center gap-2 transition-all active:scale-95"
-                    onClick={() => handleCopy(purchase.payment_method)}
-                  >
-                    <p className="text-xl font-semibold text-primary">
-                      {purchase.payment_method.keyInfo}
-                    </p>
-                    <IoCopy className="h-6 w-6 text-primary" />
-                  </button>
                 </div>
+              ) : (
+                <div>
+                  <p className="mb-3">
+                    Tu pago está en validación, puede tomar de 1 a 5 minutos en
+                    validarse
+                  </p>
+                  <p>
+                    Si aún no realizas el pago, realizalo mediante tu medio de
+                    pago seleccionado:
+                  </p>
+                  <div className="mx-auto my-4 flex w-fit gap-2">
+                    <Image
+                      src={`/images/payment/${purchase.payment_method.type.toLowerCase()}.png`}
+                      alt={purchase.payment_method.name}
+                      width={200}
+                      height={200}
+                      className="h-16 w-16 rounded-lg object-cover"
+                    />
+                    <div className="flex w-full flex-col items-center justify-center">
+                      <p className="mb-2 text-center text-lg">
+                        {purchase.payment_method.type === "YAPE" ||
+                        purchase.payment_method.type === "PLIN"
+                          ? `Envía el total de tu compra a este número con ${purchase.payment_method.name}`
+                          : `Número de cuenta ${purchase.payment_method.type}`}
+                      </p>
+
+                      <button
+                        className="flex items-center gap-2 transition-all active:scale-95"
+                        onClick={() => handleCopy(purchase.payment_method)}
+                      >
+                        <p className="text-xl font-semibold text-primary">
+                          {purchase.payment_method.keyInfo}
+                        </p>
+                        <IoCopy className="h-6 w-6 text-primary" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="font-medium text-gray-600">
+                Información de contacto
+              </h3>
+              <div className="space-y-1 rounded-lg bg-gray-50 px-6 py-4 text-sm">
+                <p className="text-lg font-semibold"> {purchase.name}</p>
+                <p className="text-sm text-gray-600"> {purchase.email}</p>
               </div>
             </div>
-          )}
-          <div>
-            <h3>Tu información</h3>
-            <p>Nombre: {purchase.name}</p>
-            <p>Email: {purchase.email}</p>
-          </div>
-        </section>
-        <section>
-          <div className="flex gap-2 p-3">
-            <Image
-              src={purchase.product.company.image}
-              alt={purchase.product.company.name}
-              width={250}
-              height={250}
-              className="w-32"
-            />
+          </section>
 
-            <div className="flex flex-col items-start">
-              <h3 className="font-medium">{purchase.product.company.name}</h3>
+          <div className="border-t md:hidden" />
+
+          <section className="w-full max-w-md space-y-4">
+            <div className="flex items-center gap-2">
+              <Image
+                src={purchase.product.company.image}
+                alt={purchase.product.company.name}
+                width={200}
+                height={200}
+                className="h-16 w-16 rounded-full object-cover"
+              />
+              <p className="text-lg font-semibold">
+                {purchase.product.company.name}
+              </p>
             </div>
-          </div>
-          <ProductCard
-            image={purchase.product.image}
-            name={purchase.product.name}
-            price={purchase.product.price}
-            quantity={1}
-          />
-        </section>
-      </main>
+
+            <div className="space-y-2 rounded-lg bg-white p-4 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+              <div>
+                <h2 className="font-medium text-gray-600">Detalle de compra</h2>
+                <h3 className="text-sm text-gray-500">
+                  Identificador único de compra: {purchase.id}
+                </h3>
+              </div>
+
+              <ProductCard
+                image={purchase.product.image}
+                name={purchase.product.name}
+                price={purchase.product.price}
+                quantity={1}
+                className="p-0"
+              />
+            </div>
+          </section>
+        </main>
+        <p className="mx-auto mt-36 mb-4 w-full max-w-5xl p-4 text-sm md:p-0">
+          Si tienes alguna duda, puedes contactarnos a través de nuestro correo
+          electrónico:{" "}
+          <a
+            href="mailto:
+                  nestor@agotao.com"
+            className="font-semibold text-primary"
+          >
+            nestor@agotao.com
+          </a>
+        </p>
+      </div>
     </>
   );
 };
