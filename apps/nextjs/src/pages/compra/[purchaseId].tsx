@@ -215,7 +215,7 @@ const PurchasePage: NextPage<
             </div>
           </section>
         </main>
-        <p className="mx-auto mt-36 mb-4 w-full max-w-5xl p-4 text-sm md:p-0">
+        <p className="mx-auto mt-12 mb-4 w-full max-w-5xl p-4 text-sm md:mt-36 md:p-0">
           Si tienes alguna duda, puedes contactarnos a través de nuestro correo
           electrónico:{" "}
           <a
