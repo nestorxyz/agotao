@@ -11,7 +11,7 @@ import { IoCopy } from "react-icons/io5";
 import { prisma, Purchase, Product, Company, PaymentMethod } from "@acme/db";
 
 // Components
-import { DefaultHead, Header } from "@/shared/components";
+import { DefaultHead } from "@/shared/components";
 import { ProductCard } from "@/modules/checkout/components";
 
 interface PurchasePageProps {

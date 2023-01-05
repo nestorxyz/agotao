@@ -64,7 +64,8 @@ export const Cards: React.FC = () => {
         <h3 className="text-lg font-semibold">Precio simple a tu ritmo</h3>
         <p className="text-gray-500">
           2.9% + S/1.00 por venta exitosa. Sin costos de instalación, comisiones
-          mensuales o costos extra.
+          mensuales o costos extra. Ventas menores a S/50.00, tienen comisión de
+          solo el 2.9%.
         </p>
       </motion.article>
     </section>
