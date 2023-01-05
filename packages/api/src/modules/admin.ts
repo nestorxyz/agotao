@@ -17,4 +17,19 @@ export const adminRouter = router({
       data: payouts,
     };
   }),
+  purchases: protectedProcedure.query(async ({ ctx }) => {
+    const purchases = await ctx.prisma.purchase.findMany();
+
+    if (!purchases)
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Could not get purchases",
+      });
+
+    return {
+      status: 200,
+      message: "Purchases found",
+      data: purchases,
+    };
+  }),
 });

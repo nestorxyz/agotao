@@ -76,7 +76,7 @@ model Purchase {
     product_id        String
     payment_method_id String
     status            PurchaseStatus @default(VALIDATING)
-    commission        Float          @default(0)
+    commission        Float
     createdAt         DateTime       @default(now())
     updatedAt         DateTime       @updatedAt
 

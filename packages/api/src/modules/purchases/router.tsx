@@ -6,7 +6,8 @@ import sendMail, { Basic } from "@acme/emails";
 import { router, publicProcedure, protectedProcedure } from "../../trpc";
 
 // Validators
-import { guestPurchaseDTO, getCompanySalesDTO } from "@acme/validations";
+import { guestPurchaseDTO } from "@acme/validations";
+import { calculateComission } from "../../utils/pricing";
 
 export const purchaseRouter = router({
   guest: publicProcedure
@@ -38,6 +39,7 @@ export const purchaseRouter = router({
           email,
           product_id,
           payment_method_id,
+          commission: calculateComission(product.price),
         },
         select: {
           id: true,
@@ -96,6 +98,7 @@ export const purchaseRouter = router({
         },
         payment_method: true,
         updatedAt: true,
+        commission: true,
       },
     });
 

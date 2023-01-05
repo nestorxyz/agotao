@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "react-hot-toast";
 import z from "zod";
+import { useRouter } from "next/router";
 
 // Components
 import {
@@ -41,6 +42,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
   const { amount, product_id, paymentMethods } = props;
 
   const { width } = useViewportSize();
+  const router = useRouter();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<Pick<
     PaymentMethod,
     "id" | "name" | "type" | "keyInfo"
@@ -77,13 +79,14 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
   });
 
   const guestPurchaseMutation = trpc.purchase.guest.useMutation({
-    onSuccess() {
+    onSuccess(data) {
       toast.success(
         "Compra realizada con éxito, recibirás un correo con los detalles",
         {
           duration: 10000,
         },
       );
+      router.push(`/compra/${data.result.id}`);
     },
     onError(error) {
       toast.error(error.message);

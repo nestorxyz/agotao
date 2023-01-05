@@ -13,7 +13,6 @@ import { Dayjs } from "@/shared/utils/Datejs";
 
 // Components
 import { Text } from "@/shared/components";
-import { calculateComission } from "@/shared/utils/pricing";
 
 export const MySales: React.FC = () => {
   const { data, isLoading } = trpc.purchase.getUserSales.useQuery();
@@ -43,8 +42,6 @@ export const MySales: React.FC = () => {
           </TableHead>
           <TableBody>
             {data.result.map((sale) => {
-              const comission = calculateComission(sale.product.price);
-
               return (
                 <TableRow key={sale.id}>
                   <TableCell>{sale.name}</TableCell>
@@ -57,11 +54,11 @@ export const MySales: React.FC = () => {
                     {Dayjs.getInstance().formatMoney(sale.product.price)}
                   </TableCell>
                   <TableCell>
-                    {Dayjs.getInstance().formatMoney(comission)}
+                    {Dayjs.getInstance().formatMoney(sale.commission)}
                   </TableCell>
                   <TableCell>
                     {Dayjs.getInstance().formatMoney(
-                      sale.product.price - comission,
+                      sale.product.price - sale.commission,
                     )}
                   </TableCell>
                 </TableRow>
