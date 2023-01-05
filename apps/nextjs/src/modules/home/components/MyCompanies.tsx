@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 // Services
 import { trpc } from "@/utils/trpc";
@@ -17,6 +18,8 @@ import { env } from "@/env/client.mjs";
 
 export const MyCompanies: React.FC = () => {
   const { data, refetch, isLoading } = trpc.company.getAll.useQuery();
+
+  const router = useRouter();
 
   return (
     <div className="w-full">
@@ -85,6 +88,16 @@ export const MyCompanies: React.FC = () => {
                         }}
                       >
                         Copiar link
+                      </Button>
+                      <Button
+                        soft
+                        color="black"
+                        size="small"
+                        onClick={() => {
+                          router.push(`/${company.username}/${product.id}`);
+                        }}
+                      >
+                        Ver
                       </Button>
                     </div>
                   </div>

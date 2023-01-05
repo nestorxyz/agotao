@@ -13,6 +13,7 @@ import { Dayjs } from "@/shared/utils/Datejs";
 
 // Components
 import { Text } from "@/shared/components";
+import { calculateComission } from "@/shared/utils/pricing";
 
 export const MySales: React.FC = () => {
   const { data, isLoading } = trpc.purchase.getUserSales.useQuery();
@@ -35,23 +36,37 @@ export const MySales: React.FC = () => {
               <TableHeaderCell>Email</TableHeaderCell>
               <TableHeaderCell>Producto</TableHeaderCell>
               <TableHeaderCell>Fecha</TableHeaderCell>
-              <TableHeaderCell>Valor</TableHeaderCell>
+              <TableHeaderCell>Venta total</TableHeaderCell>
+              <TableHeaderCell>Servicio</TableHeaderCell>
+              <TableHeaderCell>Recibes</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.result.map((sale) => (
-              <TableRow key={sale.id}>
-                <TableCell>{sale.name}</TableCell>
-                <TableCell>{sale.email}</TableCell>
-                <TableCell>{sale.product.name}</TableCell>
-                <TableCell>
-                  {dayjs(sale.updatedAt).format("dddd,DD MMM YYYY")}
-                </TableCell>
-                <TableCell>
-                  {Dayjs.getInstance().formatMoney(sale.product.price)}
-                </TableCell>
-              </TableRow>
-            ))}
+            {data.result.map((sale) => {
+              const comission = calculateComission(sale.product.price);
+
+              return (
+                <TableRow key={sale.id}>
+                  <TableCell>{sale.name}</TableCell>
+                  <TableCell>{sale.email}</TableCell>
+                  <TableCell>{sale.product.name}</TableCell>
+                  <TableCell>
+                    {dayjs(sale.updatedAt).format("dddd,DD MMM YYYY")}
+                  </TableCell>
+                  <TableCell>
+                    {Dayjs.getInstance().formatMoney(sale.product.price)}
+                  </TableCell>
+                  <TableCell>
+                    {Dayjs.getInstance().formatMoney(comission)}
+                  </TableCell>
+                  <TableCell>
+                    {Dayjs.getInstance().formatMoney(
+                      sale.product.price - comission,
+                    )}
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       )}
