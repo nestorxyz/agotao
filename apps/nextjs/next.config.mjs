@@ -17,6 +17,7 @@ const config = {
       "@acme/validations",
       "@acme/emails",
     ],
+    appDir: true,
   },
   // We already do linting on GH actions
   eslint: {
