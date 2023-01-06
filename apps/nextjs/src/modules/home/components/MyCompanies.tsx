@@ -60,7 +60,10 @@ export const MyCompanies: React.FC = () => {
                   <h2 className="text-gray-600">Balance disponible</h2>
                   <p className="text-2xl font-bold">S/. {company.balance}</p>
                 </div>
-                <PayoutButton balance={company.balance} />
+                <PayoutButton
+                  company_id={company.id}
+                  balance={company.balance}
+                />
               </div>
             </div>
 

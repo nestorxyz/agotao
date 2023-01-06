@@ -21,3 +21,4 @@ const sendMail = buildSendMail({
 export default sendMail;
 
 export * from "./emails/Basic";
+export * from "./emails/Whatever";
