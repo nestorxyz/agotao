@@ -17,6 +17,7 @@ export const PayoutButton: React.FC<PayoutButtonProps> = (props) => {
   const payoutMutation = trpc.company.requestPayout.useMutation({
     onSuccess: () => {
       toast.success("Retiro solicitado");
+      setIsOpen(false);
     },
     onError: (error) => {
       toast.error(error.message);
