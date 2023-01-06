@@ -10,6 +10,7 @@ import { Text, Button } from "@/shared/components";
 import {
   CreateCompanyButton,
   CreateProductButton,
+  PayoutButton,
 } from "@/modules/home/components";
 
 // Utils
@@ -33,24 +34,34 @@ export const MyCompanies: React.FC = () => {
       <section>
         {data?.result.map((company) => (
           <article key={company.id}>
-            <div className="flex items-center gap-5">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={company.image}
-                  alt={company.name}
-                  width={100}
-                  height={100}
-                  className="h-16 w-16 overflow-hidden rounded-full object-cover"
-                />
-                <div>
-                  <p className="truncate font-semibold">{company.name}</p>
-                  <p className="text-gray-500">@{company.username}</p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
+              <div className="flex items-center gap-5">
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={company.image}
+                    alt={company.name}
+                    width={100}
+                    height={100}
+                    className="h-12 w-12 overflow-hidden rounded-full object-cover sm:h-16 sm:w-16"
+                  />
+                  <div>
+                    <p className="truncate font-semibold">{company.name}</p>
+                    <p className="text-gray-500">@{company.username}</p>
+                  </div>
                 </div>
+                <CreateProductButton
+                  companyId={company.id}
+                  onCreated={() => refetch()}
+                />
               </div>
-              <CreateProductButton
-                companyId={company.id}
-                onCreated={() => refetch()}
-              />
+
+              <div className="flex w-full max-w-xs justify-between rounded-lg bg-gray-50 p-4">
+                <div>
+                  <h2 className="text-gray-600">Balance disponible</h2>
+                  <p className="text-2xl font-bold">S/. {company.balance}</p>
+                </div>
+                <PayoutButton balance={company.balance} />
+              </div>
             </div>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
