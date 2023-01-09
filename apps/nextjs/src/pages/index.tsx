@@ -28,9 +28,8 @@ const Home: NextPage = () => {
                 rel="noreferrer"
                 className="font-bold text-primary"
               >
-                Escríbenos
+                Escríbenos 🪄
               </a>
-              , la implementamos y te llevas 3 meses libres de comisiones.
             </p>
           </div>
         </div>
