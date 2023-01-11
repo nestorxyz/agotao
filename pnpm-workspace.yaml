@@ -1,5 +1,5 @@
 packages:
-  - apps/expo
+  - apps/nextjs
   - apps/papi
   - packages/api
   - packages/db
