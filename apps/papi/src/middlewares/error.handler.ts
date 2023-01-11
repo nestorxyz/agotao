@@ -5,6 +5,7 @@ export const logError: ErrorRequestHandler = (err, req, res, next) => {
   next(err);
 };
 
+// eslint-disable-next-line
 export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   res
     .status(err.status || 500)
