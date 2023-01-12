@@ -34,6 +34,7 @@ model Company {
     username  String   @unique
     admin_id  String
     balance   Float    @default(0)
+    sk_live   String?
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 

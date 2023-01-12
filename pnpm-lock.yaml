@@ -59,6 +59,7 @@ importers:
       firebase: ^9.15.0
       focus-trap-react: ^10.0.2
       framer-motion: ^7.10.2
+      generate-api-key: ^1.0.2
       next: ^13.0.6
       nookies: ^2.5.2
       payment: ^2.4.6
@@ -101,6 +102,7 @@ importers:
       firebase: 9.15.0
       focus-trap-react: 10.0.2_v2m5e27vhdewzwhryxwfaorcca
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
+      generate-api-key: 1.0.2
       next: 13.0.6_biqbaboplfbrettd7655fr4n2y
       nookies: 2.5.2
       payment: 2.4.6
@@ -2771,6 +2773,10 @@ packages:
   /balanced-match/1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  /base-x/4.0.0:
+    resolution: {integrity: sha512-FuwxlW4H5kh37X/oW59pwTzzTKRzfrrQwhmyspRM7swOEZcHtDZSCt45U6oKgtuFE+WYPblePMVIPR4RZrh/hw==}
+    dev: false
+
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
 
@@ -3000,6 +3006,10 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+
+  /chance/1.1.9:
+    resolution: {integrity: sha512-TfxnA/DcZXRTA4OekA2zL9GH8qscbbl6X0ZqU4tXhGveVY/mXWvEQLt5GwZcYXTEyEFflVtj+pG8nc8EwSm1RQ==}
+    dev: false
 
   /cheerio-select/1.6.0:
     resolution: {integrity: sha512-eq0GdBvxVFbqWgmCm7M3XGs1I8oLy/nExUnh6oLqmBditPO9AqQJrkslDpMun/hZ0yyTs8L0m85OHp4ho6Qm9g==}
@@ -4814,6 +4824,16 @@ packages:
       - supports-color
     dev: false
     optional: true
+
+  /generate-api-key/1.0.2:
+    resolution: {integrity: sha512-4rPSpXyboIXfugOTN3/0Qaoqpzbk0sepzPS0XyxPh3UMuu+Trk+0JMyJ6mB/7FEgp7oZ1juqsRW+8wSYeKDbfA==}
+    engines: {node: '>=14'}
+    dependencies:
+      base-x: 4.0.0
+      chance: 1.1.9
+      rfc4648: 1.5.2
+      uuid: 8.3.2
+    dev: false
 
   /get-caller-file/2.0.5:
     resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
@@ -7662,6 +7682,10 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
+  /rfc4648/1.5.2:
+    resolution: {integrity: sha512-tLOizhR6YGovrEBLatX1sdcuhoSCXddw3mqNVAcKxGJ+J0hFeJ+SjeWCv5UPA/WU3YzWPPuCVYgXBKZUPGpKtg==}
+    dev: false
+
   /rimraf/2.7.1:
     resolution: {integrity: sha512-uWjbaKIK3T1OSVptzX7Nl6PvQ3qAGtKEtVRjRuazjfL3Bx5eI409VZSqgND+4UNnmzLVdPj9FqFJNPqBZFve4w==}
     hasBin: true
@@ -8584,7 +8608,6 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: false
-    optional: true
 
   /uuid/9.0.0:
     resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
