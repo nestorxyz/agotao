@@ -22,7 +22,7 @@ export const MySales: React.FC = () => {
   return (
     <div className="w-full">
       <div className="mb-4 flex items-center justify-between">
-        <Text.H1>Mis ventas</Text.H1>
+        <Text.H2>Ventas</Text.H2>
       </div>
 
       {isLoading && <p>Cargando...</p>}

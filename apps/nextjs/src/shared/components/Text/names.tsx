@@ -9,6 +9,16 @@ export const H1: React.FC<TextProps> = (props) => {
   );
 };
 
+export const H2: React.FC<TextProps> = (props) => {
+  const { children, className } = props;
+
+  return (
+    <h1 className={classNames(className, "text-2xl font-semibold")}>
+      {children}
+    </h1>
+  );
+};
+
 export const Subtitle: React.FC<TextProps> = (props) => {
   const { children, className } = props;
 

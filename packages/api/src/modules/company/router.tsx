@@ -7,7 +7,7 @@ import sendMail, { Whatever } from "@acme/emails";
 // tRPC
 import { router, protectedProcedure } from "../../trpc";
 
-import { createCompany } from "./useCases";
+import { createCompany, createSecretKey } from "./useCases";
 
 export const companyRouter = router({
   create: createCompany,
@@ -22,6 +22,7 @@ export const companyRouter = router({
         username: true,
         image: true,
         balance: true,
+        sk_live: true,
         products: {
           select: {
             id: true,
@@ -93,4 +94,5 @@ export const companyRouter = router({
         result: {},
       };
     }),
+  createSecretKey,
 });
