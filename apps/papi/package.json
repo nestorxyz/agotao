@@ -12,9 +12,11 @@
   "author": "Nestor Mamani",
   "license": "ISC",
   "dependencies": {
+    "@acme/db": "*",
     "@hapi/boom": "^10.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "express-joi-validation": "^5.0.1",
     "joi": "^17.7.0",
     "morgan": "^1.10.0"
   },

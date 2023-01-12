@@ -42,6 +42,7 @@ model Company {
     colaborators Colaborators[]
     products     Product[]
     payouts      Payout[]
+    checkouts    Checkout[]
 }
 
 model Colaborators {
@@ -65,9 +66,10 @@ model Product {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
 
-    company   Company    @relation(fields: [company_id], references: [id])
-    user      User       @relation(fields: [created_by], references: [uid])
-    purchases Purchase[]
+    company    Company     @relation(fields: [company_id], references: [id])
+    user       User        @relation(fields: [created_by], references: [uid])
+    purchases  Purchase[]
+    orderItems OrderItem[]
 }
 
 model Purchase {
@@ -114,6 +116,34 @@ model Payout {
     payout_method PaymentMethod @relation(fields: [payout_method_id], references: [id])
 }
 
+model Checkout {
+    id             String                @id @default(cuid())
+    company_id     String
+    success_url    String
+    cancel_url     String?
+    customer_name  String?
+    customer_email String?
+    payment_status CheckoutPaymentStatus @default(UNPAID)
+    status         CheckoutStatus        @default(VALID)
+    createdAt      DateTime              @default(now())
+    updatedAt      DateTime              @updatedAt
+
+    company    Company     @relation(fields: [company_id], references: [id])
+    orderItems OrderItem[]
+}
+
+model OrderItem {
+    id          String   @id @default(cuid())
+    product_id  String
+    quantity    Int
+    checkout_id String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    product  Product  @relation(fields: [product_id], references: [id])
+    checkout Checkout @relation(fields: [checkout_id], references: [id])
+}
+
 enum Role {
     ADMIN
     USER
@@ -131,4 +161,14 @@ enum PaymentMethodType {
     INTERBANK
     YAPE
     PLIN
+}
+
+enum CheckoutStatus {
+    EXPIRED
+    VALID
+}
+
+enum CheckoutPaymentStatus {
+    UNPAID
+    PAID
 }
