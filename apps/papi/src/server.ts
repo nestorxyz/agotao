@@ -3,6 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
+import routerApi from "./routes";
 import {
   errorHandler,
   logError,
@@ -17,15 +18,17 @@ export const createServer = () => {
     .use(urlencoded({ extended: true }))
     .use(json())
     .use(cors())
-    .get("/message/:name", (req, res) => {
-      return res.json({ message: `hello ${req.params.name}` });
-    })
-    .get("/healthz", (req, res) => {
-      return res.json({ ok: true });
-    })
-    .use(logError)
-    .use(boomErrorHandler)
-    .use(errorHandler);
+    .get("/", (req, res) => {
+      return res.json({
+        message: "Hi, what are you going to ship today?",
+        "Show us on Twitter": "https://twitter.com/nestoredduardo",
+      });
+    });
+
+  routerApi(app);
+  app.use(logError);
+  app.use(boomErrorHandler);
+  app.use(errorHandler);
 
   return app;
 };
