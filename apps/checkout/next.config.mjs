@@ -20,6 +20,15 @@ const config = {
   images: {
     domains: ["lh3.googleusercontent.com", "storage.googleapis.com"],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/",
+        destination: "https://agotao.com/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default config;
