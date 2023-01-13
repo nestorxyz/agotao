@@ -4,7 +4,6 @@ import { httpBatchLink, loggerLink } from "@trpc/client";
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@acme/api";
 import { transformer } from "@acme/api/transformer";
-import Firebase from "@/lib/firebase";
 
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
@@ -26,10 +25,7 @@ export const trpc = createTRPCNext<AppRouter>({
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
           async headers() {
-            const auth = Firebase.getInstance().getAuth();
-            const token = await auth.currentUser?.getIdToken();
-
-            return token ? { authorization: `Bearer ${token}` } : {};
+            return {};
           },
         }),
       ],
