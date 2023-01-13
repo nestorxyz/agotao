@@ -123,6 +123,7 @@ model Checkout {
   cancel_url     String?
   customer_name  String?
   customer_email String?
+  expires_at     DateTime
   payment_status CheckoutPaymentStatus @default(UNPAID)
   status         CheckoutStatus        @default(VALID)
   createdAt      DateTime              @default(now())

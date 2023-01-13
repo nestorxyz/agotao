@@ -61,6 +61,7 @@ export const createSession = async (
         cancel_url,
         customer_name,
         customer_email,
+        expires_at: dayjs().add(15, "minute").toISOString(),
         orderItems: {
           create: items.map((item) => ({
             product_id: item.product_id,
@@ -78,7 +79,7 @@ export const createSession = async (
         name: session.customer_name,
         email: session.customer_email,
       },
-      expires_at: dayjs(session.createdAt).add(15, "minute").toISOString(),
+      expires_at: session.expires_at,
       payment_status: session.payment_status,
       status: session.status,
     });
