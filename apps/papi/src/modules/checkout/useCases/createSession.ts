@@ -6,6 +6,10 @@ import {
   ValidatedRequest,
 } from "express-joi-validation";
 import { Response, NextFunction } from "express";
+import { prisma } from "@acme/db";
+import dayjs from "dayjs";
+
+import { RequestWithCompany } from "@/shared/middlewares/authorization.handler";
 
 const validator = createValidator({
   passError: true,
@@ -26,10 +30,10 @@ const bodySchema = Joi.object({
 
 interface BodySchema extends ValidatedRequestSchema {
   [ContainerTypes.Body]: {
-    items: {
+    items: Array<{
       product_id: string;
       quantity: number;
-    };
+    }>;
     success_url: string;
     cancel_url?: string;
     customer_name?: string;
@@ -45,6 +49,39 @@ export const createSession = async (
   next: NextFunction,
 ) => {
   try {
+    const company = (req as RequestWithCompany).company;
+
+    const { items, success_url, cancel_url, customer_name, customer_email } =
+      req.body;
+
+    const session = await prisma.checkout.create({
+      data: {
+        company_id: company.id,
+        success_url,
+        cancel_url,
+        customer_name,
+        customer_email,
+        orderItems: {
+          create: items.map((item) => ({
+            product_id: item.product_id,
+            quantity: item.quantity,
+          })),
+        },
+      },
+    });
+
+    res.status(201).json({
+      url: `https://checkout.agotao.com/c/${session.id}`,
+      success_url: session.success_url,
+      cancel_url: session.cancel_url,
+      customer_details: {
+        name: session.customer_name,
+        email: session.customer_email,
+      },
+      expires_at: dayjs(session.createdAt).add(15, "minute").toISOString(),
+      payment_status: session.payment_status,
+      status: session.status,
+    });
   } catch (error) {
     next(error);
   }
