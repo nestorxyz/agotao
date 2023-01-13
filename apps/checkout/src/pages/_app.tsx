@@ -1,7 +1,7 @@
-import { AuthProvider } from "@/shared/context/auth";
+import { AuthProvider } from "@/context/auth";
 
 // Styles
-import "@/shared/styles/globals.css";
+import "@/styles/globals.css";
 
 // Utils
 import { trpc } from "../lib/trpc";
