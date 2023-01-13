@@ -1,6 +1,7 @@
 packages:
   - apps/nextjs
   - apps/papi
+  - apps/checkout
   - packages/api
   - packages/db
   - packages/config/*
