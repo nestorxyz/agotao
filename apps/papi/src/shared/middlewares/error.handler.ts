@@ -1,4 +1,8 @@
+import boom from "@hapi/boom";
+
+// types
 import { ErrorRequestHandler } from "express";
+import { ExpressJoiError } from "express-joi-validation";
 
 export const logError: ErrorRequestHandler = (err, req, res, next) => {
   console.log(err);
@@ -27,4 +31,19 @@ export const boomErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   }
 
   next(err);
+};
+
+export const joiErrorHandler: ErrorRequestHandler = (
+  err: any | ExpressJoiError, // eslint-disable-line @typescript-eslint/no-explicit-any
+  req,
+  res,
+  next,
+) => {
+  if (err && err.error && err.error.isJoi) {
+    const e: ExpressJoiError = err;
+
+    next(boom.badRequest(`${e.type}: ${e.error?.message}`));
+  } else {
+    next(err);
+  }
 };

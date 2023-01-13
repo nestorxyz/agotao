@@ -6,7 +6,7 @@ import {
   ValidatedRequest,
 } from "express-joi-validation";
 import { Response, NextFunction } from "express";
-import { prisma } from "@acme/db";
+import prisma from "@/shared/lib/prisma";
 import dayjs from "dayjs";
 
 import { RequestWithCompany } from "@/shared/middlewares/authorization.handler";

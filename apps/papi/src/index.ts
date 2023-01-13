@@ -4,6 +4,7 @@ import {
   errorHandler,
   logError,
   boomErrorHandler,
+  joiErrorHandler,
 } from "@/shared/middlewares/error.handler";
 
 // Routes
@@ -22,6 +23,7 @@ server.get("/", (req, res) => {
 routerApi(server);
 
 server.use(logError);
+server.use(joiErrorHandler);
 server.use(boomErrorHandler);
 server.use(errorHandler);
 
