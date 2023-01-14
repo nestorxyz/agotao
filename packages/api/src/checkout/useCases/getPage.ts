@@ -11,6 +11,19 @@ export const getPage = publicProcedure
       where: {
         id: input,
       },
+      select: {
+        id: true,
+        company: {
+          select: {
+            id: true,
+            image: true,
+            name: true,
+          },
+        },
+        status: true,
+        createdAt: true,
+        cancel_url: true,
+      },
     });
 
     if (!checkout)
@@ -32,6 +45,19 @@ export const getPage = publicProcedure
         },
         data: {
           status: "EXPIRED",
+        },
+        select: {
+          id: true,
+          company: {
+            select: {
+              id: true,
+              image: true,
+              name: true,
+            },
+          },
+          status: true,
+          createdAt: true,
+          cancel_url: true,
         },
       });
 

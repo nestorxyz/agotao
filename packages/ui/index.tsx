@@ -1,1 +1,1 @@
-export * from "./src/CheckoutHeader";
+export * from "./src/Tooltip";

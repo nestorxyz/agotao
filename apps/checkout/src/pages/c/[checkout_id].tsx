@@ -3,16 +3,16 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType,
 } from "next";
-
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
+import { CompanyBackButton } from "@/components";
 import {
   ExpiredCheckout,
   LoadingCheckout,
   NotFoundCheckout,
   PaidCheckout,
-  PrettyCheckout,
-} from "@/components";
+} from "@/screens";
 
 interface CheckoutPageProps {
   checkout_id: string;
@@ -63,7 +63,22 @@ const CheckoutPage: NextPage<
     return <ExpiredCheckout />;
   } */
 
-  return <PrettyCheckout checkout={checkout} />;
+  return (
+    <>
+      <header className="p-4">
+        <CompanyBackButton
+          name={checkout.company.name}
+          logo={checkout.company.image}
+          cancel_url={checkout.cancel_url ?? undefined}
+        />
+
+        <button>
+          Detalles
+          <ChevronDownIcon className="h-5 w-5" />
+        </button>
+      </header>
+    </>
+  );
 };
 
 export default CheckoutPage;
