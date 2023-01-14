@@ -14,6 +14,7 @@
     "@acme/api": "*",
     "@acme/db": "*",
     "@acme/tailwind-config": "*",
+    "@agotao/ui": "*",
     "@tanstack/react-query": "^4.16.1",
     "@trpc/client": "^10.9.0",
     "@trpc/next": "^10.9.0",

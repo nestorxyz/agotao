@@ -55,15 +55,15 @@ const CheckoutPage: NextPage<
     return <NotFoundCheckout />;
   }
 
-  if (checkout.payment_status === "PAID") {
+  /* if (checkout.payment_status === "PAID") {
     return <PaidCheckout />;
   }
 
   if (checkout.status === "EXPIRED") {
     return <ExpiredCheckout />;
-  }
+  } */
 
-  return <PrettyCheckout />;
+  return <PrettyCheckout checkout={checkout} />;
 };
 
 export default CheckoutPage;
