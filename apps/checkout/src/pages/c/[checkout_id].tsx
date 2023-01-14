@@ -4,7 +4,7 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType,
 } from "next";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
 import { CompanyBackButton } from "@/components";
@@ -87,6 +87,43 @@ const CheckoutPage: NextPage<
           <ChevronDownIcon className="h-4 w-4" />
         </button>
       </header>
+      <main>
+        <section className="mt-4 mb-8">
+          <div className="relative flex flex-col items-center">
+            <Image
+              src={checkout.orderItems[0]!.product.image}
+              alt={checkout.orderItems[0]!.product.name}
+              width={300}
+              height={300}
+              className="h-32 w-32 rounded-md object-cover"
+            />
+            <button
+              className="absolute -bottom-4 flex min-w-[100px] items-center justify-center gap-1 rounded-full bg-white px-1 py-1 shadow-sm"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              <span className="text-sm font-medium leading-4 text-gray-800">
+                {checkout.orderItems.reduce((acc, item) => {
+                  return acc + item.quantity;
+                }, 0)}{" "}
+                items
+              </span>
+              <ChevronRightIcon className="h-[14px] w-[14px] text-gray-400" />
+            </button>
+          </div>
+          <div>
+            <p>Comprar en {checkout.company.name}</p>
+            <p>
+              {Dayjs.formatMoney(
+                checkout.orderItems.reduce((acc, item) => {
+                  return acc + item.quantity * item.product.price;
+                }, 0),
+              )}
+            </p>
+          </div>
+        </section>
+      </main>
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="p-4">
           <section>

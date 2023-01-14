@@ -5,7 +5,7 @@ import {
   H1 as H1Component,
   H2 as H2Component,
   Subtitle as SubtitleComponent,
-} from "@/shared/components/Text/names";
+} from "./names";
 
 export interface TextProps {
   children: React.ReactNode;

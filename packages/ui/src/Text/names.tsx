@@ -13,9 +13,9 @@ export const H2: React.FC<TextProps> = (props) => {
   const { children, className } = props;
 
   return (
-    <h1 className={classNames(className, "text-2xl font-semibold")}>
+    <h2 className={classNames(className, "text-2xl font-semibold")}>
       {children}
-    </h1>
+    </h2>
   );
 };
 
