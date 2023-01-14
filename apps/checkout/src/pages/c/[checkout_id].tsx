@@ -7,7 +7,7 @@ import {
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
-import { CompanyBackButton } from "@/components";
+import { CompanyBackButton, PaymentElement } from "@/components";
 import {
   ExpiredCheckout,
   LoadingCheckout,
@@ -125,6 +125,7 @@ const CheckoutPage: NextPage<
             </p>
           </div>
         </section>
+        <PaymentElement />
       </main>
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="p-4">

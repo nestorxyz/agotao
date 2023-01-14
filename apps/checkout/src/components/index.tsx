@@ -1,2 +1,2 @@
 export * from "./CompanyBackButton";
-export * from "./Tooltip";
+export * from "./PaymentElement";

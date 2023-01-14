@@ -291,6 +291,7 @@ importers:
   packages/ui:
     specifiers:
       '@radix-ui/react-icons': ^1.1.1
+      '@radix-ui/react-label': ^2.0.0
       '@radix-ui/react-tooltip': ^1.0.2
       '@types/react': ^18.0.25
       '@types/react-dom': ^18.0.9
@@ -302,6 +303,7 @@ importers:
       typescript: ^4.9.4
     devDependencies:
       '@radix-ui/react-icons': 1.1.1_react@18.2.0
+      '@radix-ui/react-label': 2.0.0_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-tooltip': 1.0.2_2zx2umvpluuhvlq44va5bta2da
       '@types/react': 18.0.25
       '@types/react-dom': 18.0.10
@@ -1680,11 +1682,10 @@ packages:
       react: ^16.8 || ^17.0 || ^18.0
       react-dom: ^16.8 || ^17.0 || ^18.0
     dependencies:
-      '@babel/runtime': 7.19.0
+      '@babel/runtime': 7.20.7
       '@radix-ui/react-primitive': 1.0.1_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
-    dev: false
 
   /@radix-ui/react-popover/1.0.2_2zx2umvpluuhvlq44va5bta2da:
     resolution: {integrity: sha512-4tqZEl9w95R5mlZ/sFdgBnfhCBOEPepLIurBA5kt/qaAhldJ1tNQd0ngr0ET0AHbPotT4mwxMPr7a+MA/wbK0g==}
