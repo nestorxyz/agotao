@@ -23,6 +23,20 @@ export const getPage = publicProcedure
         status: true,
         createdAt: true,
         cancel_url: true,
+        orderItems: {
+          select: {
+            id: true,
+            product: {
+              select: {
+                id: true,
+                name: true,
+                image: true,
+                price: true,
+              },
+            },
+            quantity: true,
+          },
+        },
       },
     });
 
@@ -58,6 +72,20 @@ export const getPage = publicProcedure
           status: true,
           createdAt: true,
           cancel_url: true,
+          orderItems: {
+            select: {
+              id: true,
+              product: {
+                select: {
+                  id: true,
+                  name: true,
+                  image: true,
+                  price: true,
+                },
+              },
+              quantity: true,
+            },
+          },
         },
       });
 

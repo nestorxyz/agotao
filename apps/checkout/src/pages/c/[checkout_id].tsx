@@ -14,7 +14,8 @@ import {
   NotFoundCheckout,
   PaidCheckout,
 } from "@/screens";
-import { Modal } from "@agotao/ui";
+import { Modal, Dayjs } from "@agotao/ui";
+import Image from "next/image";
 
 interface CheckoutPageProps {
   checkout_id: string;
@@ -69,7 +70,7 @@ const CheckoutPage: NextPage<
 
   return (
     <>
-      <header className="p-4">
+      <header className="flex justify-between p-4">
         <CompanyBackButton
           name={checkout.company.name}
           logo={checkout.company.image}
@@ -77,19 +78,46 @@ const CheckoutPage: NextPage<
         />
 
         <button
-          className="flex items-center gap-2"
+          className="flex items-center gap-1 text-sm font-medium text-gray-400"
           onClick={() => {
             setShowModal(true);
           }}
         >
           Detalles
-          <ChevronDownIcon className="h-5 w-5" />
+          <ChevronDownIcon className="h-4 w-4" />
         </button>
       </header>
       <Modal showModal={showModal} setShowModal={setShowModal}>
         <div className="p-4">
-          <h1 className="text-2xl font-semibold">Detalles de la compra</h1>
-          <button>asd</button>
+          <section>
+            {checkout.orderItems.map((item) => (
+              <article className="flex gap-4">
+                <Image
+                  src={item.product.image}
+                  alt={item.product.name}
+                  width={100}
+                  height={100}
+                  className="h-[42px] w-[42px] rounded-md object-cover"
+                />
+                <div>
+                  <p className="w-auto truncate text-sm font-medium">
+                    {item.product.name}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {item.quantity} unidades
+                  </p>
+                </div>
+                <div className="ml-auto">
+                  <p className="w-auto truncate text-right text-sm font-medium">
+                    {Dayjs.formatMoney(item.product.price * item.quantity)}
+                  </p>
+                  <p className="text-right text-xs text-gray-500">
+                    {Dayjs.formatMoney(item.product.price)} cada uno
+                  </p>
+                </div>
+              </article>
+            ))}
+          </section>
         </div>
       </Modal>
     </>

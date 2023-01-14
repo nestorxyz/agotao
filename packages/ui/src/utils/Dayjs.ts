@@ -2,7 +2,7 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import "dayjs/locale/es";
 
-export class Dayjs {
+class Dayjs {
   private static instance: Dayjs;
   private _userTimezone: string;
 
@@ -29,8 +29,10 @@ export class Dayjs {
       minimumFractionDigits: 2,
     });
 
-    return `S/ ${currencyFormatter.format(number)}`;
+    return `${currencyFormatter.format(number)}`;
   };
 
   public dayjs = dayjs;
 }
+
+export default Dayjs.getInstance();
