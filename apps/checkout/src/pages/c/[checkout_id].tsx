@@ -88,11 +88,11 @@ const CheckoutPage: NextPage<
         </button>
       </header>
       <main>
-        <section className="mt-4 mb-8">
+        <section className="mt-4 mb-8 space-y-10">
           <div className="relative flex flex-col items-center">
             <Image
-              src={checkout.orderItems[0]!.product.image}
-              alt={checkout.orderItems[0]!.product.name}
+              src={checkout.orderItems[0]!.product.image} // eslint-disable-line
+              alt={checkout.orderItems[0]!.product.name} // eslint-disable-line
               width={300}
               height={300}
               className="h-32 w-32 rounded-md object-cover"
@@ -112,9 +112,11 @@ const CheckoutPage: NextPage<
               <ChevronRightIcon className="h-[14px] w-[14px] text-gray-400" />
             </button>
           </div>
-          <div>
-            <p>Comprar en {checkout.company.name}</p>
-            <p>
+          <div className="text-center">
+            <p className="font-medium text-gray-500">
+              Comprar en {checkout.company.name}
+            </p>
+            <p className="text-3xl font-semibold">
               {Dayjs.formatMoney(
                 checkout.orderItems.reduce((acc, item) => {
                   return acc + item.quantity * item.product.price;
@@ -128,7 +130,7 @@ const CheckoutPage: NextPage<
         <div className="p-4">
           <section>
             {checkout.orderItems.map((item) => (
-              <article className="flex gap-4">
+              <article key={item.id} className="flex gap-4">
                 <Image
                   src={item.product.image}
                   alt={item.product.name}
@@ -154,6 +156,21 @@ const CheckoutPage: NextPage<
                 </div>
               </article>
             ))}
+            <article className="mt-4 flex gap-4">
+              <div className="h-[42px] w-[42px] rounded-md bg-transparent object-cover" />
+              <div>
+                <p className="w-auto truncate text-sm font-medium">Total</p>
+              </div>
+              <div className="ml-auto">
+                <p className="text-right font-medium">
+                  {Dayjs.formatMoney(
+                    checkout.orderItems.reduce((acc, item) => {
+                      return acc + item.quantity * item.product.price;
+                    }, 0),
+                  )}{" "}
+                </p>
+              </div>
+            </article>
           </section>
         </div>
       </Modal>
