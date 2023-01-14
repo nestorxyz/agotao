@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   NextPage,
   GetServerSideProps,
@@ -13,6 +14,7 @@ import {
   NotFoundCheckout,
   PaidCheckout,
 } from "@/screens";
+import { Modal } from "@agotao/ui";
 
 interface CheckoutPageProps {
   checkout_id: string;
@@ -40,6 +42,8 @@ export const getServerSideProps: GetServerSideProps<CheckoutPageProps> = async (
 const CheckoutPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = (props) => {
+  const [showModal, setShowModal] = useState(false);
+
   const { data: checkout, isLoading } = trpc.checkout.getPage.useQuery(
     props.checkout_id,
     {
@@ -72,11 +76,22 @@ const CheckoutPage: NextPage<
           cancel_url={checkout.cancel_url ?? undefined}
         />
 
-        <button>
+        <button
+          className="flex items-center gap-2"
+          onClick={() => {
+            setShowModal(true);
+          }}
+        >
           Detalles
           <ChevronDownIcon className="h-5 w-5" />
         </button>
       </header>
+      <Modal showModal={showModal} setShowModal={setShowModal}>
+        <div className="p-4">
+          <h1 className="text-2xl font-semibold">Detalles de la compra</h1>
+          <button>asd</button>
+        </div>
+      </Modal>
     </>
   );
 };
