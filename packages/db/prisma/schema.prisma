@@ -27,15 +27,16 @@ model User {
 }
 
 model Company {
-    id        String   @id @default(cuid())
-    image     String
-    name      String
-    username  String   @unique
-    admin_id  String
-    balance   Float    @default(0)
-    sk_live   String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    id          String   @id @default(cuid())
+    image       String
+    name        String
+    username    String   @unique
+    admin_id    String
+    balance     Float    @default(0)
+    sk_live     String?
+    webhook_url String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 
     admin            User              @relation(fields: [admin_id], references: [uid])
     colaborators     Colaborators[]

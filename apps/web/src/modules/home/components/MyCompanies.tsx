@@ -6,7 +6,7 @@ import { IoCopy } from "react-icons/io5";
 import { trpc } from "@/utils/trpc";
 
 // Components
-import { Text, Button } from "@/shared/components";
+import { Text, Button, Input } from "@/shared/components";
 import {
   CreateCompanyButton,
   CreateProductButton,
@@ -103,6 +103,10 @@ export const MyCompanies: React.FC = () => {
                     Generar API KEY
                   </Button>
                 )}
+              </div>
+              <div>
+                <Input label="Webhook URL" />
+                <Button>Guardar</Button>
               </div>
             </div>
 

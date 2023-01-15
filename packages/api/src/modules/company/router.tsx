@@ -23,6 +23,7 @@ export const companyRouter = router({
         image: true,
         balance: true,
         sk_live: true,
+        webhook_url: true,
         products: {
           select: {
             id: true,
