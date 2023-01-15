@@ -20,14 +20,13 @@ import {
   NotFoundCheckout,
   PaidCheckout,
 } from "@/screens";
-import { Dayjs, useViewportSize } from "@agotao/utils";
+import { Dayjs } from "@agotao/utils";
 import Image from "next/image";
 
 interface CheckoutPageProps {
   checkout_id: string;
 }
 
-// Return the checkout_id from the URL
 export const getServerSideProps: GetServerSideProps<CheckoutPageProps> = async (
   context,
 ) => {
@@ -51,8 +50,6 @@ const CheckoutPage: NextPage<
 > = (props) => {
   const [showModal, setShowModal] = useState(false);
 
-  const { width } = useViewportSize();
-
   const { data: checkout, isLoading } = trpc.checkout.getPage.useQuery(
     props.checkout_id,
     {
@@ -68,13 +65,13 @@ const CheckoutPage: NextPage<
     return <NotFoundCheckout />;
   }
 
-  /* if (checkout.payment_status === "PAID") {
+  if (checkout.payment_status === "PAID") {
     return <PaidCheckout />;
   }
 
   if (checkout.status === "EXPIRED") {
     return <ExpiredCheckout />;
-  } */
+  }
 
   const total = checkout.orderItems.reduce((acc, item) => {
     return acc + item.quantity * item.product.price;

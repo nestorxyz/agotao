@@ -21,6 +21,7 @@ export const getPage = publicProcedure
           },
         },
         status: true,
+        payment_status: true,
         createdAt: true,
         cancel_url: true,
         orderItems: {
@@ -70,6 +71,7 @@ export const getPage = publicProcedure
             },
           },
           status: true,
+          payment_status: true,
           createdAt: true,
           cancel_url: true,
           orderItems: {
