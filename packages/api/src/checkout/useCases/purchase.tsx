@@ -1,8 +1,7 @@
-import z from "zod";
-
 // Libraries
 import { TRPCError } from "@trpc/server";
 import sendMail, { Basic } from "@acme/emails";
+import { checkoutPurchaseDTO } from "@acme/validations";
 
 // tRPC
 import { publicProcedure } from "../../trpc";
@@ -10,22 +9,7 @@ import { publicProcedure } from "../../trpc";
 import { calculateComission } from "../../utils/pricing";
 
 export const purchase = publicProcedure
-  .input(
-    z.object({
-      name: z
-        .string({ required_error: "El nombre es requerido" })
-        .min(3, "El nombre debe tener al menos 3 caracteres"),
-      email: z
-        .string({ required_error: "El email es requerido" })
-        .email({ message: "El email no es válido" }),
-      checkout_id: z.string({
-        required_error: "El id del checkout es requerido",
-      }),
-      payment_method_id: z.string({
-        required_error: "Selecciona un método de pago",
-      }),
-    }),
-  )
+  .input(checkoutPurchaseDTO)
   .mutation(async ({ input, ctx }) => {
     const { name, email, checkout_id, payment_method_id } = input;
 
@@ -78,9 +62,21 @@ export const purchase = publicProcedure
         checkout_session_id: checkout_id,
         payment_method_id,
         commission: calculateComission(total_to_pay),
+        amount: total_to_pay,
       },
-      include: {
-        payment_method: true,
+      select: {
+        id: true,
+        payment_method: {
+          select: {
+            name: true,
+          },
+        },
+        checkoutSession: {
+          select: {
+            success_url: true,
+            cancel_url: true,
+          },
+        },
       },
     });
 
@@ -107,5 +103,8 @@ export const purchase = publicProcedure
 
     return {
       message: "Compra exitosa",
+      result: {
+        ...purchase,
+      },
     };
   });

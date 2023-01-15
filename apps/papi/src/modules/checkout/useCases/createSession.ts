@@ -54,7 +54,7 @@ export const createSession = async (
     const { items, success_url, cancel_url, customer_name, customer_email } =
       req.body;
 
-    const session = await prisma.checkout.create({
+    const session = await prisma.checkoutSession.create({
       data: {
         company_id: company.id,
         success_url,

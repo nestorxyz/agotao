@@ -7,7 +7,7 @@ import { publicProcedure } from "../../trpc";
 export const getPage = publicProcedure
   .input(z.string())
   .query(async ({ input, ctx }) => {
-    const checkout = await ctx.prisma.checkout.findUnique({
+    const checkout = await ctx.prisma.checkoutSession.findUnique({
       where: {
         id: input,
       },
@@ -53,7 +53,7 @@ export const getPage = publicProcedure
     const minutes = Math.floor(diff / 1000 / 60);
 
     if (checkout.status === "VALID" && minutes > 15) {
-      const updatedCheckout = await ctx.prisma.checkout.update({
+      const updatedCheckout = await ctx.prisma.checkoutSession.update({
         where: {
           id: checkout.id,
         },

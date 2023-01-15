@@ -1,7 +1,9 @@
 import { router } from "../trpc";
 
-import { getPage } from "./useCases";
+import { getPage, purchase, getPaymentMethods } from "./useCases";
 
 export const checkoutRouter = router({
   getPage,
+  purchase,
+  getPaymentMethods,
 });
