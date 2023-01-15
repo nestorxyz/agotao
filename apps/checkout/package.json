@@ -15,7 +15,6 @@
     "@acme/db": "*",
     "@acme/tailwind-config": "*",
     "@acme/validations": "*",
-    "@agotao/ui": "*",
     "@agotao/utils": "*",
     "@radix-ui/react-tooltip": "^1.0.2",
     "@tanstack/react-query": "^4.16.1",

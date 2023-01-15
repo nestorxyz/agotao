@@ -25,22 +25,18 @@ export const adminRouter = router({
         name: true,
         email: true,
         updatedAt: true,
+        amount: true,
         commission: true,
         status: true,
-        product: {
+        checkoutSession: {
           select: {
-            id: true,
-            name: true,
-            price: true,
             company: {
               select: {
-                id: true,
                 name: true,
                 admin: {
                   select: {
-                    uid: true,
-                    name: true,
                     email: true,
+                    name: true,
                   },
                 },
               },
@@ -69,21 +65,27 @@ export const adminRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const purchase = await ctx.prisma.purchase.findUnique({
+      const purchase = await ctx.prisma.purchase.update({
         where: {
           id: input.id,
         },
+        data: {
+          status: "VALID",
+          checkoutSession: {
+            update: {
+              payment_status: "PAID",
+            },
+          },
+        },
         select: {
           id: true,
+          amount: true,
           commission: true,
-          product: {
+          checkoutSession: {
             select: {
-              id: true,
-              price: true,
               company: {
                 select: {
                   id: true,
-                  balance: true,
                 },
               },
             },
@@ -94,32 +96,17 @@ export const adminRouter = router({
       if (!purchase)
         throw new TRPCError({
           code: "INTERNAL_SERVER_ERROR",
-          message: "Could not get purchase",
-        });
-
-      const updatedPurchase = await ctx.prisma.purchase.update({
-        where: {
-          id: input.id,
-        },
-        data: {
-          status: "VALID",
-        },
-      });
-
-      if (!updatedPurchase)
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
           message: "Could not validate purchase",
         });
 
       // Add balance to company
       const company = await ctx.prisma.company.update({
         where: {
-          id: purchase.product.company.id,
+          id: purchase.checkoutSession.company.id,
         },
         data: {
           balance: {
-            increment: purchase.product.price - purchase.commission,
+            increment: purchase.amount - purchase.commission,
           },
         },
       });
@@ -151,7 +138,6 @@ export const adminRouter = router({
       return {
         status: 200,
         message: "Purchase validated",
-        data: updatedPurchase,
       };
     }),
 });

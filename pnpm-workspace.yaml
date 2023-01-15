@@ -1,5 +1,5 @@
 packages:
-  - apps/nextjs
+  - apps/web
   - apps/papi
   - apps/checkout
   - packages/api

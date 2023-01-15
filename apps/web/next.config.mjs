@@ -11,7 +11,13 @@ const config = {
   swcMinify: true,
   experimental: {
     // Enables hot-reload and easy integration for local packages
-    transpilePackages: ["@acme/api", "@acme/validations", "@agotao/utils"],
+    transpilePackages: [
+      "@acme/api",
+      "@acme/db",
+      "@acme/validations",
+      "@acme/emails",
+      "@agotao/utils",
+    ],
   },
   // We already do linting on GH actions
   eslint: {
@@ -19,15 +25,6 @@ const config = {
   },
   images: {
     domains: ["lh3.googleusercontent.com", "storage.googleapis.com"],
-  },
-  redirects: async () => {
-    return [
-      {
-        source: "/",
-        destination: "https://agotao.com/",
-        permanent: true,
-      },
-    ];
   },
 };
 
