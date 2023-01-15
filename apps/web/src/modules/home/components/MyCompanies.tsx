@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/router";
 import { IoCopy } from "react-icons/io5";
 
 // Services
@@ -16,12 +15,9 @@ import {
 
 // Utils
 import { copyToClipboard } from "@/shared/utils/copyToClipboard";
-import { env } from "@/env/client.mjs";
 
 export const MyCompanies: React.FC = () => {
   const { data, refetch, isLoading } = trpc.company.getAll.useQuery();
-
-  const router = useRouter();
 
   const createSecretKeyMutation = trpc.company.createSecretKey.useMutation({
     onSuccess: (data) => {
@@ -139,31 +135,6 @@ export const MyCompanies: React.FC = () => {
                         <p className="whitespace-nowrap text-gray-500">
                           S/. {product.price}
                         </p>
-                        <Button
-                          soft
-                          color="black"
-                          size="small"
-                          onClick={() => {
-                            copyToClipboard({
-                              text: `${env.NEXT_PUBLIC_APP_URL}/${company.username}/${product.id}`,
-                              onSuccess: () => {
-                                toast.success("Copiado al portapapeles");
-                              },
-                            });
-                          }}
-                        >
-                          Copiar link
-                        </Button>
-                        <Button
-                          soft
-                          color="black"
-                          size="small"
-                          onClick={() => {
-                            router.push(`/${company.username}/${product.id}`);
-                          }}
-                        >
-                          Ver
-                        </Button>
                       </div>
                     </div>
                   </div>
