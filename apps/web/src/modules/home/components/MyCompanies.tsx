@@ -36,8 +36,7 @@ export const MyCompanies: React.FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
-    getValues,
+    formState: { errors },
   } = useForm<UpdateWebhookURL>({
     resolver: zodResolver(updateWebhookURLSchema),
     defaultValues: {
@@ -55,9 +54,6 @@ export const MyCompanies: React.FC = () => {
       toast.error(error.message);
     },
   });
-
-  console.log(errors);
-  console.log(getValues());
 
   return (
     <div className="w-full">

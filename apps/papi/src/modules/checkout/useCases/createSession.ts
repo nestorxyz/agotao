@@ -6,6 +6,7 @@ import {
   ValidatedRequest,
 } from "express-joi-validation";
 import { Response, NextFunction } from "express";
+import { Prisma } from "@prisma/client";
 import prisma from "@/shared/lib/prisma";
 import dayjs from "dayjs";
 
@@ -26,6 +27,7 @@ const bodySchema = Joi.object({
   cancel_url: Joi.string().optional(),
   customer_name: Joi.string().optional(),
   customer_email: Joi.string().optional(),
+  metadata: Joi.object().optional(),
 });
 
 interface BodySchema extends ValidatedRequestSchema {
@@ -38,6 +40,7 @@ interface BodySchema extends ValidatedRequestSchema {
     cancel_url?: string;
     customer_name?: string;
     customer_email?: string;
+    metadata?: Record<string, unknown>;
   };
 }
 
@@ -51,8 +54,14 @@ export const createSession = async (
   try {
     const company = (req as RequestWithCompany).company;
 
-    const { items, success_url, cancel_url, customer_name, customer_email } =
-      req.body;
+    const {
+      items,
+      success_url,
+      cancel_url,
+      customer_name,
+      customer_email,
+      metadata,
+    } = req.body;
 
     const session = await prisma.checkoutSession.create({
       data: {
@@ -68,6 +77,7 @@ export const createSession = async (
             quantity: item.quantity,
           })),
         },
+        metadata: metadata as Prisma.InputJsonValue,
       },
     });
 
@@ -82,6 +92,7 @@ export const createSession = async (
       expires_at: session.expires_at,
       payment_status: session.payment_status,
       status: session.status,
+      metadata: session.metadata,
     });
   } catch (error) {
     next(error);

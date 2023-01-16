@@ -122,6 +122,7 @@ model CheckoutSession {
     customer_name  String?
     customer_email String?
     expires_at     DateTime?
+    metadata       Json?
     payment_status CheckoutPaymentStatus @default(UNPAID)
     status         CheckoutStatus        @default(VALID)
     createdAt      DateTime              @default(now())
