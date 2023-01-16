@@ -20,7 +20,7 @@ import { Dayjs } from "@agotao/utils";
 import { Button } from "@/shared/components";
 
 export const Purchases: React.FC = () => {
-  const { data, isLoading, refetch } = trpc.admin.purchases.useQuery();
+  const { data, isLoading, refetch } = trpc.admin.getPurchases.useQuery();
 
   const validatePurchaseMutation = trpc.admin.validatePurchase.useMutation({
     onSuccess: () => {
@@ -40,7 +40,7 @@ export const Purchases: React.FC = () => {
     <Card>
       <Flex justifyContent="justify-start" spaceX="space-x-2">
         <Title>Purchases</Title>
-        <Badge text="8" color="gray" />
+        <Badge text={data?.data.length.toString() ?? ""} color="gray" />
       </Flex>
       <Text marginTop="mt-2">Overview of purchases</Text>
 

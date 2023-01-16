@@ -75,6 +75,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
                   id: true,
                   name: true,
                   image: true,
+                  price: true,
                 },
               },
             },
