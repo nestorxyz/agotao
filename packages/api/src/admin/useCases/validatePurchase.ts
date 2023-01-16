@@ -114,6 +114,8 @@ export const validatePurchase = protectedProcedure
           code: "INTERNAL_SERVER_ERROR",
           message: "Could not send webhook to company",
         });
+
+      console.log("webhookResponse:", webhookResponse);
     }
 
     return {
