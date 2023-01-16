@@ -29,7 +29,7 @@ export class Dayjs {
       minimumFractionDigits: 2,
     });
 
-    return `S/ ${currencyFormatter.format(number)}`;
+    return `${currencyFormatter.format(number)}`;
   };
 
   public dayjs = dayjs;
