@@ -11,8 +11,8 @@ import { createCompany, createSecretKey } from "./useCases";
 
 export const companyRouter = router({
   create: createCompany,
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    const companies = await ctx.prisma.company.findMany({
+  getCompany: protectedProcedure.query(async ({ ctx }) => {
+    const company = await ctx.prisma.company.findFirst({
       where: {
         admin_id: ctx.session.uid,
       },
@@ -35,16 +35,10 @@ export const companyRouter = router({
       },
     });
 
-    if (!companies)
-      throw new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "No se pudo obtener las empresas",
-      });
-
     return {
       status: 200,
       message: "Empresas obtenidas correctamente",
-      result: companies,
+      result: company,
     };
   }),
   requestPayout: protectedProcedure
