@@ -2,9 +2,9 @@
   "name": "@agotao/papi",
   "version": "1.0.0",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs",
+    "build": "tsup src/index.ts --format cjs && cp src/index.html dist",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "dev": "tsup src/index.ts --format cjs --watch --onSuccess \"node dist/index.js\"",
+    "dev": "tsup src/index.ts --format cjs --watch --onSuccess \"node dist/index.js\" && cp src/index.html dist",
     "lint": "tsc --noEmit && TIMING=1 eslint \"src/**/*.ts*\"",
     "start": "node dist/index.js"
   },

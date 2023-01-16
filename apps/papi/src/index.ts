@@ -14,10 +14,11 @@ const port = process.env.PORT || 5001;
 const server = createServer();
 
 server.get("/", (req, res) => {
-  return res.json({
-    message: "Hi, what are you going to ship today?",
-    "Show us on Twitter": "https://twitter.com/nestoredduardo",
-  });
+  return res.sendFile("index.html", { root: __dirname });
+});
+
+server.get("/health", (req, res) => {
+  return res.status(200).json({ status: "ok" });
 });
 
 routerApi(server);
