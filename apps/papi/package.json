@@ -2,17 +2,20 @@
   "name": "@agotao/papi",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next dev -p 3002",
+    "dev": "next dev -p 3001",
     "build": "next build",
     "clean": "rm -rf .next .turbo node_modules",
-    "start": "next start -p 3002",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@acme/api": "*",
+    "@acme/db": "*",
     "@acme/tailwind-config": "*",
+    "@hapi/boom": "^10.0.0",
+    "joi": "^17.7.0",
     "next": "^13.0.6",
+    "next-joi": "^2.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

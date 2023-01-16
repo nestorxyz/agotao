@@ -33,7 +33,7 @@ model Company {
     username    String   @unique
     admin_id    String
     balance     Float    @default(0)
-    sk_live     String?
+    sk_live     String?  @unique
     webhook_url String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
