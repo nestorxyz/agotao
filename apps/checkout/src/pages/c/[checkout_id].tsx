@@ -7,7 +7,7 @@ import {
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
-import { Modal } from "@/components";
+import { Modal, DefaultHead } from "@/components";
 import {
   CompanyBackButton,
   PaymentElement,
@@ -79,6 +79,8 @@ const CheckoutPage: NextPage<
 
   return (
     <>
+      <DefaultHead title={`Checkout - ${checkout.company.name}`} />
+
       <div className="p-4 lg:flex lg:min-h-screen lg:p-0">
         <section className="mx-auto mb-8 w-full max-w-sm lg:m-0 lg:max-w-none lg:bg-[rgba(0,0,0,0.01)] lg:pt-16">
           <div className="ml-auto space-y-8 lg:mr-20 lg:w-96">

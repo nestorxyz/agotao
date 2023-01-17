@@ -1,7 +1,12 @@
+import { DefaultHead, Dots } from "@/components";
+
 export const LoadingCheckout: React.FC = () => {
   return (
-    <div>
-      <h1>Loading Checkout...</h1>
-    </div>
+    <>
+      <DefaultHead title="Loading Checkout" />
+      <div className="flex h-screen w-full items-center justify-center">
+        <Dots />
+      </div>
+    </>
   );
 };
