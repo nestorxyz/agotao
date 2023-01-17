@@ -171,6 +171,7 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
                   <p className="truncate text-lg font-semibold">
                     {product.name}
                   </p>
+                  <p className="text-gray-500">id: {product.id}</p>
                   <div className="flex w-full items-center justify-between">
                     <p className="whitespace-nowrap text-gray-500">
                       S/. {product.price}
