@@ -23,6 +23,7 @@ module.exports = {
           800: "#3f18bf",
           900: "#35169c",
         },
+        secondary: "FF4FCB",
       },
     },
   },

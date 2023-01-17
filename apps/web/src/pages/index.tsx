@@ -15,11 +15,10 @@ const Home: NextPage = () => {
       <main className="mx-auto mb-10 flex w-full max-w-6xl flex-col items-center justify-center px-4 xl:px-0">
         <Title />
 
+        <Preview />
         <div className="mt-16 flex w-full flex-col-reverse justify-between gap-8 md:mt-24 lg:flex-row lg:items-center">
           <Cards />
           <div className="flex w-full flex-col gap-4">
-            <Preview />
-
             <p className="text-sm text-gray-600 md:text-base">
               ¿Necesitas una nueva solución?{" "}
               <a
