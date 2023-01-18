@@ -12,6 +12,7 @@ export const Features: React.FC = () => {
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.8 }}
+        viewport={{ once: true }}
         className="mx-auto mb-[50px] max-w-[600px] space-y-[10px] text-center md:mb-[80px]"
       >
         <h3 className="font-bold uppercase text-primary">
@@ -26,6 +27,7 @@ export const Features: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 1 }}
+          viewport={{ once: true }}
           className="rounded-[20px] border border-gray-100 p-10 shadow-sm"
         >
           <div className="mb-[30px] w-fit rounded-md bg-primary-50 p-3">
@@ -46,6 +48,7 @@ export const Features: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 1.2 }}
+          viewport={{ once: true }}
           className="rounded-[20px] border border-gray-100 p-10 shadow-sm"
         >
           <div className="mb-[30px] w-fit rounded-md bg-primary-50 p-3">
@@ -54,7 +57,6 @@ export const Features: React.FC = () => {
           <h4 className="mb-[10px] text-2xl font-extrabold">
             Inicia en minutos
           </h4>
-          <p className="text-lg text-gray-500"></p>
           <p className="text-lg text-gray-500">
             Crea tu cuenta, integra las APIs y comienza a aceptar pagos en
             línea.
@@ -64,6 +66,7 @@ export const Features: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 1.4 }}
+          viewport={{ once: true }}
           className="rounded-[20px] border border-gray-100 p-10 shadow-sm"
         >
           <div className="mb-[30px] w-fit rounded-md bg-primary-50 p-3">

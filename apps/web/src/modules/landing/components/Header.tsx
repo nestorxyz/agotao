@@ -52,7 +52,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-20 left-0 z-10 flex h-screen w-full flex-col gap-6 bg-white px-4"
+              className="absolute top-[75px] left-0 z-10 flex h-screen w-full flex-col gap-6 bg-white px-4"
             >
               <Button
                 color="black"

@@ -6,6 +6,7 @@ import {
   Preview,
   Features,
   Footer,
+  Developers,
 } from "@/modules/landing/components";
 
 // Types
@@ -24,6 +25,8 @@ const Home: NextPage = () => {
         <Preview />
 
         <Features />
+
+        <Developers />
       </main>
 
       <Footer />
