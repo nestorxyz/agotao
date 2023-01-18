@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   NextPage,
   GetServerSideProps,
@@ -22,6 +22,8 @@ import {
 } from "@/screens";
 import { Dayjs } from "@agotao/utils";
 import Image from "next/image";
+
+import mixpanel from "@/lib/mixpanel";
 
 interface CheckoutPageProps {
   checkout_id: string;
@@ -66,12 +68,33 @@ const CheckoutPage: NextPage<
   }
 
   if (checkout.payment_status === "PAID") {
+    mixpanel.track("Checkout Page Paid", {
+      checkout_id: checkout.id,
+      company_id: checkout.company.id,
+      company_name: checkout.company.name,
+      status: "PAID",
+    });
+
     return <PaidCheckout />;
   }
 
   if (checkout.status === "EXPIRED") {
+    mixpanel.track("Checkout Page Expired", {
+      checkout_id: checkout.id,
+      company_id: checkout.company.id,
+      company_name: checkout.company.name,
+      status: "EXPIRED",
+    });
+
     return <ExpiredCheckout />;
   }
+
+  mixpanel.track("Checkout Page", {
+    checkout_id: checkout.id,
+    company_id: checkout.company.id,
+    company_name: checkout.company.name,
+    status: "VALID",
+  });
 
   const total = checkout.orderItems.reduce((acc, item) => {
     return acc + item.quantity * item.product.price;

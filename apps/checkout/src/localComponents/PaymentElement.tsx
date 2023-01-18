@@ -17,6 +17,7 @@ import { PaymentMethod } from "@acme/db";
 
 // Services
 import { trpc } from "@/lib/trpc";
+import mixpanel from "@/lib/mixpanel";
 import { CheckoutPurchaseDTO, checkoutPurchaseDTO } from "@acme/validations";
 
 export interface PaymentElementProps {
@@ -70,9 +71,20 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           duration: 10000,
         },
       );
+      mixpanel.track("Checkout Purchase", {
+        purchase_id: data.result.id,
+        amount: data.result.amount,
+        commission: data.result.commission,
+        company: data.result.checkoutSession.company.name,
+        payment_method: data.result.payment_method.name,
+      });
       router.push(`/compra/${data.result.id}`);
     },
     onError(error) {
+      mixpanel.track("Checkout Purchase Error", {
+        error: error.message,
+      });
+
       toast.error(error.message);
     },
   });

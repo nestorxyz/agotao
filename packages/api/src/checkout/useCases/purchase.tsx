@@ -66,6 +66,8 @@ export const purchase = publicProcedure
       },
       select: {
         id: true,
+        amount: true,
+        commission: true,
         payment_method: {
           select: {
             name: true,
@@ -73,6 +75,11 @@ export const purchase = publicProcedure
         },
         checkoutSession: {
           select: {
+            company: {
+              select: {
+                name: true,
+              },
+            },
             success_url: true,
             cancel_url: true,
           },
