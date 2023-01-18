@@ -94,11 +94,17 @@ export const Footer: React.FC = () => {
             . Todos los derechos reservados. Construido con ❤️ en Perú.
           </span>
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <a href="#" className="text-gray-500 hover:text-gray-900">
+            <a
+              href="https://twitter.com/_agotao"
+              className="text-gray-500 hover:text-gray-900"
+            >
               <TwitterLogoIcon className="h-6 w-6" />
               <span className="sr-only">Twitter page</span>
             </a>
-            <a href="#" className="text-gray-500 hover:text-gray-900">
+            <a
+              href="https://www.linkedin.com/company/agotao/"
+              className="text-gray-500 hover:text-gray-900"
+            >
               <LinkedInLogoIcon className="h-6 w-6" />
               <span className="sr-only">LinkedIn account</span>
             </a>
