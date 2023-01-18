@@ -23,7 +23,10 @@ export const Header: React.FC<HeaderProps> = (props) => {
 
   return (
     <header
-      className={classNames(className, "flex items-center bg-white py-5 px-4")}
+      className={classNames(
+        className,
+        "fixed z-10 flex w-full items-center bg-white py-5 px-4",
+      )}
     >
       <div className="mx-auto flex w-full max-w-6xl justify-between">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
@@ -49,7 +52,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-20 left-0 z-10 flex h-full w-full flex-col gap-6 bg-white px-4"
+              className="absolute top-20 left-0 z-10 flex h-screen w-full flex-col gap-6 bg-white px-4"
             >
               <Button
                 color="black"

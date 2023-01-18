@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/shared/components";
 
 export const Title: React.FC = () => {
   const router = useRouter();
 
   return (
-    <div className="relative mb-12 mt-16 max-w-[800px] space-y-5 md:mt-20 ">
+    <div className="relative mb-12 mt-36 max-w-[800px] space-y-5 md:mt-[200px]">
       <motion.h1
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
