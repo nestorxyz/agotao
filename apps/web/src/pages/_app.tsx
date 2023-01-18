@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/shared/context/auth";
+import NextNProgress from "nextjs-progressbar";
 
 // Styles
 import "@/shared/styles/globals.css";
@@ -39,6 +40,7 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
           duration: 4000,
         }}
       />
+      <NextNProgress color="#694fff" />
       <Component {...pageProps} />
     </AuthProvider>
   );

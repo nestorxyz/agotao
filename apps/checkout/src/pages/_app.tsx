@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
+import NextNProgress from "nextjs-progressbar";
 
 // Styles
 import "@/styles/globals.css";
@@ -31,6 +32,8 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
 
   return (
     <>
+      <NextNProgress color="#694fff" />
+
       <Toaster
         position="top-center"
         toastOptions={{

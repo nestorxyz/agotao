@@ -1,6 +1,8 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
+import mixpanel from "@/lib/mixpanel";
+
 interface CompanyBackButtonProps {
   name: string;
   logo: string;
@@ -14,6 +16,10 @@ export const CompanyBackButton: React.FC<CompanyBackButtonProps> = (props) => {
     <button
       className="group relative flex h-8 min-w-[100px] items-center gap-2"
       onClick={() => {
+        mixpanel.track("Checkout Back ", {
+          company_name: name,
+        });
+
         if (cancel_url) {
           window.open(cancel_url, "_self");
         } else {

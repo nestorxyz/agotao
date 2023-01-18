@@ -45,6 +45,7 @@ importers:
       framer-motion: ^7.10.2
       mixpanel-browser: ^2.45.0
       next: ^13.0.6
+      nextjs-progressbar: ^0.0.16
       postcss: ^8.4.19
       react: 18.2.0
       react-dom: 18.2.0
@@ -67,6 +68,7 @@ importers:
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
       mixpanel-browser: 2.45.0
       next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+      nextjs-progressbar: 0.0.16_next@13.0.6+react@18.2.0
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       react-hot-toast: 2.4.0_biqbaboplfbrettd7655fr4n2y
@@ -160,6 +162,7 @@ importers:
       generate-api-key: ^1.0.2
       mixpanel-browser: ^2.45.0
       next: ^13.0.6
+      nextjs-progressbar: ^0.0.16
       nookies: ^2.5.2
       payment: ^2.4.6
       postcss: ^8.4.19
@@ -205,6 +208,7 @@ importers:
       generate-api-key: 1.0.2
       mixpanel-browser: 2.45.0
       next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+      nextjs-progressbar: 0.0.16_next@13.0.6+react@18.2.0
       nookies: 2.5.2
       payment: 2.4.6
       prop-types: 15.8.1
@@ -2288,6 +2292,10 @@ packages:
     dependencies:
       '@types/node': 18.11.18
     dev: true
+
+  /@types/nprogress/0.2.0:
+    resolution: {integrity: sha512-1cYJrqq9GezNFPsWTZpFut/d4CjpZqA0vhqDUPFWYKF1oIyBz5qnoYMzR+0C/T96t3ebLAC1SSnwrVOm5/j74A==}
+    dev: false
 
   /@types/payment/2.1.4:
     resolution: {integrity: sha512-FR9njCfl788PfIhjULwuyb0tpwh57g6uIWCZu+Mg69tQ/GyWoVL39+ugXn0LyqLhhUj/2qWKTRHX/Dqbhw6v7g==}
@@ -6287,6 +6295,19 @@ packages:
       - '@babel/core'
       - babel-plugin-macros
 
+  /nextjs-progressbar/0.0.16_next@13.0.6+react@18.2.0:
+    resolution: {integrity: sha512-GV0fD38EMD3vSDCmkq+tObmoup6QA91a6a9MxGuhJZuRk/9TNsrHGnIQQQ/sggkMkXuT4fBgF6jRjFwScDT3zA==}
+    peerDependencies:
+      next: '>= 6.0.0'
+      react: '>= 16.0.0'
+    dependencies:
+      '@types/nprogress': 0.2.0
+      next: 13.0.6_biqbaboplfbrettd7655fr4n2y
+      nprogress: 0.2.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /no-case/2.3.2:
     resolution: {integrity: sha512-rmTZ9kz+f3rCvK2TD1Ue/oZlns7OGoIWP4fc3llxxRXlOkHKoWPPWJOfFYpITabSow43QJbRIoHQXtt10VldyQ==}
     dependencies:
@@ -6375,6 +6396,10 @@ packages:
       console-control-strings: 1.1.0
       gauge: 3.0.2
       set-blocking: 2.0.0
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /nth-check/2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
