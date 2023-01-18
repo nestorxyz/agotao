@@ -10,7 +10,9 @@ const Home = () => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="mt-20 p-4 text-center">
-        <h1 className="mb-6 text-4xl font-medium">Agotao API</h1>
+        <h1 className="mb-6 text-4xl font-medium md:text-6xl md:font-semibold">
+          Agotao API
+        </h1>
         <h3 className="text-lg">Hi, what are you going to ship today?</h3>
         <p className="text-base">
           Show your thing on Twitter and{" "}
@@ -28,7 +30,7 @@ const Home = () => {
           alt="Deku"
           width={600}
           height={600}
-          className="mx-auto mt-6 w-full max-w-sm"
+          className="mx-auto mt-6 w-full max-w-sm md:max-w-lg"
         />
 
         <p className="text-base">
