@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import NextNProgress from "nextjs-progressbar";
+import { Analytics } from "@vercel/analytics/react";
 
 // Styles
 import "@/styles/globals.css";
@@ -41,6 +42,7 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
         }}
       />
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 };

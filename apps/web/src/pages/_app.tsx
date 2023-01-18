@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/shared/context/auth";
 import NextNProgress from "nextjs-progressbar";
+import { Analytics } from "@vercel/analytics/react";
 
 // Styles
 import "@/shared/styles/globals.css";
@@ -42,6 +43,7 @@ const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
       />
       <NextNProgress color="#694fff" />
       <Component {...pageProps} />
+      <Analytics />
     </AuthProvider>
   );
 };

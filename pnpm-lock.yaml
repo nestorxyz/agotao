@@ -38,6 +38,7 @@ importers:
       '@types/mixpanel-browser': ^2.38.0
       '@types/react': ^18.0.25
       '@types/react-dom': ^18.0.9
+      '@vercel/analytics': ^0.1.8
       autoprefixer: ^10.4.13
       classnames: ^2.3.2
       eslint: ^8.31.0
@@ -64,6 +65,7 @@ importers:
       '@trpc/next': 10.9.0_boycm4yp33b2f3lgy6o2xtyfcm
       '@trpc/react-query': 10.9.0_qw4miir7nnxijwjta54q3esyeq
       '@trpc/server': 10.9.0
+      '@vercel/analytics': 0.1.8_react@18.2.0
       classnames: 2.3.2
       framer-motion: 7.10.3_biqbaboplfbrettd7655fr4n2y
       mixpanel-browser: 2.45.0
@@ -149,6 +151,7 @@ importers:
       '@types/react-credit-cards': ^0.8.1
       '@types/react-dom': ^18.0.9
       '@types/uuid': ^9.0.0
+      '@vercel/analytics': ^0.1.8
       autoprefixer: ^10.4.13
       bcrypt: ^5.1.0
       classnames: ^2.3.2
@@ -198,6 +201,7 @@ importers:
       '@trpc/react-query': 10.9.0_qw4miir7nnxijwjta54q3esyeq
       '@trpc/server': 10.9.0
       '@types/react-credit-cards': 0.8.1
+      '@vercel/analytics': 0.1.8_react@18.2.0
       bcrypt: 5.1.0
       classnames: 2.3.2
       csstype: 3.1.1
@@ -2500,6 +2504,14 @@ packages:
     dependencies:
       '@typescript-eslint/types': 5.48.1
       eslint-visitor-keys: 3.3.0
+
+  /@vercel/analytics/0.1.8_react@18.2.0:
+    resolution: {integrity: sha512-PQrOI8BJ9qUiVJuQfnKiJd15eDjDJH9TBKsNeMrtelT4NAk7d9mBVz1CoZkvoFnHQ0OW7Xnqmr1F2nScfAnznQ==}
+    peerDependencies:
+      react: ^16.8||^17||^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /abbrev/1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
