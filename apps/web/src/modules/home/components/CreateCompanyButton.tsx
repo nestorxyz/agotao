@@ -18,6 +18,7 @@ import {
   ErrorMessage,
   Spinner,
 } from "@/shared/components";
+import mixpanel from "@/shared/lib/mixpanel";
 
 export interface CreateCompanyButtonProps {
   onCreated?: () => void;
@@ -44,6 +45,10 @@ export const CreateCompanyButton: React.FC<CreateCompanyButtonProps> = (
 
   const createCompanyMutation = trpc.company.create.useMutation({
     onSuccess(data) {
+      mixpanel.track("Company Created", {
+        company: data.result.id,
+        name: data.result.name,
+      });
       onCreated?.();
       setLoading(false);
       toast.success(data.message);

@@ -15,6 +15,7 @@ import { CreateProductButton, PayoutButton } from "@/modules/home/components";
 
 // Utils
 import { copyToClipboard } from "@/shared/utils/copyToClipboard";
+import mixpanel from "@/shared/lib/mixpanel";
 
 interface CompanyProps {
   refetch: () => void;
@@ -54,6 +55,11 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
 
   const updateWebhookUrlMutation = trpc.web.updateWebhookURL.useMutation({
     onSuccess: () => {
+      mixpanel.track("Webhook URL Updated", {
+        company_id: company.id,
+        company_name: company.name,
+        webhook_url: company.webhook_url,
+      });
       refetch();
       toast.success("Webhook URL actualizado");
     },
@@ -100,11 +106,16 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
                 color="black"
                 soft
                 onClick={() => {
-                  company.sk_live &&
+                  if (company.sk_live) {
                     copyToClipboard({
                       text: company.sk_live,
                       onSuccess: () => toast.success("API KEY copiado"),
                     });
+                    mixpanel.track("API KEY Copied", {
+                      company_id: company.id,
+                      company_name: company.name,
+                    });
+                  }
                 }}
                 className="truncate"
               >

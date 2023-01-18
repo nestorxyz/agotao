@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 // Components
 import { DefaultHead } from "@/shared/components";
 import {
@@ -11,8 +13,13 @@ import {
 
 // Types
 import type { NextPage } from "next";
+import mixpanel from "@/shared/lib/mixpanel";
 
 const Home: NextPage = () => {
+  useEffect(() => {
+    mixpanel.track("Landing Hit");
+  }, []);
+
   return (
     <>
       <DefaultHead />

@@ -8,6 +8,7 @@ import { DefaultHead, Dots } from "@/shared/components";
 
 // Hooks
 import { useAuth } from "@/shared/hooks/useAuth";
+import mixpanel from "@/shared/lib/mixpanel";
 
 const LoginPage: NextPage = () => {
   const { user, loading } = useAuth();
@@ -26,6 +27,11 @@ const LoginPage: NextPage = () => {
   }
 
   if (user) {
+    mixpanel.identify(user.uid);
+    mixpanel.people.set_once({
+      $email: user.email,
+      $name: user.name,
+    });
     router.push("/home");
 
     return <></>;

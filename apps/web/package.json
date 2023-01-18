@@ -39,6 +39,7 @@
     "focus-trap-react": "^10.0.2",
     "framer-motion": "^7.10.2",
     "generate-api-key": "^1.0.2",
+    "mixpanel-browser": "^2.45.0",
     "next": "^13.0.6",
     "nookies": "^2.5.2",
     "payment": "^2.4.6",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/mixpanel-browser": "^2.38.0",
     "@types/node": "^18.0.0",
     "@types/payment": "^2.1.4",
     "@types/react": "^18.0.25",

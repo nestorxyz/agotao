@@ -19,6 +19,7 @@ import {
   Input,
   Spinner,
 } from "@/shared/components";
+import mixpanel from "@/shared/lib/mixpanel";
 
 export interface CreateProductButtonProps {
   onCreated?: () => void;
@@ -46,6 +47,11 @@ export const CreateProductButton: React.FC<CreateProductButtonProps> = (
 
   const createProductMutation = trpc.product.create.useMutation({
     onSuccess(data) {
+      mixpanel.track("Product Created", {
+        product: data.result.id,
+        name: data.result.name,
+        price: data.result.price,
+      });
       onCreated?.();
       setLoading(false);
       toast.success(data.message);
