@@ -1,11 +1,36 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { AuthContent } from "@/modules/auth";
-import { DefaultHead } from "@/shared/components";
+import { DefaultHead, Dots } from "@/shared/components";
+
+// Hooks
+import { useAuth } from "@/shared/hooks/useAuth";
 
 const SignupPage: NextPage = () => {
+  const { user, loading } = useAuth();
+
+  const router = useRouter();
+
+  if (loading) {
+    return (
+      <>
+        <DefaultHead title="Validando sesión" />
+        <div className="flex h-screen w-full items-center justify-center">
+          <Dots />
+        </div>
+      </>
+    );
+  }
+
+  if (user) {
+    router.push("/home");
+
+    return <></>;
+  }
+
   return (
     <>
       <DefaultHead title="Crear cuenta" />
