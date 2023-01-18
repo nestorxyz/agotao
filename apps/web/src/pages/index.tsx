@@ -3,9 +3,9 @@ import { DefaultHead } from "@/shared/components";
 import {
   Header,
   Title,
-  Cards,
   Preview,
   Features,
+  Footer,
 } from "@/modules/landing/components";
 
 // Types
@@ -25,6 +25,8 @@ const Home: NextPage = () => {
 
         <Features />
       </main>
+
+      <Footer />
     </>
   );
 };
