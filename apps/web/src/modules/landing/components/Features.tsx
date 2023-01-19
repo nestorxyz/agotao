@@ -79,9 +79,9 @@ export const Features: React.FC = () => {
             2.9% + S/1.00 por venta exitosa. Sin costos de instalación o
             comisiones mensuales.
           </p>
-          <p className="text-lg text-gray-500">
+          {/* <p className="text-lg text-gray-500">
             Ventas menores a S/50.00, tienen comisión de solo el 2.9%.{" "}
-          </p>
+          </p> */}
         </motion.article>
       </div>
     </section>
