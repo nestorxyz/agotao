@@ -32,6 +32,10 @@ const LoginPage: NextPage = () => {
       $email: user.email,
       $name: user.name,
     });
+    mixpanel.track("Login", {
+      $email: user.email,
+      $name: user.name,
+    });
     router.push("/home");
 
     return <></>;
