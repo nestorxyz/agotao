@@ -3,11 +3,10 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-hot-toast";
-import z from "zod";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import * as RadioGroup from "@radix-ui/react-radio-group";
-import { InfoCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 // Components
 import { Input, ErrorMessage, Button, Spinner, Label } from "@/components";
@@ -171,6 +170,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
         filled
         onClick={handleSubmit((data) => {
           setProcessing(true);
+          checkoutPurchaseMutation.mutate(data);
         })}
         disabled={checkoutPurchaseMutation.isLoading}
         className="mb-10"

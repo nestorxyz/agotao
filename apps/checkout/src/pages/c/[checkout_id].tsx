@@ -80,7 +80,7 @@ const CheckoutPage: NextPage<
     return <PaidCheckout />;
   }
 
-  /* if (checkout.status === "EXPIRED") {
+  if (checkout.status === "EXPIRED") {
     mixpanel.track("Checkout Page Expired", {
       checkout_id: checkout.id,
       company_id: checkout.company.id,
@@ -89,7 +89,7 @@ const CheckoutPage: NextPage<
     });
 
     return <ExpiredCheckout />;
-  } */
+  }
 
   mixpanel.track("Checkout Page", {
     checkout_id: checkout.id,
