@@ -64,7 +64,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
         purchase_id: data.result.id,
         amount: data.result.amount,
         commission: data.result.commission,
-        company: data.result.checkoutSession.company.name,
+        company: data.result.checkout_session.company.name,
         payment_method: data.result.payment_method.name,
       });
       router.push(`/compra/${data.result.id}`);

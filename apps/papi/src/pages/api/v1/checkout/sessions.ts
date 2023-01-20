@@ -86,6 +86,22 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
         },
         metadata: metadata as Prisma.InputJsonValue,
       },
+      select: {
+        id: true,
+        success_url: true,
+        cancel_url: true,
+        customer_name: true,
+        customer_email: true,
+        expires_at: true,
+        payment_intent: {
+          select: {
+            id: true,
+            status: true,
+          },
+        },
+        status: true,
+        metadata: true,
+      },
     });
 
     res.status(201).json({
@@ -97,7 +113,9 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
         email: session.customer_email,
       },
       expires_at: session.expires_at,
-      payment_status: session.payment_status,
+      payment_status: session.payment_intent
+        ? session.payment_intent.status
+        : null,
       status: session.status,
       metadata: session.metadata,
     });

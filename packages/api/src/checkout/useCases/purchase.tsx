@@ -18,7 +18,13 @@ export const purchase = publicProcedure
         id: checkout_id,
       },
       include: {
-        orderItems: {
+        payment_intent: {
+          select: {
+            id: true,
+            status: true,
+          },
+        },
+        order_items: {
           select: {
             quantity: true,
             product: {
@@ -38,9 +44,9 @@ export const purchase = publicProcedure
         code: "BAD_REQUEST",
       });
 
-    if (checkoutSession.payment_status === "PAID")
+    if (checkoutSession.payment_intent)
       throw new TRPCError({
-        message: "El checkout ya fue pagado",
+        message: "El checkout ya fue utilizado",
         code: "BAD_REQUEST",
       });
 
@@ -50,12 +56,12 @@ export const purchase = publicProcedure
         code: "BAD_REQUEST",
       });
 
-    const total_to_pay = checkoutSession.orderItems.reduce(
+    const total_to_pay = checkoutSession.order_items.reduce(
       (acc, item) => acc + item.product.price * item.quantity,
       0,
     );
 
-    const purchase = await ctx.prisma.purchase.create({
+    const purchase = await ctx.prisma.paymentIntent.create({
       data: {
         name,
         email,
@@ -73,7 +79,7 @@ export const purchase = publicProcedure
             name: true,
           },
         },
-        checkoutSession: {
+        checkout_session: {
           select: {
             company: {
               select: {
@@ -101,7 +107,7 @@ export const purchase = publicProcedure
         <Basic
           name={name}
           email={email}
-          product_name={checkoutSession.orderItems[0]!.product.name} // eslint-disable-line
+          product_name={checkoutSession.order_items[0]!.product.name} // eslint-disable-line
           price={total_to_pay}
           payment_method={purchase.payment_method.name}
         />
