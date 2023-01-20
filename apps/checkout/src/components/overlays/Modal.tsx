@@ -103,8 +103,8 @@ export function Modal({
                   ref: mobileModalRef,
                   key: "mobile-modal",
                   className: classNames(
-                    "group fixed inset-x-0 bottom-0 z-40 w-screen cursor-grab active:cursor-grabbing",
-                    width > breakPoint && "hidden",
+                    "group inset-x-0 bottom-0 z-40 w-screen cursor-grab active:cursor-grabbing",
+                    width > breakPoint ? "hidden" : "fixed",
                   ),
                   initial: { y: "0%" },
                   animate: controls,
@@ -120,8 +120,8 @@ export function Modal({
                   ref: desktopModalRef,
                   key: "desktop-modal",
                   className: classNames(
-                    "fixed inset-0 z-40 hidden min-h-screen items-center justify-center",
-                    width > breakPoint && "flex",
+                    "fixed inset-0 z-40 min-h-screen items-center justify-center",
+                    width > breakPoint ? "flex" : "hidden",
                   ),
                   initial: { scale: 0.95 },
                   animate: { scale: 1 },

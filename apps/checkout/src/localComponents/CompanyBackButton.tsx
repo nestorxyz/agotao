@@ -1,34 +1,20 @@
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
-import mixpanel from "@/lib/mixpanel";
-
 interface CompanyBackButtonProps {
   name: string;
   logo: string;
-  cancel_url?: string;
+  onClick?: () => void;
 }
 
 export const CompanyBackButton: React.FC<CompanyBackButtonProps> = (props) => {
-  const { name, logo, cancel_url } = props;
+  const { name, logo, onClick } = props;
 
   return (
     <button
       className="group relative flex h-8 min-w-[100px] items-center gap-2"
-      onClick={() => {
-        mixpanel.track("Checkout Back ", {
-          company_name: name,
-        });
-
-        if (cancel_url) {
-          window.open(cancel_url, "_self");
-        } else {
-          window.history.back();
-        }
-      }}
-      title={`Ir a ${
-        cancel_url ? "la página de la empresa" : "la página anterior"
-      }`}
+      onClick={onClick}
+      title={"Ir a la página de la empresa"}
     >
       <ArrowLeftIcon className="h-5 w-5 text-gray-400 transition-all group-hover:-translate-x-[2px] group-hover:scale-105 group-hover:text-gray-800 lg:absolute lg:-left-6" />
 

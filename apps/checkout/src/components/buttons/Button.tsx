@@ -38,6 +38,9 @@ export const Button: React.FC<ButtonProps> = (props) => {
         className,
         disabled && "cursor-default opacity-50",
         filled &&
+          color === "primary" &&
+          "bg-primary text-white hover:bg-primary-700 disabled:bg-primary",
+        filled &&
           color === "black" &&
           "bg-black text-white hover:bg-[#1a1a1a] disabled:bg-black",
         filled &&

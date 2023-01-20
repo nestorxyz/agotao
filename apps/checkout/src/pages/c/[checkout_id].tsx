@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   NextPage,
   GetServerSideProps,
@@ -7,7 +7,7 @@ import {
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
-import { Modal, DefaultHead } from "@/components";
+import { Modal, DefaultHead, Text, Button } from "@/components";
 import {
   CompanyBackButton,
   PaymentElement,
@@ -51,6 +51,7 @@ const CheckoutPage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const [showGoBackModal, setShowGoBackModal] = useState(false);
 
   const { data: checkout, isLoading } = trpc.checkout.getPage.useQuery(
     props.checkout_id,
@@ -78,7 +79,7 @@ const CheckoutPage: NextPage<
     return <PaidCheckout />;
   }
 
-  if (checkout.status === "EXPIRED") {
+  /* if (checkout.status === "EXPIRED") {
     mixpanel.track("Checkout Page Expired", {
       checkout_id: checkout.id,
       company_id: checkout.company.id,
@@ -87,7 +88,7 @@ const CheckoutPage: NextPage<
     });
 
     return <ExpiredCheckout />;
-  }
+  } */
 
   mixpanel.track("Checkout Page", {
     checkout_id: checkout.id,
@@ -111,7 +112,7 @@ const CheckoutPage: NextPage<
               <CompanyBackButton
                 name={checkout.company.name}
                 logo={checkout.company.image}
-                cancel_url={checkout.cancel_url ?? undefined}
+                onClick={() => setShowGoBackModal(true)}
               />
 
               <button
@@ -179,7 +180,7 @@ const CheckoutPage: NextPage<
         </div>
       </div>
       <footer className="mb-8 mt-10 flex items-center justify-center gap-2 text-gray-400 lg:hidden">
-        <p>Powered by</p>
+        <p>Compras seguras con</p>
         <Image
           src="/isotipo.svg"
           alt="Isotipo de Agotao"
@@ -192,7 +193,7 @@ const CheckoutPage: NextPage<
         setShowModal={setShowModal}
         breakPoint={1024}
       >
-        <div className="bg-white p-4" id="mobile-items">
+        <div className="bg-white p-4">
           <section className="mx-auto max-w-md lg:w-96">
             {checkout.orderItems.map((item) => (
               <ItemCard
@@ -206,6 +207,45 @@ const CheckoutPage: NextPage<
             ))}
             <TotalCard total={Dayjs.formatMoney(total)} />
           </section>
+        </div>
+      </Modal>
+      <Modal showModal={showGoBackModal} setShowModal={setShowGoBackModal}>
+        <div className="rounded-lg bg-white p-8 sm:shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]">
+          <Text.H2 className="text-center font-bold">
+            ¿Estás seguro de que quieres salir?
+          </Text.H2>
+          <Text.Subtitle className="mb-10 text-center">
+            Si sales de la página de pago, la compra se cancelará.
+          </Text.Subtitle>
+
+          <div className="mt-4 flex flex-col-reverse justify-center gap-2 sm:flex-row">
+            <Button
+              soft
+              color="black"
+              onClick={() => {
+                setShowGoBackModal(false);
+              }}
+            >
+              No, completar la compra
+            </Button>
+            <Button
+              filled
+              color="primary"
+              onClick={() => {
+                mixpanel.track("Checkout Back ", {
+                  company_name: checkout.company.name,
+                });
+
+                if (checkout.cancel_url) {
+                  window.open(checkout.cancel_url, "_self");
+                } else {
+                  window.history.back();
+                }
+              }}
+            >
+              Salir de todos modos
+            </Button>
+          </div>
         </div>
       </Modal>
     </>
