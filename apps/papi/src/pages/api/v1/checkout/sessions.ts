@@ -78,7 +78,7 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
         customer_name,
         customer_email,
         expires_at: dayjs().add(15, "minute").toISOString(),
-        orderItems: {
+        order_items: {
           create: items.map((item) => ({
             product_id: item.product_id,
             quantity: item.quantity,

@@ -21,10 +21,15 @@ export const getPage = publicProcedure
           },
         },
         status: true,
-        payment_status: true,
         createdAt: true,
         cancel_url: true,
-        orderItems: {
+        payment_intent: {
+          select: {
+            id: true,
+            status: true,
+          },
+        },
+        order_items: {
           select: {
             id: true,
             product: {
@@ -71,10 +76,15 @@ export const getPage = publicProcedure
             },
           },
           status: true,
-          payment_status: true,
+          payment_intent: {
+            select: {
+              id: true,
+              status: true,
+            },
+          },
           createdAt: true,
           cancel_url: true,
-          orderItems: {
+          order_items: {
             select: {
               id: true,
               product: {

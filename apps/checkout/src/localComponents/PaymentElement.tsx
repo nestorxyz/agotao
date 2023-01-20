@@ -22,10 +22,11 @@ import { CheckoutPurchaseDTO, checkoutPurchaseDTO } from "@acme/validations";
 export interface PaymentElementProps {
   checkout_id: string;
   setProcessing: (processing: boolean) => void;
+  processing: boolean;
 }
 
 export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
-  const { checkout_id, setProcessing } = props;
+  const { checkout_id, setProcessing, processing } = props;
 
   const router = useRouter();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<Pick<
@@ -172,7 +173,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           setProcessing(true);
           checkoutPurchaseMutation.mutate(data);
         })}
-        disabled={checkoutPurchaseMutation.isLoading}
+        disabled={checkoutPurchaseMutation.isLoading || processing}
         className="mb-10"
       >
         {checkoutPurchaseMutation.isLoading ? (

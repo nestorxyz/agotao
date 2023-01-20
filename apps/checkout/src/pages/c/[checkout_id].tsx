@@ -4,6 +4,7 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType,
 } from "next";
+import { useRouter } from "next/router";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { trpc } from "@/lib/trpc";
 
@@ -14,12 +15,7 @@ import {
   ItemCard,
   TotalCard,
 } from "@/localComponents";
-import {
-  ExpiredCheckout,
-  LoadingCheckout,
-  NotFoundCheckout,
-  PaidCheckout,
-} from "@/screens";
+import { ExpiredCheckout, LoadingCheckout, NotFoundCheckout } from "@/screens";
 import { Dayjs } from "@agotao/utils";
 import Image from "next/image";
 
@@ -54,6 +50,8 @@ const CheckoutPage: NextPage<
   const [showGoBackModal, setShowGoBackModal] = useState(false);
   const [processing, setProcessing] = useState(false);
 
+  const router = useRouter();
+
   const { data: checkout, isLoading } = trpc.checkout.getPage.useQuery(
     props.checkout_id,
     {
@@ -69,7 +67,7 @@ const CheckoutPage: NextPage<
     return <NotFoundCheckout />;
   }
 
-  if (checkout.payment_status === "PAID") {
+  if (checkout.payment_intent?.status === "PAID") {
     mixpanel.track("Checkout Page Paid", {
       checkout_id: checkout.id,
       company_id: checkout.company.id,
@@ -77,7 +75,22 @@ const CheckoutPage: NextPage<
       status: "PAID",
     });
 
-    return <PaidCheckout />;
+    router.push(`/compra/${checkout.payment_intent.id}`);
+
+    return <></>;
+  }
+
+  if (checkout.payment_intent?.status === "VALIDATING") {
+    mixpanel.track("Checkout Page Validating", {
+      checkout_id: checkout.id,
+      company_id: checkout.company.id,
+      company_name: checkout.company.name,
+      status: "VALIDATING",
+    });
+
+    router.push(`/compra/${checkout.payment_intent.id}`);
+
+    return <></>;
   }
 
   if (checkout.status === "EXPIRED") {
@@ -98,7 +111,7 @@ const CheckoutPage: NextPage<
     status: "VALID",
   });
 
-  const total = checkout.orderItems.reduce((acc, item) => {
+  const total = checkout.order_items.reduce((acc, item) => {
     return acc + item.quantity * item.product.price;
   }, 0);
 
@@ -129,8 +142,8 @@ const CheckoutPage: NextPage<
             </header>
             <div className="relative flex flex-col items-center lg:hidden">
               <Image
-                src={checkout.orderItems[0]!.product.image} // eslint-disable-line
-                alt={checkout.orderItems[0]!.product.name} // eslint-disable-line
+                src={checkout.order_items[0]!.product.image} // eslint-disable-line
+                alt={checkout.order_items[0]!.product.name} // eslint-disable-line
                 width={300}
                 height={300}
                 className="h-32 w-32 rounded-md object-cover"
@@ -142,7 +155,7 @@ const CheckoutPage: NextPage<
                 }}
               >
                 <span className="text-sm font-medium leading-4 text-gray-800">
-                  {checkout.orderItems.reduce((acc, item) => {
+                  {checkout.order_items.reduce((acc, item) => {
                     return acc + item.quantity;
                   }, 0)}{" "}
                   items
@@ -160,7 +173,7 @@ const CheckoutPage: NextPage<
             </div>
             <div className="hidden lg:inline-block">
               <section className="mx-auto max-w-md lg:w-96">
-                {checkout.orderItems.map((item) => (
+                {checkout.order_items.map((item) => (
                   <ItemCard
                     key={item.id}
                     name={item.product.name}
@@ -181,6 +194,7 @@ const CheckoutPage: NextPage<
           <PaymentElement
             checkout_id={checkout.id}
             setProcessing={setProcessing}
+            processing={processing}
           />
         </div>
       </div>
@@ -200,7 +214,7 @@ const CheckoutPage: NextPage<
       >
         <div className="bg-white p-4">
           <section className="mx-auto max-w-md lg:w-96">
-            {checkout.orderItems.map((item) => (
+            {checkout.order_items.map((item) => (
               <ItemCard
                 key={item.id}
                 name={item.product.name}
