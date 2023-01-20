@@ -2,13 +2,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IoCopy } from "react-icons/io5";
 import { toast } from "react-hot-toast";
 import z from "zod";
 import { useRouter } from "next/router";
-import { copyToClipboard } from "@agotao/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import * as RadioGroup from "@radix-ui/react-radio-group";
+import { InfoCircledIcon, LockClosedIcon } from "@radix-ui/react-icons";
 
 // Components
 import { Input, ErrorMessage, Button, Spinner, Label } from "@/components";
@@ -22,13 +21,12 @@ import mixpanel from "@/lib/mixpanel";
 import { CheckoutPurchaseDTO, checkoutPurchaseDTO } from "@acme/validations";
 
 export interface PaymentElementProps {
-  amount: number;
   checkout_id: string;
-  className?: string;
+  setProcessing: (processing: boolean) => void;
 }
 
 export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
-  const { amount, checkout_id } = props;
+  const { checkout_id, setProcessing } = props;
 
   const router = useRouter();
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<Pick<
@@ -42,18 +40,8 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
     formState: { errors },
     setValue,
     clearErrors,
-  } = useForm<CheckoutPurchaseDTO & { accept_payment: boolean }>({
-    resolver: zodResolver(
-      checkoutPurchaseDTO.extend({
-        accept_payment: z
-          .boolean({
-            required_error: "Debes de confirmar que has realizado el pago",
-          })
-          .refine((value) => value === true, {
-            message: "Debes de confirmar que has realizado el pago",
-          }),
-      }),
-    ),
+  } = useForm<CheckoutPurchaseDTO>({
+    resolver: zodResolver(checkoutPurchaseDTO),
     defaultValues: {
       checkout_id,
     },
@@ -82,6 +70,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
       router.push(`/compra/${data.result.id}`);
     },
     onError(error) {
+      setProcessing(false);
       mixpanel.track("Checkout Purchase Error", {
         error: error.message,
       });
@@ -99,7 +88,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
   }
 
   return (
-    <div className="mx-auto flex max-w-sm flex-col gap-4 lg:m-0 lg:ml-20 lg:mt-8">
+    <div className="mx-auto flex max-w-sm flex-col gap-8 lg:m-0 lg:ml-20 lg:mt-8">
       <div className="space-y-4">
         <Input
           id="name"
@@ -117,7 +106,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           error={errors.email?.message}
         />
         <div className="space-y-2">
-          <Label>Elige un método de pago</Label>
+          <Label>Selecciona un método de pago</Label>
           <RadioGroup.Root
             aria-label="Selecciona método de pago"
             className="grid grid-cols-2 gap-3"
@@ -127,6 +116,11 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
                 key={paymentMethod.type}
                 value={paymentMethod.id}
                 className="flex items-center gap-2"
+                onClick={() => {
+                  setSelectedPaymentMethod(paymentMethod);
+                  setValue("payment_method_id", paymentMethod.id);
+                  clearErrors("payment_method_id");
+                }}
               >
                 <div className="relative max-h-[20px] min-h-[20px] min-w-[20px] max-w-[20px] rounded-full border-2 border-gray-300">
                   <RadioGroup.Indicator>
@@ -153,100 +147,22 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
             ))}
           </RadioGroup.Root>
 
-          {/* <div className="flex flex-wrap justify-center gap-3">
-            {paymentMethods?.map((paymentMethod) => (
-              <Button
-                key={paymentMethod.type}
-                {...(selectedPaymentMethod?.type === paymentMethod.type
-                  ? { outline: true }
-                  : { light: true })}
-                color="positive"
-                style={{
-                  height: "75px",
-                  minWidth: "75px",
-                  width: "75px",
-                  padding: "0",
-                  borderRadius: "8px",
-                }}
-                className={classNames(
-                  selectedPaymentMethod?.type === paymentMethod.type
-                    ? "scale-105 border-2"
-                    : "opacity-50",
-                  "transition-all hover:scale-105",
-                )}
-                onClick={() => {
-                  setSelectedPaymentMethod(paymentMethod);
-                  setValue("payment_method_id", paymentMethod.id);
-                  clearErrors("payment_method_id");
-                }}
-              >
-                <Image
-                  src={`/images/payment/${paymentMethod.type.toLowerCase()}.png`}
-                  alt={paymentMethod.name}
-                  width={200}
-                  height={200}
-                  className="h-16 w-16 rounded-lg object-cover"
-                />
-              </Button>
-            ))}
-          </div> */}
           {errors.payment_method_id?.message && (
             <ErrorMessage>{errors.payment_method_id?.message}</ErrorMessage>
           )}
         </div>
       </div>
 
-      {selectedPaymentMethod ? (
-        <div>
-          <div className="flex items-center gap-4">
-            <div className="flex w-full flex-col items-center justify-center">
-              <p className="mb-2 text-center text-lg">
-                {selectedPaymentMethod.type === "YAPE" ||
-                selectedPaymentMethod.type === "PLIN"
-                  ? `Envía el total de tu compra a este número con ${selectedPaymentMethod.name}`
-                  : `Realiza una transferencia a la siguiente cuenta ${selectedPaymentMethod.type}`}
-              </p>
-
-              <button
-                className="flex items-center gap-2 transition-all active:scale-95"
-                onClick={() =>
-                  copyToClipboard({
-                    text: selectedPaymentMethod.keyInfo,
-                    onSuccess: () => {
-                      toast.success(
-                        `${selectedPaymentMethod.name} copiado al portapapeles`,
-                      );
-                    },
-                  })
-                }
-              >
-                <p className="text-xl font-semibold text-primary">
-                  {selectedPaymentMethod.keyInfo}
-                </p>
-                <IoCopy className="h-6 w-6 text-primary" />
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      {/* <div>
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            id="accept_payment"
-            className="h-4 w-4"
-            {...register("accept_payment")}
-          />
-          <p>
-            He realizado el pago de {Dayjs.formatMoney(amount)} mediante{" "}
-            {selectedPaymentMethod?.name}
+      {selectedPaymentMethod && (
+        <div className="flex flex-col items-center rounded-lg bg-primary-50 p-4">
+          <InfoCircledIcon className="h-6 w-6 text-primary" />
+          <p className="text-center text-sm text-primary">
+            Recuerda que deberás realizar la transferencia mediante el método de
+            pago seleccionado en un plazo máximo de 15 minutos para completar la
+            compra.
           </p>
         </div>
-        {errors.accept_payment?.message && (
-          <ErrorMessage>{errors.accept_payment?.message}</ErrorMessage>
-        )}
-      </div> */}
+      )}
 
       <Button
         key="confirm"
@@ -254,10 +170,10 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
         size="large"
         filled
         onClick={handleSubmit((data) => {
-          checkoutPurchaseMutation.mutate(data);
+          setProcessing(true);
         })}
         disabled={checkoutPurchaseMutation.isLoading}
-        className="mt-4 mb-10"
+        className="mb-10"
       >
         {checkoutPurchaseMutation.isLoading ? (
           <>

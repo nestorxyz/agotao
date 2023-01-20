@@ -52,6 +52,7 @@ const CheckoutPage: NextPage<
 > = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [showGoBackModal, setShowGoBackModal] = useState(false);
+  const [processing, setProcessing] = useState(false);
 
   const { data: checkout, isLoading } = trpc.checkout.getPage.useQuery(
     props.checkout_id,
@@ -113,6 +114,7 @@ const CheckoutPage: NextPage<
                 name={checkout.company.name}
                 logo={checkout.company.image}
                 onClick={() => setShowGoBackModal(true)}
+                processing={processing}
               />
 
               <button
@@ -176,7 +178,10 @@ const CheckoutPage: NextPage<
           </div>
         </section>
         <div className="lg:w-full lg:max-w-none lg:pt-16 lg:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
-          <PaymentElement checkout_id={checkout.id} amount={total} />
+          <PaymentElement
+            checkout_id={checkout.id}
+            setProcessing={setProcessing}
+          />
         </div>
       </div>
       <footer className="mb-8 mt-10 flex items-center justify-center gap-2 text-gray-400 lg:hidden">
