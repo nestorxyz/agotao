@@ -1,13 +1,14 @@
 import { useState } from "react";
 import Image from "next/image";
-import classNames from "classnames";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IoCopy } from "react-icons/io5";
 import { toast } from "react-hot-toast";
 import z from "zod";
 import { useRouter } from "next/router";
-import { copyToClipboard, Dayjs } from "@agotao/utils";
+import { copyToClipboard } from "@agotao/utils";
+import { motion, AnimatePresence } from "framer-motion";
+import * as RadioGroup from "@radix-ui/react-radio-group";
 
 // Components
 import { Input, ErrorMessage, Button, Spinner, Label } from "@/components";
@@ -115,9 +116,44 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
           register={register}
           error={errors.email?.message}
         />
-        <div className="space-y-1">
+        <div className="space-y-2">
           <Label>Elige un método de pago</Label>
-          <div className="flex flex-wrap justify-center gap-3">
+          <RadioGroup.Root
+            aria-label="Selecciona método de pago"
+            className="grid grid-cols-2 gap-3"
+          >
+            {paymentMethods?.map((paymentMethod) => (
+              <RadioGroup.Item
+                key={paymentMethod.type}
+                value={paymentMethod.id}
+                className="flex items-center gap-2"
+              >
+                <div className="relative max-h-[20px] min-h-[20px] min-w-[20px] max-w-[20px] rounded-full border-2 border-gray-300">
+                  <RadioGroup.Indicator>
+                    <AnimatePresence>
+                      <motion.div
+                        className="absolute left-1 top-1 bottom-1 right-1 h-[9px] w-[9px] rounded-full bg-primary"
+                        initial={{ scale: 2 }}
+                        animate={{ scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      ></motion.div>
+                    </AnimatePresence>
+                  </RadioGroup.Indicator>
+                </div>
+                <Image
+                  src={`/images/payment/${paymentMethod.type.toLowerCase()}.png`}
+                  alt={paymentMethod.name}
+                  width={200}
+                  height={200}
+                  className="h-10 w-10 rounded-lg object-cover"
+                />
+                <p className="font-medium">{paymentMethod.name}</p>
+              </RadioGroup.Item>
+            ))}
+          </RadioGroup.Root>
+
+          {/* <div className="flex flex-wrap justify-center gap-3">
             {paymentMethods?.map((paymentMethod) => (
               <Button
                 key={paymentMethod.type}
@@ -153,7 +189,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
                 />
               </Button>
             ))}
-          </div>
+          </div> */}
           {errors.payment_method_id?.message && (
             <ErrorMessage>{errors.payment_method_id?.message}</ErrorMessage>
           )}
@@ -194,7 +230,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
         </div>
       ) : null}
 
-      <div>
+      {/* <div>
         <div className="flex items-center gap-2">
           <input
             type="checkbox"
@@ -210,7 +246,7 @@ export const PaymentElement: React.FC<PaymentElementProps> = (props) => {
         {errors.accept_payment?.message && (
           <ErrorMessage>{errors.accept_payment?.message}</ErrorMessage>
         )}
-      </div>
+      </div> */}
 
       <Button
         key="confirm"
