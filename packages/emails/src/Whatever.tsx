@@ -9,7 +9,7 @@ export interface WhateverProps {
   children: React.ReactNode;
 }
 
-export const Whatever: Template<WhateverProps> = (props) => {
+const Whatever: Template<WhateverProps> = (props) => {
   const { children } = props;
 
   return (
@@ -24,3 +24,5 @@ export const Whatever: Template<WhateverProps> = (props) => {
     </BaseLayout>
   );
 };
+
+export default Whatever;

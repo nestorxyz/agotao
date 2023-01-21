@@ -1,4 +1,3 @@
-import React from "react";
 import { MjmlSection, MjmlColumn } from "mjml-react";
 import { Template } from "mailing-core";
 import BaseLayout from "./components/BaseLayout";
@@ -13,7 +12,7 @@ export interface BasicProps {
   payment_method: string;
 }
 
-export const Basic: Template<BasicProps> = (props) => {
+const Basic: Template<BasicProps> = (props) => {
   const { name, email, product_name, price, payment_method } = props;
 
   return (
@@ -40,3 +39,5 @@ export const Basic: Template<BasicProps> = (props) => {
     </BaseLayout>
   );
 };
+
+export default Basic;

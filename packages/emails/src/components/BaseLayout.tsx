@@ -32,8 +32,8 @@ export default function BaseLayout({
           <meta name="supported-color-schemes" content="light dark" />
         </MjmlRaw>
         <MjmlFont
-          name="Inter"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700"
+          name="Manrope"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700"
         />
         <MjmlAttributes>
           <MjmlAll {...themeDefaults} />
@@ -44,6 +44,10 @@ export default function BaseLayout({
           }
           a {
             color: inherit
+          }
+          .top-section {
+            border-radius: 6px 6px 0 0;
+            padding-top: 28px !important;
           }
           .gutter {
             padding-left: ${spacing.s7}px;
@@ -125,7 +129,9 @@ export default function BaseLayout({
       `}</MjmlStyle>
       </MjmlHead>
 
-      <MjmlBody width={width}>{children}</MjmlBody>
+      <MjmlBody width={width} backgroundColor="#fdfdfd">
+        {children}
+      </MjmlBody>
     </Mjml>
   );
 }

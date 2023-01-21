@@ -5,8 +5,7 @@ import { colors } from "../theme";
 type DividerProps = React.ComponentProps<typeof MjmlDivider>;
 
 const defaultProps = {
-  borderColor: colors.neutral600,
-  borderStyle: "dotted",
+  borderColor: colors.black[100],
   borderWidth: "1px",
 };
 

@@ -1,13 +1,17 @@
 export const colors = {
-  black: "#000",
-  white: "#FFF",
-  gold: "#FADF98",
-  neutral100: "#F5F5F5",
-  neutral200: "#EEE",
-  neutral400: "#888",
-  neutral500: "#777",
-  neutral600: "#666",
-  neutral800: "#444",
+  black: {
+    DEFAULT: "#1e1e1e",
+    "50": "#f7f7f7",
+    "100": "#e3e3e3",
+    "200": "#c8c8c8",
+    "300": "#a4a4a4",
+    "400": "#818181",
+    "500": "#666666",
+    "600": "#515151",
+    "700": "#434343",
+    "800": "#383838",
+    "900": "#1e1e1e",
+  },
 };
 
 export const fontSize = {

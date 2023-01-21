@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "m-init": "mailing init",
+    "m-preview": "mailing preview",
+    "m-server": "mailing server",
+    "mailing": "mailing",
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint . --ext .ts,.tsx",
     "type-check": "tsc --noEmit"

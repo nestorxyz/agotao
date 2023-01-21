@@ -1,4 +1,4 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src", "index.ts", "emails"]
+  "include": ["src", "index.ts", "src", "src/components", "src/previews"]
 }
