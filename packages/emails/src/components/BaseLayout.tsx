@@ -9,17 +9,22 @@ import {
   MjmlAll,
   MjmlRaw,
   MjmlPreview,
+  MjmlWrapper,
+  MjmlSection,
+  MjmlColumn,
+  MjmlImage,
 } from "mjml-react";
+import Footer from "./Footer";
 import { colors, screens, themeDefaults, spacing } from "../theme";
 
 type BaseLayoutProps = {
-  width: number;
+  company_name: string;
   children: React.ReactNode;
   preview?: string;
 };
 
 export default function BaseLayout({
-  width,
+  company_name,
   children,
   preview,
 }: BaseLayoutProps) {
@@ -28,8 +33,8 @@ export default function BaseLayout({
       <MjmlHead>
         {preview && <MjmlPreview>{preview}</MjmlPreview>}
         <MjmlRaw>
-          <meta name="color-scheme" content="light dark" />
-          <meta name="supported-color-schemes" content="light dark" />
+          <meta name="color-scheme" content="light" />
+          <meta name="supported-color-schemes" content="light" />
         </MjmlRaw>
         <MjmlFont
           name="Manrope"
@@ -45,92 +50,24 @@ export default function BaseLayout({
           a {
             color: inherit
           }
-          .top-section {
-            border-radius: 6px 6px 0 0;
-            padding-top: 28px !important;
-          }
-          .gutter {
-            padding-left: ${spacing.s7}px;
-            padding-right: ${spacing.s7}px;
-          }
-          .no-wrap {
-            white-space: nowrap;
-          }
-          .dark-mode {
-            display: none;
-            max-width: 0px;
-            max-height: 0px;
-            overflow: hidden;
-            mso-hide: all;
-          }
-          .hidden {
-            display: none;
-            max-width: 0px;
-            max-height: 0px;
-            overflow: hidden;
-            mso-hide: all;
-          }
-          .lg-hidden {
-            display: none;
-            max-width: 0px;
-            max-height: 0px;
-            overflow: hidden;
-            mso-hide: all;
-          }
-
-          /* Large screens */
-          @media (min-width:${screens.xs}) {
-            .lg-gutter {
-              padding-left: ${spacing.s7}px !important;
-              padding-right: ${spacing.s7}px !important;
-            }
-            .sm-hidden {
-              display: none;
-              max-width: 0px;
-              max-height: 0px;
-              overflow: hidden;
-              mso-hide: all;
-            }
-            .lg-hidden {
-              display: block !important;
-              max-width: none !important;
-              max-height: none !important;
-              overflow: visible !important;
-              mso-hide: none !important;
-            }
-          }
-
-          /* Dark Mode */
-          @media (prefers-color-scheme: dark) {
-            body {
-              background: ${colors.black};
-            }
-            .invert > * {
-              filter: invert(1) !important;
-            }
-            .text > * {
-              color: #fff !important;
-            }
-            .dark-mode {
-              display: inherit !important;
-              max-width: none !important;
-              max-height: none !important;
-              overflow: visible !important;
-              mso-hide: none !important;
-            }
-            .light-mode {
-              display: none;
-              max-width: 0px;
-              max-height: 0px;
-              overflow: hidden;
-              mso-hide: all;
-            }
-          }
       `}</MjmlStyle>
       </MjmlHead>
 
-      <MjmlBody width={width} backgroundColor="#fdfdfd">
-        {children}
+      <MjmlBody width={640} backgroundColor="#fdfdfd">
+        <MjmlWrapper fullWidth={true} padding="24px 16px">
+          <MjmlSection paddingBottom={24} backgroundColor="white">
+            <MjmlColumn>
+              <MjmlImage
+                height={10}
+                src="https://firebasestorage.googleapis.com/v0/b/civil-glyph-372313.appspot.com/o/assets%2Fcover.png?alt=media&token=c0d0c0ae-2601-44ba-8ca1-9e1c7902bde1"
+              />
+            </MjmlColumn>
+          </MjmlSection>
+
+          {children}
+
+          <Footer company_name={company_name} />
+        </MjmlWrapper>
       </MjmlBody>
     </Mjml>
   );

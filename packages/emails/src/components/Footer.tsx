@@ -68,7 +68,12 @@ export default function Footer({ company_name }: FooterProps) {
           </MjmlRaw>
         </MjmlColumn>
       </MjmlSection>
-      <MjmlSection paddingTop={32} paddingBottom={32}>
+      <MjmlSection
+        paddingTop={16}
+        paddingBottom={32}
+        paddingLeft={10}
+        paddingRight={10}
+      >
         <MjmlColumn>
           <MjmlText
             fontSize={fontSize.xs}

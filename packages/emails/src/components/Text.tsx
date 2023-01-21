@@ -5,6 +5,10 @@ type TextProps = {
   maxWidth?: number;
 } & React.ComponentProps<typeof MjmlText>;
 
-export default function Text({ children }: TextProps) {
-  return <MjmlText color={"#515151"}>{children}</MjmlText>;
+export default function Text({ children, ...props }: TextProps) {
+  return (
+    <MjmlText color={"#515151"} {...props}>
+      {children}
+    </MjmlText>
+  );
 }

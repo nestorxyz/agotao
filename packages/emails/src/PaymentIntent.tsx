@@ -19,43 +19,43 @@ interface PaymentIntentMailProps {
 }
 
 const PaymentIntentMail: React.FC<PaymentIntentMailProps> = (props) => {
-  const { company_image, company_name, payment_method } = props;
+  const { company_image, company_name, payment_method, products, total } =
+    props;
 
   return (
-    <BaseLayout width={600}>
-      <MjmlWrapper
-        fullWidth={true}
-        padding="24px 16px"
-        backgroundColor={"white"}
-      >
-        <MjmlSection>
+    <BaseLayout company_name={company_name}>
+      <MjmlSection backgroundColor={"white"} padding="0px 16px">
+        <MjmlColumn>
+          <MjmlImage
+            src={company_image}
+            width={80}
+            borderRadius="1000px"
+            padding="16px 0px"
+          />
+          <Text paddingBottom="8px">
+            Gracias por tu compra en <b>{company_name}</b>
+          </Text>
+          <Text>
+            Realiza la transferencia mediante {payment_method} para completar la
+            compra. Puedes ignorar este mensaje si ya realizaste el pago.
+          </Text>
+
+          <Divider padding={"24px 0px"} />
+        </MjmlColumn>
+      </MjmlSection>
+
+      {products.map((product) => (
+        <MjmlSection key={product.name}>
           <MjmlColumn>
-            <MjmlImage
-              height={10}
-              src="https://firebasestorage.googleapis.com/v0/b/civil-glyph-372313.appspot.com/o/assets%2Fcover.png?alt=media&token=c0d0c0ae-2601-44ba-8ca1-9e1c7902bde1"
-            />
-            <MjmlImage
-              src={company_image}
-              width={80}
-              borderRadius="1000px"
-              padding="16px 0px"
-            />
             <Text>
-              Gracias por tu compra en <b>{company_name}</b>
-            </Text>
-            <Text>
-              Realiza la transferencia mediante {payment_method} para completar
-              la compra. Puedes ignorar este mensaje si ya realizaste el pago{" "}
+              {product.name} x {product.quantity}
             </Text>
           </MjmlColumn>
+          <MjmlColumn>
+            <Text>{product.total}</Text>
+          </MjmlColumn>
         </MjmlSection>
-
-        <Divider padding={"24px 0px"} />
-
-        <MjmlSection backgroundColor={colors.black[100]} padding="16px 8px">
-          <MjmlColumn></MjmlColumn>
-        </MjmlSection>
-      </MjmlWrapper>
+      ))}
     </BaseLayout>
   );
 };
