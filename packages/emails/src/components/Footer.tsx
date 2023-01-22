@@ -81,8 +81,9 @@ export default function Footer({ company_name }: FooterProps) {
             align="center"
             color={colors.black.DEFAULT}
           >
-            © {new Date().getFullYear()} Agotao. Todos los derechos reservados.
-            Construido con ❤️ en Perú.
+            © {new Date().getFullYear()}{" "}
+            <a href="https://agotao.com/">Agotao</a>. Todos los derechos
+            reservados. Construido con ❤️ en Perú.
           </MjmlText>
 
           <MjmlText
@@ -91,8 +92,11 @@ export default function Footer({ company_name }: FooterProps) {
             align="center"
           >
             Recibes este correo porque has hecho una compra en {company_name},
-            que usa los servicios de <b>Agotao</b> para el procesamiento de
-            pagos.
+            que usa los servicios de{" "}
+            <b>
+              <a href="https://agotao.com/">Agotao</a>
+            </b>{" "}
+            para el procesamiento de pagos.
           </MjmlText>
         </MjmlColumn>
       </MjmlSection>
