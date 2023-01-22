@@ -48,7 +48,8 @@ export default function BaseLayout({
             -webkit-font-smoothing: antialiased;
           }
           a {
-            color: inherit
+            color: inherit;
+            text-decoration: none;
           }
       `}</MjmlStyle>
       </MjmlHead>

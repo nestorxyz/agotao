@@ -14,6 +14,7 @@
     "@acme/emails": "*",
     "@acme/firebase-admin": "*",
     "@acme/validations": "*",
+    "@agotao/utils": "*",
     "@trpc/client": "^10.9.0",
     "@trpc/server": "^10.9.0",
     "axios": "^1.2.2",

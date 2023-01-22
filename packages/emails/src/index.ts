@@ -19,6 +19,3 @@ const sendMail = buildSendMail({
 });
 
 export default sendMail;
-
-export * from "./Basic";
-export * from "./Whatever";

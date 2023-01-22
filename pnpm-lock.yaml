@@ -249,6 +249,7 @@ importers:
       '@acme/emails': '*'
       '@acme/firebase-admin': '*'
       '@acme/validations': '*'
+      '@agotao/utils': '*'
       '@trpc/client': ^10.9.0
       '@trpc/server': ^10.9.0
       axios: ^1.2.2
@@ -261,6 +262,7 @@ importers:
       '@acme/emails': link:../emails
       '@acme/firebase-admin': link:../firebase-admin
       '@acme/validations': link:../validations
+      '@agotao/utils': link:../utils
       '@trpc/client': 10.9.0_@trpc+server@10.9.0
       '@trpc/server': 10.9.0
       axios: 1.2.2
