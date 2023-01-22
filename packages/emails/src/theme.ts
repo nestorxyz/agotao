@@ -1,4 +1,7 @@
 export const colors = {
+  primary: {
+    DEFAULT: "#694fff",
+  },
   black: {
     DEFAULT: "#1e1e1e",
     "50": "#f7f7f7",
@@ -29,6 +32,7 @@ export const lineHeight = {
 
 export const fontWeight = {
   normal: 400,
+  medium: 500,
   bold: 700,
 };
 
