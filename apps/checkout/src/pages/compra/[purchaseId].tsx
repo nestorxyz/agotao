@@ -3,9 +3,10 @@ import {
   GetServerSideProps,
   InferGetServerSidePropsType,
 } from "next";
+import { useState } from "react";
 import Image from "next/image";
 import { toast } from "react-hot-toast";
-import { IoCopy } from "react-icons/io5";
+import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { Dayjs } from "@agotao/utils";
 
 // Services
@@ -19,15 +20,17 @@ import {
 } from "@acme/db";
 
 // Components
-import { DefaultHead } from "@/components";
-import { ItemCard, TotalCard } from "@/localComponents";
+import { DefaultHead, Modal } from "@/components";
+import { CompanyBackButton, ItemCard, TotalCard } from "@/localComponents";
+import { VerifiyingPayment } from "@/localComponents/VerifiyingPayment";
+import { StatusBadge } from "@/localComponents/StatusBadge";
 
 interface PurchasePageProps {
-  purchase: Pick<
+  payment_intent: Pick<
     PaymentIntent,
     "id" | "name" | "email" | "status" | "updatedAt" | "amount"
   > & {
-    checkout_session: Pick<CheckoutSession, "id"> & {
+    checkout_session: Pick<CheckoutSession, "id" | "expires_at"> & {
       company: Pick<Company, "name" | "image">;
       order_items: {
         id: string;
@@ -60,6 +63,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
       checkout_session: {
         select: {
           id: true,
+          expires_at: true,
           company: {
             select: {
               name: true,
@@ -100,7 +104,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
 
   return {
     props: {
-      purchase: JSON.parse(JSON.stringify(payment_intent)),
+      payment_intent: JSON.parse(JSON.stringify(payment_intent)),
     },
   };
 };
@@ -108,7 +112,9 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
 const PurchasePage: NextPage<
   InferGetServerSidePropsType<typeof getServerSideProps>
 > = (props) => {
-  const { purchase } = props;
+  const { payment_intent } = props;
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleCopy = (
     paymentMethod: Pick<PaymentMethod, "id" | "name" | "type" | "keyInfo">,
@@ -117,7 +123,7 @@ const PurchasePage: NextPage<
     toast.success(`Copiado ${paymentMethod.name}`);
   };
 
-  const total_items = purchase.checkout_session.order_items.reduce(
+  const total_items = payment_intent.checkout_session.order_items.reduce(
     (total, item) => total + item.quantity,
     0,
   );
@@ -125,16 +131,167 @@ const PurchasePage: NextPage<
   return (
     <>
       <DefaultHead
-        siteName={purchase.name.split(" ")[0]}
-        title={`Compra en ${purchase.checkout_session.company.name}`}
+        siteName={payment_intent.name.split(" ")[0]}
+        title={`Compra en ${payment_intent.checkout_session.company.name}`}
       />
 
-      <div className="flex min-h-screen w-full flex-col">
-        <header className="flex items-center bg-white py-5 px-4">
-          <div className="mx-auto flex w-full max-w-5xl justify-between">
-            <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
+      <div className="p-4 lg:flex lg:min-h-screen lg:p-0">
+        <section className="mx-auto mb-8 w-full max-w-sm lg:m-0 lg:max-w-none lg:bg-[rgba(0,0,0,0.01)] lg:pt-16">
+          <div className="ml-auto space-y-8 lg:mr-20 lg:w-96">
+            <header className="flex justify-between">
+              <CompanyBackButton
+                name={payment_intent.checkout_session.company.name}
+                logo={payment_intent.checkout_session.company.image}
+                processing={true}
+              />
+
+              <button
+                className="flex items-center gap-1 text-sm font-medium text-gray-400 lg:hidden"
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
+                Detalles
+                <ChevronDownIcon className="h-4 w-4" />
+              </button>
+            </header>
+            <div className="relative flex flex-col items-center lg:hidden">
+              <Image
+                src={
+                  payment_intent.checkout_session.order_items[0]!.product.image
+                } // eslint-disable-line
+                alt={
+                  payment_intent.checkout_session.order_items[0]!.product.name
+                } // eslint-disable-line
+                width={300}
+                height={300}
+                className="h-32 w-32 rounded-md object-cover"
+              />
+              <button
+                className="absolute -bottom-4 flex min-w-[100px] items-center justify-center gap-1 rounded-full bg-white px-1 py-1 shadow-sm"
+                onClick={() => {
+                  setShowModal(true);
+                }}
+              >
+                <span className="text-sm font-medium leading-4 text-gray-800">
+                  {payment_intent.checkout_session.order_items.reduce(
+                    (acc, item) => {
+                      return acc + item.quantity;
+                    },
+                    0,
+                  )}{" "}
+                  items
+                </span>
+                <ChevronRightIcon className="h-[14px] w-[14px] text-gray-400" />
+              </button>
+            </div>
+            <div className="text-center lg:text-left">
+              <p className="font-medium text-gray-500">
+                Tu compra en {payment_intent.checkout_session.company.name}
+              </p>
+              <p className="text-3xl font-semibold">
+                {Dayjs.formatMoney(payment_intent.amount)}
+              </p>
+            </div>
+            <div className="hidden lg:inline-block">
+              <section className="mx-auto max-w-md lg:w-96">
+                {payment_intent.checkout_session.order_items.map((item) => (
+                  <ItemCard
+                    key={item.id}
+                    name={item.product.name}
+                    image={item.product.image}
+                    quantity={item.quantity}
+                    price={Dayjs.formatMoney(item.product.price)}
+                    total={Dayjs.formatMoney(
+                      item.quantity * item.product.price,
+                    )}
+                  />
+                ))}
+                <TotalCard total={Dayjs.formatMoney(payment_intent.amount)} />
+              </section>
+            </div>
           </div>
-        </header>
+        </section>
+        <div className="lg:w-full lg:max-w-none lg:pt-16 lg:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+          <div className="mx-auto flex max-w-md flex-col gap-8 lg:m-0 lg:ml-20 lg:mt-8">
+            <div className="space-y-2">
+              <h3 className="font-medium text-gray-600">
+                Información de contacto
+              </h3>
+              <div className="space-y-1 rounded-lg bg-gray-50 px-6 py-4 text-sm">
+                <p className="text-lg font-semibold"> {payment_intent.name}</p>
+                <p className="text-sm text-gray-600"> {payment_intent.email}</p>
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-medium text-gray-600">
+                    Estado de tu compra
+                  </h3>
+                  <span className="text-sm text-gray-400">
+                    ID: {payment_intent.id}
+                  </span>
+                </div>
+                <StatusBadge status={payment_intent.status} />
+              </div>
+              {payment_intent.status === "VALIDATING" && (
+                <VerifiyingPayment
+                  company_name={payment_intent.checkout_session.company.name}
+                  payment_method={payment_intent.payment_method.name}
+                  payment_method_info={payment_intent.payment_method.keyInfo}
+                  total={Dayjs.formatMoney(payment_intent.amount)}
+                  expires_at={Dayjs.dayjs
+                    .tz(
+                      payment_intent.checkout_session.expires_at,
+                      "America/Lima",
+                    )
+                    .format("DD [de] MMMM [de] YYYY, h:mm a")}
+                  status={payment_intent.status}
+                />
+              )}
+            </div>
+
+            <p
+              className="mx-auto mt-12 mb-4 w-full max-w-5xl p-4 text-center text-sm md:p-0 md:pb-1
+             lg:mt-auto lg:text-left"
+            >
+              Si tienes alguna duda, puedes contactarnos a través de nuestro
+              correo electrónico:{" "}
+              <a
+                href="mailto:
+                pagos@agotao.com"
+                className="font-semibold text-primary"
+              >
+                pagos@agotao.com
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <Modal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        breakPoint={1024}
+      >
+        <div className="bg-white p-4">
+          <section className="mx-auto max-w-md lg:w-96">
+            {payment_intent.checkout_session.order_items.map((item) => (
+              <ItemCard
+                key={item.id}
+                name={item.product.name}
+                image={item.product.image}
+                quantity={item.quantity}
+                price={Dayjs.formatMoney(item.product.price)}
+                total={Dayjs.formatMoney(item.quantity * item.product.price)}
+              />
+            ))}
+            <TotalCard total={Dayjs.formatMoney(payment_intent.amount)} />
+          </section>
+        </div>
+      </Modal>
+      {/* <div className="flex min-h-screen w-full flex-col">
+        
 
         <main className="mx-auto flex w-full flex-col gap-4 p-4 md:w-full md:max-w-5xl md:flex-row md:gap-10 lg:px-0">
           <section className="w-full space-y-4">
@@ -195,15 +352,7 @@ const PurchasePage: NextPage<
               )}
             </div>
 
-            <div className="space-y-2">
-              <h3 className="font-medium text-gray-600">
-                Información de contacto
-              </h3>
-              <div className="space-y-1 rounded-lg bg-gray-50 px-6 py-4 text-sm">
-                <p className="text-lg font-semibold"> {purchase.name}</p>
-                <p className="text-sm text-gray-600"> {purchase.email}</p>
-              </div>
-            </div>
+            
           </section>
 
           <div className="border-t md:hidden" />
@@ -248,18 +397,8 @@ const PurchasePage: NextPage<
             </div>
           </section>
         </main>
-        <p className="mx-auto mt-12 mb-4 w-full max-w-5xl p-4 text-sm md:mt-36 md:p-0">
-          Si tienes alguna duda, puedes contactarnos a través de nuestro correo
-          electrónico:{" "}
-          <a
-            href="mailto:
-                  nestor@agotao.com"
-            className="font-semibold text-primary"
-          >
-            nestor@agotao.com
-          </a>
-        </p>
-      </div>
+        
+      </div> */}
     </>
   );
 };

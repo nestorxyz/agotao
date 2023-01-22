@@ -10,6 +10,7 @@
   "author": "Nestor Mamani",
   "license": "ISC",
   "dependencies": {
-    "@acme/db": "*"
+    "@acme/db": "*",
+    "dayjs": "^1.11.7"
   }
 }

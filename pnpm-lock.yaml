@@ -321,8 +321,10 @@ importers:
   packages/utils:
     specifiers:
       '@acme/db': '*'
+      dayjs: ^1.11.7
     dependencies:
       '@acme/db': link:../db
+      dayjs: 1.11.7
 
   packages/validations:
     specifiers:
