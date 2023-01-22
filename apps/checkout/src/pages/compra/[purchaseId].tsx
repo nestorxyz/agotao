@@ -212,7 +212,7 @@ const PurchasePage: NextPage<
             </div>
           </div>
         </section>
-        <div className="lg:w-full lg:max-w-none lg:pt-16 lg:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+        <div className="lg:w-full lg:max-w-none lg:pt-12 lg:shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
           <div className="mx-auto flex max-w-md flex-col gap-8 lg:m-0 lg:ml-20 lg:mt-8">
             <div className="space-y-2">
               <h3 className="font-medium text-gray-600">

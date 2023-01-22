@@ -49,7 +49,7 @@ export const VerifiyingPayment: React.FC<VerifiyingPaymentProps> = (props) => {
         )}
       </p>
 
-      <div className="my-4 space-y-2 rounded-md py-4 px-6 shadow-[rgba(7,_65,_210,_0.1)_0px_9px_30px]">
+      <div className="my-4 space-y-2 rounded-md border border-gray-100 py-4 px-6">
         <div>
           <p className="text-sm font-medium">Importe a pagar</p>
           <p className="font-semibold text-primary">{total}</p>
