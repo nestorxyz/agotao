@@ -15,7 +15,7 @@ import {
   MjmlImage,
 } from "mjml-react";
 import Footer from "./Footer";
-import { colors, screens, themeDefaults, spacing } from "../theme";
+import { themeDefaults } from "../theme";
 
 type BaseLayoutProps = {
   company_name: string;
