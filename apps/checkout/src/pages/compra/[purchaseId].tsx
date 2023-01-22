@@ -11,7 +11,7 @@ import { Dayjs } from "@agotao/utils";
 // Services
 import {
   prisma,
-  Purchase,
+  PaymentIntent,
   Product,
   PaymentMethod,
   CheckoutSession,
@@ -24,12 +24,12 @@ import { ItemCard, TotalCard } from "@/localComponents";
 
 interface PurchasePageProps {
   purchase: Pick<
-    Purchase,
+    PaymentIntent,
     "id" | "name" | "email" | "status" | "updatedAt" | "amount"
   > & {
-    checkoutSession: Pick<CheckoutSession, "id"> & {
+    checkout_session: Pick<CheckoutSession, "id"> & {
       company: Pick<Company, "name" | "image">;
-      orderItems: {
+      order_items: {
         id: string;
         quantity: number;
         product: Pick<Product, "id" | "name" | "price" | "image">;
@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
     purchaseId: string;
   };
 
-  const purchase = await prisma.purchase.findUnique({
+  const payment_intent = await prisma.paymentIntent.findUnique({
     where: {
       id: purchaseId,
     },
@@ -57,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
       status: true,
       updatedAt: true,
       amount: true,
-      checkoutSession: {
+      checkout_session: {
         select: {
           id: true,
           company: {
@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
               image: true,
             },
           },
-          orderItems: {
+          order_items: {
             select: {
               id: true,
               quantity: true,
@@ -93,22 +93,14 @@ export const getServerSideProps: GetServerSideProps<PurchasePageProps> = async (
     },
   });
 
-  if (!purchase)
+  if (!payment_intent)
     return {
       notFound: true,
     };
 
-  if (purchase.status === "INVALID")
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-
   return {
     props: {
-      purchase: JSON.parse(JSON.stringify(purchase)),
+      purchase: JSON.parse(JSON.stringify(payment_intent)),
     },
   };
 };
@@ -125,7 +117,7 @@ const PurchasePage: NextPage<
     toast.success(`Copiado ${paymentMethod.name}`);
   };
 
-  const total_items = purchase.checkoutSession.orderItems.reduce(
+  const total_items = purchase.checkout_session.order_items.reduce(
     (total, item) => total + item.quantity,
     0,
   );
@@ -134,7 +126,7 @@ const PurchasePage: NextPage<
     <>
       <DefaultHead
         siteName={purchase.name.split(" ")[0]}
-        title={`Compra en ${purchase.checkoutSession.company.name}`}
+        title={`Compra en ${purchase.checkout_session.company.name}`}
       />
 
       <div className="flex min-h-screen w-full flex-col">
@@ -149,16 +141,16 @@ const PurchasePage: NextPage<
             <h1 className="text-2xl font-bold">
               Hola {purchase.name.split(" ")[0]}, has comprado {total_items}{" "}
               {total_items > 1 ? "productos" : "producto"} en{" "}
-              {purchase.checkoutSession.company.name}
+              {purchase.checkout_session.company.name}
             </h1>
 
             <div className="rounded-lg border border-gray-100 px-6 py-4">
               <h3 className="font-medium text-gray-600">Estado de la compra</h3>
-              {purchase.status === "VALID" ? (
+              {purchase.status === "PAID" ? (
                 <div>
                   <p>
                     Tu compra ha sido validada,{" "}
-                    {purchase.checkoutSession.company.name} se comunicará
+                    {purchase.checkout_session.company.name} se comunicará
                     contigo
                   </p>
                 </div>
@@ -219,14 +211,14 @@ const PurchasePage: NextPage<
           <section className="w-full max-w-md space-y-4">
             <div className="flex items-center gap-2">
               <Image
-                src={purchase.checkoutSession.company.image}
-                alt={purchase.checkoutSession.company.name}
+                src={purchase.checkout_session.company.image}
+                alt={purchase.checkout_session.company.name}
                 width={200}
                 height={200}
                 className="h-16 w-16 rounded-full object-cover"
               />
               <p className="text-lg font-semibold">
-                {purchase.checkoutSession.company.name}
+                {purchase.checkout_session.company.name}
               </p>
             </div>
 
@@ -239,7 +231,7 @@ const PurchasePage: NextPage<
               </div>
 
               <section className="mx-auto max-w-md lg:w-96">
-                {purchase.checkoutSession.orderItems.map((item) => (
+                {purchase.checkout_session.order_items.map((item) => (
                   <ItemCard
                     key={item.id}
                     name={item.product.name}

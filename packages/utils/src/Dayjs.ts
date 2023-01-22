@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import "dayjs/locale/es";
 
@@ -7,6 +8,7 @@ class Dayjs {
   private _userTimezone: string;
 
   private constructor() {
+    dayjs.extend(utc);
     dayjs.extend(timezone);
 
     this._userTimezone = "America/Lima";
