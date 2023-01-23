@@ -102,31 +102,26 @@ export const validatePurchase = protectedProcedure
       });
 
     if (purchase.checkout_session.company.webhook_url) {
-      // Send webhook to company with auth bearer
-      const webhookResponse = await axios.post(
-        purchase.checkout_session.company.webhook_url,
-        {
-          type: "succeeded",
-          id: purchase.id,
-          amount: purchase.amount,
-          commission: purchase.commission,
-          payment_method: purchase.payment_method.name,
-          metadata: purchase.checkout_session.metadata,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${purchase.checkout_session.company.sk_live}`,
+      try {
+        await axios.post(
+          purchase.checkout_session.company.webhook_url,
+          {
+            type: "succeeded",
+            id: purchase.id,
+            amount: purchase.amount,
+            commission: purchase.commission,
+            payment_method: purchase.payment_method.name,
+            metadata: purchase.checkout_session.metadata,
           },
-        },
-      );
-
-      if (!webhookResponse)
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Could not send webhook to company",
-        });
-
-      console.log("webhookResponse:", webhookResponse);
+          {
+            headers: {
+              Authorization: `Bearer ${purchase.checkout_session.company.sk_live}`,
+            },
+          },
+        );
+      } catch (error) {
+        console.log("webhookResponse error:", error);
+      }
     }
 
     await sendMail({
@@ -147,7 +142,7 @@ export const validatePurchase = protectedProcedure
           date={Dayjs.dayjs
             .tz(new Date())
             .format("DD [de] MMMM [de] YYYY, h:mm a")}
-          button_url={`https://checkout.agotao/compra/${purchase.id}`}
+          button_url={`https://checkout.agotao.com/compra/${purchase.id}`}
         />
       ),
     });

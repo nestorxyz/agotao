@@ -134,7 +134,7 @@ export const purchase = publicProcedure
           expires_at={Dayjs.dayjs
             .tz(purchase.checkout_session.expires_at)
             .format("DD [de] MMMM [de] YYYY, h:mm a")}
-          button_url={`https://checkout.agotao/compra/${purchase.id}`}
+          button_url={`https://checkout.agotao.com/compra/${purchase.id}`}
         />
       ),
     });

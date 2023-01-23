@@ -256,21 +256,19 @@ const PurchasePage: NextPage<
                 </div>
                 <StatusBadge status={payment_intent.status} />
               </div>
-              {payment_intent.status === "VALIDATING" && (
-                <VerifiyingPayment
-                  company_name={payment_intent.checkout_session.company.name}
-                  payment_method={payment_intent.payment_method.name}
-                  payment_method_info={payment_intent.payment_method.keyInfo}
-                  total={Dayjs.formatMoney(payment_intent.amount)}
-                  expires_at={Dayjs.dayjs
-                    .tz(
-                      payment_intent.checkout_session.expires_at,
-                      "America/Lima",
-                    )
-                    .format("DD [de] MMMM [de] YYYY, h:mm a")}
-                  status={payment_intent.status}
-                />
-              )}
+              <VerifiyingPayment
+                company_name={payment_intent.checkout_session.company.name}
+                payment_method={payment_intent.payment_method.name}
+                payment_method_info={payment_intent.payment_method.keyInfo}
+                total={Dayjs.formatMoney(payment_intent.amount)}
+                expires_at={Dayjs.dayjs
+                  .tz(
+                    payment_intent.checkout_session.expires_at,
+                    "America/Lima",
+                  )
+                  .format("DD [de] MMMM [de] YYYY, h:mm a")}
+                status={payment_intent.status}
+              />
             </div>
 
             <p
