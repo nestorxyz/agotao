@@ -2,7 +2,7 @@ import z from "zod";
 
 // Libraries
 import { TRPCError } from "@trpc/server";
-import sendMail, { Whatever } from "@acme/emails";
+import { sendMail, Whatever } from "@acme/emails";
 
 // tRPC
 import { router, protectedProcedure } from "../../trpc";

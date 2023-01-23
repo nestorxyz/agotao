@@ -1,6 +1,6 @@
 // Libraries
 import { TRPCError } from "@trpc/server";
-import { sendMail, BasicMail, PaymentIntentMail } from "@acme/emails";
+import { sendMail, Whatever, PaymentIntentMail } from "@acme/emails";
 import { checkoutPurchaseDTO } from "@acme/validations";
 
 // tRPC
@@ -143,13 +143,14 @@ export const purchase = publicProcedure
       subject: `Compra realizada por ${name}`,
       to: "nmamanipantoja@gmail.com",
       component: (
-        <BasicMail
+        <Whatever>
           name={name}
           email={email}
-          product_name={checkoutSession.order_items[0]!.product.name} // eslint-disable-line
-          price={total_to_pay}
+          {/* eslint-disable-next-line */}
+          product_name={checkoutSession.order_items[0]!.product.name} price=
+          {total_to_pay}
           payment_method={purchase.payment_method.name}
-        />
+        </Whatever>
       ),
     });
 

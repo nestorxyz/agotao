@@ -47,7 +47,7 @@ export const MySales: React.FC = () => {
                   <TableCell>{sale.name}</TableCell>
                   <TableCell>{sale.email}</TableCell>
                   <TableCell>
-                    {sale.checkoutSession.orderItems.length} productos
+                    {sale.checkout_session.order_items.length} productos
                   </TableCell>
                   <TableCell>
                     {dayjs(sale.updatedAt).format("dddd,DD MMM YYYY")}

@@ -4,15 +4,14 @@ import { TRPCError } from "@trpc/server";
 import { protectedProcedure } from "../../trpc";
 
 export const getMySales = protectedProcedure.query(async ({ ctx }) => {
-  const purchases = await ctx.prisma.purchase.findMany({
+  const purchases = await ctx.prisma.paymentIntent.findMany({
     where: {
-      checkoutSession: {
+      checkout_session: {
         company: {
           admin_id: ctx.session.uid,
         },
-        payment_status: "PAID",
       },
-      status: "VALID",
+      status: "PAID",
     },
     select: {
       id: true,
@@ -21,10 +20,10 @@ export const getMySales = protectedProcedure.query(async ({ ctx }) => {
       updatedAt: true,
       amount: true,
       commission: true,
-      checkoutSession: {
+      checkout_session: {
         select: {
           id: true,
-          orderItems: {
+          order_items: {
             select: {
               id: true,
               quantity: true,

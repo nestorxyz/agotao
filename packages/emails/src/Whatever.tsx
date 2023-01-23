@@ -13,7 +13,7 @@ const Whatever: Template<WhateverProps> = (props) => {
   const { children } = props;
 
   return (
-    <BaseLayout width={600}>
+    <BaseLayout company_name="asds">
       <MjmlSection>
         <MjmlColumn>
           <Text paddingTop={spacing.s7} paddingBottom={spacing.s7}>
