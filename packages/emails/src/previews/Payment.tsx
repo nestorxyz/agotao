@@ -1,4 +1,5 @@
 import PaymentIntentMail from "../PaymentIntent";
+import PaymentInvalidMail from "../PaymentInvalid";
 
 export const PaymentIntentPreview = () => {
   return (
@@ -22,6 +23,19 @@ export const PaymentIntentPreview = () => {
       total="$500"
       expires_at="2021-10-10 20:45pm"
       button_url="https://www.google.com"
+    />
+  );
+};
+
+export const PaymentInvalidPreview = () => {
+  return (
+    <PaymentInvalidMail
+      company_name="Facebook"
+      name="Juan"
+      date="2021-10-10 20:45pm"
+      payment_method="Visa"
+      payment_method_info="**** **** **** 1234"
+      total="$500"
     />
   );
 };
