@@ -65,12 +65,12 @@ export const Purchases: React.FC = () => {
               <TableRow key={purchase.id}>
                 <TableCell>{purchase.name}</TableCell>
                 <TableCell>{purchase.email}</TableCell>
-                <TableCell>{purchase.checkoutSession.company.name}</TableCell>
+                <TableCell>{purchase.checkout_session.company.name}</TableCell>
                 <TableCell>
-                  {purchase.checkoutSession.company.admin.name}
+                  {purchase.checkout_session.company.admin.name}
                 </TableCell>
                 <TableCell>
-                  {purchase.checkoutSession.company.admin.email}
+                  {purchase.checkout_session.company.admin.email}
                 </TableCell>
                 <TableCell textAlignment="text-right">
                   {Dayjs.formatMoney(purchase.amount)}
@@ -85,7 +85,7 @@ export const Purchases: React.FC = () => {
                   <Button
                     color="positive"
                     outline
-                    disabled={purchase.status === "VALID"}
+                    disabled={purchase.status === "PAID"}
                     loading={validatePurchaseMutation.isLoading}
                     onClick={() =>
                       validatePurchaseMutation.mutate({ id: purchase.id })
