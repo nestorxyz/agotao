@@ -5,7 +5,6 @@ import {
 } from "next";
 import { useState } from "react";
 import Image from "next/image";
-import { toast } from "react-hot-toast";
 import { ChevronDownIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { Dayjs } from "@agotao/utils";
 
@@ -116,18 +115,6 @@ const PurchasePage: NextPage<
 
   const [showModal, setShowModal] = useState(false);
 
-  const handleCopy = (
-    paymentMethod: Pick<PaymentMethod, "id" | "name" | "type" | "keyInfo">,
-  ) => {
-    navigator.clipboard.writeText(paymentMethod.keyInfo);
-    toast.success(`Copiado ${paymentMethod.name}`);
-  };
-
-  const total_items = payment_intent.checkout_session.order_items.reduce(
-    (total, item) => total + item.quantity,
-    0,
-  );
-
   return (
     <>
       <DefaultHead
@@ -159,11 +146,13 @@ const PurchasePage: NextPage<
             <div className="relative flex flex-col items-center lg:hidden">
               <Image
                 src={
+                  // eslint-disable-next-line
                   payment_intent.checkout_session.order_items[0]!.product.image
-                } // eslint-disable-line
+                }
                 alt={
+                  // eslint-disable-next-line
                   payment_intent.checkout_session.order_items[0]!.product.name
-                } // eslint-disable-line
+                }
                 width={300}
                 height={300}
                 className="h-32 w-32 rounded-md object-cover"
