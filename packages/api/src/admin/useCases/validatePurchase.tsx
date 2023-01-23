@@ -3,6 +3,8 @@ import axios from "axios";
 import { TRPCError } from "@trpc/server";
 
 import { protectedProcedure } from "../../trpc";
+import { sendMail, PaymentValid } from "@acme/emails";
+import { Dayjs } from "@agotao/utils";
 
 export const validatePurchase = protectedProcedure
   .input(
@@ -11,34 +13,43 @@ export const validatePurchase = protectedProcedure
     }),
   )
   .mutation(async ({ ctx, input }) => {
-    const purchase = await ctx.prisma.purchase.update({
+    const purchase = await ctx.prisma.paymentIntent.update({
       where: {
         id: input.id,
       },
       data: {
-        status: "VALID",
-        checkoutSession: {
-          update: {
-            payment_status: "PAID",
-          },
-        },
+        status: "PAID",
       },
       select: {
         id: true,
         amount: true,
         commission: true,
+        email: true,
         payment_method: {
           select: {
             id: true,
             name: true,
           },
         },
-        checkoutSession: {
+        checkout_session: {
           select: {
             metadata: true,
+            order_items: {
+              select: {
+                quantity: true,
+                product: {
+                  select: {
+                    name: true,
+                    price: true,
+                  },
+                },
+              },
+            },
             company: {
               select: {
                 id: true,
+                name: true,
+                image: true,
                 sk_live: true,
                 webhook_url: true,
               },
@@ -57,7 +68,7 @@ export const validatePurchase = protectedProcedure
     // Add balance to company
     const company = await ctx.prisma.company.update({
       where: {
-        id: purchase.checkoutSession.company.id,
+        id: purchase.checkout_session.company.id,
       },
       data: {
         balance: {
@@ -90,21 +101,21 @@ export const validatePurchase = protectedProcedure
         message: "Could not update admin balance",
       });
 
-    if (purchase.checkoutSession.company.webhook_url) {
+    if (purchase.checkout_session.company.webhook_url) {
       // Send webhook to company with auth bearer
       const webhookResponse = await axios.post(
-        purchase.checkoutSession.company.webhook_url,
+        purchase.checkout_session.company.webhook_url,
         {
           type: "succeeded",
           id: purchase.id,
           amount: purchase.amount,
           commission: purchase.commission,
           payment_method: purchase.payment_method.name,
-          metadata: purchase.checkoutSession.metadata,
+          metadata: purchase.checkout_session.metadata,
         },
         {
           headers: {
-            Authorization: `Bearer ${purchase.checkoutSession.company.sk_live}`,
+            Authorization: `Bearer ${purchase.checkout_session.company.sk_live}`,
           },
         },
       );
@@ -117,6 +128,29 @@ export const validatePurchase = protectedProcedure
 
       console.log("webhookResponse:", webhookResponse);
     }
+
+    await sendMail({
+      subject: `Tu recibo de ${purchase.checkout_session.company.name} id-${purchase.id}`,
+      to: purchase.email,
+      component: (
+        <PaymentValid
+          company_image={purchase.checkout_session.company.image}
+          company_name={purchase.checkout_session.company.name}
+          payment_intent_id={purchase.id}
+          payment_method={purchase.payment_method.name}
+          products={purchase.checkout_session.order_items.map((item) => ({
+            name: item.product.name,
+            quantity: item.quantity,
+            total: Dayjs.formatMoney(item.product.price * item.quantity),
+          }))}
+          total={Dayjs.formatMoney(purchase.amount)}
+          date={Dayjs.dayjs
+            .tz(new Date())
+            .format("DD [de] MMMM [de] YYYY, h:mm a")}
+          button_url={`https://checkout.agotao/compra/${purchase.id}`}
+        />
+      ),
+    });
 
     return {
       status: 200,
