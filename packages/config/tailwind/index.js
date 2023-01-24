@@ -4,6 +4,7 @@ module.exports = {
     "./src/**/*.{ts,tsx}",
     "./src/_app.tsx",
     "./src/app/**/*.{js,ts,jsx,tsx}",
+    "./app/**/*.{js,ts,jsx,tsx}",
     "../../packages/ui/**/*.{ts,tsx}",
   ],
   theme: {

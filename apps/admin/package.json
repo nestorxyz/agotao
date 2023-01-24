@@ -1,0 +1,30 @@
+{
+  "name": "@agotao/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3003",
+    "build": "next build",
+    "clean": "rm -rf .next .turbo node_modules",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@acme/tailwind-config": "*",
+    "firebase": "^9.15.0",
+    "next": "^13.0.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "eslint": "^8.32.0",
+    "eslint-config-next": "13.0.4",
+    "postcss": "^8.4.19",
+    "tailwindcss": "^3.2.4",
+    "typescript": "^4.9.4"
+  }
+}

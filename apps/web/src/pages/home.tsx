@@ -1,14 +1,23 @@
 import { NextPage } from "next";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/shared/hooks/useAuth";
 
 // Components
 import { DefaultHead, Dots } from "@/shared/components";
-import { Header, MyCompanies, MySales } from "@/modules/home/components";
+import {
+  Header,
+  MyCompanies,
+  MySales,
+  Layout,
+} from "@/modules/home/components";
+
+import { HomeScreen } from "@/modules/home/types";
 
 const HomePage: NextPage = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const [screen, setScreen] = useState<HomeScreen>(HomeScreen.project);
 
   if (loading) {
     return (
@@ -32,10 +41,10 @@ const HomePage: NextPage = () => {
       <>
         <DefaultHead title="Home" />
         <Header />
-        <main className="mx-auto mb-10 flex w-full max-w-3xl flex-col items-center justify-center gap-4 px-4 xl:px-0">
+        <Layout setScreen={setScreen}>
           <MyCompanies />
           <MySales />
-        </main>
+        </Layout>
       </>
     );
   }

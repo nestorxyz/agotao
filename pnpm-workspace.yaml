@@ -2,6 +2,7 @@ packages:
   - apps/web
   - apps/papi
   - apps/checkout
+  - apps/admin
   - packages/api
   - packages/db
   - packages/config/*
