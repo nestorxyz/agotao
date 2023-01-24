@@ -1,11 +1,8 @@
-import { MjmlSection, MjmlColumn, MjmlImage } from "mjml-react";
+import { MjmlSection, MjmlColumn } from "mjml-react";
 
-import { colors, fontWeight } from "./theme";
 import BaseLayout from "./components/BaseLayout";
 import Text from "./components/Text";
 import Divider from "./components/Divider";
-import H3 from "./components/H3";
-import Button from "./components/Button";
 
 interface PaymentInvalidMailProps {
   name: string;

@@ -32,6 +32,16 @@ export const Purchases: React.FC = () => {
     },
   });
 
+  const invalidatePurchaseMutation = trpc.admin.invalidatePurchase.useMutation({
+    onSuccess: () => {
+      toast.success("Purchase Invalidated");
+      refetch();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -85,13 +95,27 @@ export const Purchases: React.FC = () => {
                   <Button
                     color="positive"
                     outline
-                    disabled={purchase.status === "PAID"}
+                    disabled={
+                      purchase.status === "PAID" || purchase.status === "UNPAID"
+                    }
                     loading={validatePurchaseMutation.isLoading}
                     onClick={() =>
                       validatePurchaseMutation.mutate({ id: purchase.id })
                     }
                   >
                     Validar pago
+                  </Button>
+                  <Button
+                    outline
+                    disabled={
+                      purchase.status === "PAID" || purchase.status === "UNPAID"
+                    }
+                    loading={invalidatePurchaseMutation.isLoading}
+                    onClick={() =>
+                      invalidatePurchaseMutation.mutate({ id: purchase.id })
+                    }
+                  >
+                    InValidar pago
                   </Button>
                 </TableCell>
               </TableRow>
