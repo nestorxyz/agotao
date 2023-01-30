@@ -12,6 +12,7 @@
   "dependencies": {
     "@acme/db": "*",
     "@acme/tailwind-config": "*",
+    "@acme/emails": "*",
     "@hapi/boom": "^10.0.0",
     "joi": "^17.7.0",
     "next": "^13.0.6",
