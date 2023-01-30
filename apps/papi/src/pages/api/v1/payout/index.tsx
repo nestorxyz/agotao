@@ -109,6 +109,7 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
               name: true,
               email: true,
               type: true,
+              keyInfo: true,
             },
           },
         },
@@ -154,13 +155,17 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
                 <>
                   <span>
                     <strong>Name:</strong> {item.name}
-                  </span>
+                  </span>{" "}
                   <span>
                     <strong>Amount:</strong> {item.amount}
-                  </span>
+                  </span>{" "}
                   <span>
                     <strong>Payout Method:</strong> {item.type}
+                  </span>{" "}
+                  <span>
+                    <strong>Info:</strong> {item.keyInfo}
                   </span>
+                  <br />
                 </>
               ))}
             </p>
