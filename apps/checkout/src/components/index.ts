@@ -11,3 +11,4 @@ export * from "./loaders";
 export { default as Text } from "./Text";
 export * from "./inputs";
 export * from "./User";
+export * from "./StatusBadge";
