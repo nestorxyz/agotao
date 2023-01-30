@@ -5,6 +5,7 @@ import {
   getPurchases,
   invalidatePurchase,
   getPayouts,
+  validatePayouts,
 } from "./useCases";
 
 export const adminRouter = router({
@@ -12,4 +13,5 @@ export const adminRouter = router({
   getPurchases,
   invalidatePurchase,
   getPayouts,
+  validatePayouts,
 });

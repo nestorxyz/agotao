@@ -9,6 +9,7 @@ import {
   TableHeaderCell,
   TableBody,
 } from "@tremor/react";
+import toast from "react-hot-toast";
 
 import { StatusBadge, Text, Button, Modal } from "@/shared/components";
 import { Dayjs } from "@agotao/utils";
@@ -40,7 +41,17 @@ export const Payouts: React.FC = () => {
   const [payout, setPayout] = useState<Payout | undefined>(undefined);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data, error } = trpc.admin.getPayouts.useQuery();
+  const { data, error, refetch } = trpc.admin.getPayouts.useQuery();
+
+  const validatePayoutMutation = trpc.admin.validatePayouts.useMutation({
+    onSuccess: () => {
+      toast.success("Payout validated");
+      refetch();
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
 
   if (!data && !error) return <div>Loading...</div>;
 
@@ -72,7 +83,11 @@ export const Payouts: React.FC = () => {
         ))}
       </section>
 
-      <Modal showModal={isModalOpen} setShowModal={setIsModalOpen}>
+      <Modal
+        showModal={isModalOpen}
+        setShowModal={setIsModalOpen}
+        disableClose={validatePayoutMutation.isLoading}
+      >
         {payout && (
           <div className="inline-block w-full transform overflow-hidden bg-white px-4 py-6 align-middle transition-all sm:max-w-xl sm:rounded-2xl sm:border sm:border-gray-200 sm:py-10 sm:px-6">
             <div className="flex gap-2">
@@ -135,6 +150,10 @@ export const Payouts: React.FC = () => {
               color="black"
               className="w-full"
               disabled={payout.status !== "VALIDATING"}
+              loading={validatePayoutMutation.isLoading}
+              onClick={() => {
+                validatePayoutMutation.mutate({ id: payout.id });
+              }}
             >
               Pagos realizados
             </Button>
