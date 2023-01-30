@@ -50,7 +50,7 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
       throw boom.unauthorized("Invalid Token");
     }
 
-    if (req.method === "POST") {
+    if (req.method == "POST") {
       const company = await prisma.company.findUnique({
         where: {
           sk_live: bearerToken,
