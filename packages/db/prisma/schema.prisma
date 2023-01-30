@@ -24,7 +24,6 @@ model User {
     colaborators       Colaborators[]
     products           Product[]
     financial_accounts FinancialAccount[]
-    payouts            PayoutItem[]
 }
 
 model Company {
@@ -113,14 +112,16 @@ model Payout {
 
 model PayoutItem {
     id        String            @id @default(cuid())
-    user_id   String
+    name      String
+    email     String
     amount    Float
+    fee       Float
     payout_id String
     type      PaymentMethodType
+    keyInfo   String
     createdAt DateTime          @default(now())
     updatedAt DateTime          @updatedAt
 
-    user   User   @relation(fields: [user_id], references: [uid])
     payout Payout @relation(fields: [payout_id], references: [id])
 }
 

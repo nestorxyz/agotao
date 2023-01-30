@@ -7,6 +7,7 @@ import { z } from "zod";
  */
 export const serverSchema = z.object({
   DATABASE_URL: z.string().url(),
+  AGOTAO_ADMIN_ID: z.string(),
 });
 
 /**

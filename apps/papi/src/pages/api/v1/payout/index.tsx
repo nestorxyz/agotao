@@ -6,14 +6,18 @@ import { prisma, Prisma } from "@acme/db";
 import withJoi from "@/lib/withJoi";
 
 import { sendMail, Whatever } from "@acme/emails";
+import { roundNumber2Two, payoutFees } from "@agotao/utils";
+import { env } from "@/env/server.mjs";
 
 const bodySchema = Joi.object({
   destinations: Joi.array().items({
-    agotao_account_id: Joi.string().required(),
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
     amount: Joi.number().required(),
     payout_method: Joi.string()
       .required()
       .valid("BBVA", "BCP", "INTERBANK", "YAPE", "PLIN"),
+    payout_method_info: Joi.string(),
   }),
   metadata: Joi.object().optional(),
 });
@@ -21,9 +25,11 @@ const bodySchema = Joi.object({
 interface ValidatedRequest extends NextApiRequest {
   body: {
     destinations: {
-      agotao_account_id: string;
+      name: string;
+      email: string;
       amount: number;
       payout_method: "BBVA" | "BCP" | "INTERBANK" | "YAPE" | "PLIN";
+      payout_method_info: string;
     }[];
     metadata: Record<string, unknown>;
   };
@@ -58,17 +64,34 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
 
       const { destinations, metadata } = req.body;
 
-      // TODO: Validate destinations
-      // TODO: Add fees
+      // Make sure business has enough funds to pay out and fees
+      let totalAmount = 0;
+      let totalFees = 0;
+
+      destinations.forEach((destination) => {
+        const { amount } = destination;
+
+        totalAmount += roundNumber2Two(amount);
+        totalFees += payoutFees(amount);
+      });
+
+      if (totalAmount + totalFees > company.balance) {
+        throw boom.badRequest("Insufficient Funds");
+      }
+
+      // Create payout request
       const payoutRequest = await prisma.payout.create({
         data: {
           company_id: company.id,
           items: {
             createMany: {
               data: destinations.map((destination) => ({
-                user_id: destination.agotao_account_id,
+                name: destination.name,
+                email: destination.email,
                 amount: destination.amount,
+                fee: payoutFees(destination.amount),
                 type: destination.payout_method,
+                keyInfo: destination.payout_method_info,
               })),
             },
           },
@@ -78,11 +101,46 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
           id: true,
           status: true,
           metadata: true,
-          items: true,
+          items: {
+            select: {
+              id: true,
+              amount: true,
+              fee: true,
+              name: true,
+              email: true,
+              type: true,
+            },
+          },
         },
       });
 
-      const adminMustActionEmail = await sendMail({
+      // Discount balance from company
+      const companyPayment = prisma.company.update({
+        where: {
+          id: company.id,
+        },
+        data: {
+          balance: {
+            decrement: totalAmount + totalFees,
+          },
+        },
+      });
+
+      // Add fees to master account
+      const adminPayment = prisma.user.update({
+        where: {
+          uid: env.AGOTAO_ADMIN_ID,
+        },
+        data: {
+          balance: {
+            increment: totalFees,
+          },
+        },
+      });
+
+      await Promise.all([companyPayment, adminPayment]);
+
+      await sendMail({
         subject: "Payout Good to Go",
         to: "nmamanipantoja@gmail.com",
         // Show company name, amount, and payout method for each destination
@@ -94,6 +152,9 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
             <p>
               {payoutRequest.items.map((item) => (
                 <>
+                  <span>
+                    <strong>Name:</strong> {item.name}
+                  </span>
                   <span>
                     <strong>Amount:</strong> {item.amount}
                   </span>
