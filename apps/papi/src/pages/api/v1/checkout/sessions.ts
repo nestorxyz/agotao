@@ -122,9 +122,9 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
         status: session.status,
         metadata: session.metadata,
       });
+    } else {
+      throw boom.methodNotAllowed("Method Not Allowed");
     }
-
-    throw boom.methodNotAllowed("Method Not Allowed");
 
     // eslint-disable-next-line
   } catch (err: any) {
