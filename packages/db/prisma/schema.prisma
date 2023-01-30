@@ -114,6 +114,7 @@ model PayoutItem {
     id        String            @id @default(cuid())
     name      String
     email     String
+    memo      String?
     amount    Float
     fee       Float
     payout_id String

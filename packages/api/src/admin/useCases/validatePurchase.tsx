@@ -106,7 +106,7 @@ export const validatePurchase = protectedProcedure
         await axios.post(
           purchase.checkout_session.company.webhook_url,
           {
-            type: "succeeded",
+            type: "payment.succeeded",
             id: purchase.id,
             amount: purchase.amount,
             commission: purchase.commission,
