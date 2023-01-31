@@ -12,12 +12,14 @@ import {
   Layout,
 } from "@/modules/home/components";
 
-import { HomeScreen } from "@/modules/home/types";
+import { DashboardScreens } from "@/modules/home/types";
 
 const HomePage: NextPage = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [screen, setScreen] = useState<HomeScreen>(HomeScreen.project);
+  const [screen, setScreen] = useState<DashboardScreens>(
+    DashboardScreens.project,
+  );
 
   if (loading) {
     return (

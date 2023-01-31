@@ -1,5 +1,4 @@
-export enum HomeScreen {
+export enum DashboardScreens {
   project = "project",
-  sales = "sales",
-  developers = "developers",
+  payout = "payout",
 }

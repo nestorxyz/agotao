@@ -5,6 +5,17 @@ import { signOut } from "@/shared/utils/firebaseAuth";
 import { useAuth } from "@/shared/hooks/useAuth";
 
 import { Button, User } from "@/shared/components";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/shared/components/DropdownMenu";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/shared/components/Avatar";
 
 export interface HeaderProps {
   className?: string;
@@ -24,24 +35,31 @@ export const Header: React.FC<HeaderProps> = (props) => {
     <header
       className={classNames(className, "flex items-center bg-white py-5 px-4")}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col justify-between sm:flex-row">
+      <div className="mx-auto flex w-full max-w-6xl justify-between">
         <Image src="/isotipo.svg" alt="logo" width={124} height={30} />
-        <User
-          image={user.image ?? ""}
-          name={user.name}
-          username={user.email}
-          className="rounded-full transition-all"
-        />
-        <Button
-          onClick={async () => {
-            await signOut();
-            router.push("/login");
-          }}
-          color="black"
-          light
-        >
-          Cerrar sesión
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger className="items-center gap-2 sm:flex">
+            <Avatar>
+              <AvatarImage src={user.image ?? undefined} />
+              <AvatarFallback>
+                {user.name[0] ? user.name[0].toUpperCase() : "Hi"}
+              </AvatarFallback>
+            </Avatar>
+            <p className="hidden font-semibold text-gray-700 sm:block">
+              {user.email}
+            </p>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="mr-4 sm:m-0 sm:min-w-[192px]">
+            <DropdownMenuItem
+              onClick={async () => {
+                await signOut();
+                router.push("/login");
+              }}
+            >
+              Cerrar sesión
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );

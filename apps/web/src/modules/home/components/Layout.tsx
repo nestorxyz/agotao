@@ -1,9 +1,9 @@
-import { HomeScreen } from "@/modules/home/types";
+import { DashboardScreens } from "@/modules/home/types";
 import { Button } from "@/shared/components";
 
 interface LayoutProps {
   children: React.ReactNode;
-  setScreen: (screen: HomeScreen) => void;
+  setScreen: (screen: DashboardScreens) => void;
 }
 
 export const Layout: React.FC<LayoutProps> = (props) => {
