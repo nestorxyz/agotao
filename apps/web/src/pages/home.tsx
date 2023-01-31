@@ -1,25 +1,16 @@
 import { NextPage } from "next";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import { useAuth } from "@/shared/hooks/useAuth";
 
 // Components
 import { DefaultHead, Dots } from "@/shared/components";
-import {
-  Header,
-  MyCompanies,
-  MySales,
-  Layout,
-} from "@/modules/home/components";
+import { Header } from "@/modules/home/components";
 
-import { DashboardScreens } from "@/modules/home/types";
+import HomeScreen from "@/modules/home";
 
 const HomePage: NextPage = () => {
   const { user, loading } = useAuth();
   const router = useRouter();
-  const [screen, setScreen] = useState<DashboardScreens>(
-    DashboardScreens.project,
-  );
 
   if (loading) {
     return (
@@ -41,12 +32,8 @@ const HomePage: NextPage = () => {
   if (user) {
     return (
       <>
-        <DefaultHead title="Home" />
         <Header />
-        <Layout setScreen={setScreen}>
-          <MyCompanies />
-          <MySales />
-        </Layout>
+        <HomeScreen />
       </>
     );
   }

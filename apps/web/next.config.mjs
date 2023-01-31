@@ -24,7 +24,11 @@ const config = {
     ignoreDuringBuilds: !!process.env.CI,
   },
   images: {
-    domains: ["lh3.googleusercontent.com", "storage.googleapis.com"],
+    domains: [
+      "lh3.googleusercontent.com",
+      "storage.googleapis.com",
+      "firebasestorage.googleapis.com",
+    ],
   },
 };
 

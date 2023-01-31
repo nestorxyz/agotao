@@ -22,9 +22,7 @@ interface CompanyProps {
   company: Pick<
     Company,
     "id" | "name" | "username" | "image" | "balance" | "sk_live" | "webhook_url"
-  > & {
-    products: Pick<Product, "id" | "name" | "image" | "price">[];
-  };
+  >;
 }
 
 export const CompanyInfo: React.FC<CompanyProps> = (props) => {
@@ -70,21 +68,20 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
 
   return (
     <section>
+      <div className="flex items-center gap-2">
+        <Image
+          src={company.image}
+          alt={company.name}
+          width={100}
+          height={100}
+          className="h-12 w-12 overflow-hidden rounded-full object-cover sm:h-16 sm:w-16"
+        />
+        <div>
+          <p className="truncate font-semibold">{company.name}</p>
+        </div>
+      </div>
       <article className="space-y-8">
         <div className="flex flex-col gap-5 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <Image
-              src={company.image}
-              alt={company.name}
-              width={100}
-              height={100}
-              className="h-12 w-12 overflow-hidden rounded-full object-cover sm:h-16 sm:w-16"
-            />
-            <div>
-              <p className="truncate font-semibold">{company.name}</p>
-              <p className="text-gray-500">@{company.username}</p>
-            </div>
-          </div>
           <div className="flex w-full max-w-xs justify-between rounded-lg bg-gray-50 p-4">
             <div>
               <h2 className="text-gray-600">Balance disponible</h2>
@@ -165,6 +162,7 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
               onCreated={() => refetch()}
             />
           </div>
+          {/* 
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {company.products.map((product) => (
               <div
@@ -191,7 +189,7 @@ export const CompanyInfo: React.FC<CompanyProps> = (props) => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </article>
     </section>

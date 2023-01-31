@@ -6,7 +6,8 @@ import { CreateCompanyButton } from "@/modules/home/components";
 import { CompanyInfo } from "./CompanyInfo";
 
 export const MyCompanies: React.FC = () => {
-  const { data, refetch, isLoading } = trpc.company.getCompany.useQuery();
+  const { data, refetch, isLoading } =
+    trpc.web.dashboard.getCompanies.useQuery();
 
   return (
     <div className="w-full">
@@ -16,7 +17,9 @@ export const MyCompanies: React.FC = () => {
         <CreateCompanyButton onCreated={() => refetch()} />
       )}
 
-      {data?.result && <CompanyInfo company={data.result} refetch={refetch} />}
+      {data?.result.company && (
+        <CompanyInfo company={data.result.company} refetch={refetch} />
+      )}
     </div>
   );
 };

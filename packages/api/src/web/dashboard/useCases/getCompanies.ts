@@ -22,14 +22,9 @@ export const getCompanies = protectedProcedure.query(async ({ ctx }) => {
       message: "No se encontraron empresas",
     });
 
-  let company = allCompanies[0];
-
   return {
     status: 200,
     message: "Empresas obtenidas correctamente",
-    result: {
-      company,
-      allCompanies,
-    },
+    result: allCompanies,
   };
 });
