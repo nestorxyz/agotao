@@ -12,6 +12,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableBody,
+  Badge,
 } from "@tremor/react";
 import { ArrowUpRight } from "lucide-react";
 import {
@@ -64,7 +65,28 @@ const Payouts: React.FC<PayoutsProps> = (props) => {
     return (
       <>
         <div className="flex flex-col gap-2">
-          <Text.H3>Depósitos</Text.H3>
+          <div className="flex items-center justify-between">
+            <Text.H3>Depósitos</Text.H3>
+            <div className="flex flex-col gap-4 sm:flex-row">
+              <Badge
+                text={`Número: ${data.result.reduce(
+                  (acc, cur) => acc + cur.items.length,
+                  0,
+                )}`}
+                color="gray"
+              />
+              <Badge
+                text={`Monto total: ${Dayjs.formatMoney(
+                  data.result.reduce(
+                    (acc, cur) =>
+                      acc + cur.items.reduce((acc, cur) => acc + cur.amount, 0),
+                    0,
+                  ),
+                )}`}
+                color="sky"
+              />
+            </div>
+          </div>
           <Text.Subtitle>
             Resumen de los depósitos realizados desde el balance de la empresa
           </Text.Subtitle>

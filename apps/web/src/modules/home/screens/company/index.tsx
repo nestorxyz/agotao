@@ -47,7 +47,7 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-7xl flex-col gap-4 px-4 py-6 md:p-8">
+    <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-4 px-4 py-6 md:px-0 md:py-8">
       <div className="flex flex-wrap justify-between gap-2">
         <div className="flex items-center gap-2">
           <Image
@@ -74,8 +74,8 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
         </DropdownMenu>
       </div>
 
-      <div>
-        <Card>
+      <div className="flex w-full max-w-xs justify-start">
+        <Card maxWidth="max-w-md">
           <TremorText>Balance</TremorText>
           <Metric>{Dayjs.formatMoney(selectedCompany.balance)}</Metric>
         </Card>
