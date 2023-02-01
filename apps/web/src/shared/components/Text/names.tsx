@@ -18,7 +18,7 @@ export const H2: React.FC<TextProps> = (props) => {
 export const H3: React.FC<TextProps> = (props) => {
   const { children, className } = props;
 
-  return <h3 className={cn(className, "text-xl font-medium")}>{children}</h3>;
+  return <h3 className={cn("text-xl font-medium", className)}>{children}</h3>;
 };
 
 export const Subtitle: React.FC<TextProps> = (props) => {
