@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const { data, error, refetch } = trpc.web.dashboard.getCompanies.useQuery();
 
   if (!data && !error) {
-    <Loading />;
+    return <Loading />;
   }
 
   if (error || !data) {

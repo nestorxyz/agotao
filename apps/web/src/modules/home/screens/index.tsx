@@ -12,6 +12,7 @@ import {
   TabsTrigger,
 } from "@/shared/components/Tabs";
 import Payouts from "./payouts";
+import Developers from "./developers";
 
 interface CompanyScreenProps {
   companies: {
@@ -71,6 +72,9 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
               company_name={selectedCompany.name}
               company_image={selectedCompany.image}
             />
+          </TabsContent>
+          <TabsContent value="developers" className="border-0 p-0">
+            <Developers company_id={selectedCompany.id} />
           </TabsContent>
         </Tabs>
       </div>
