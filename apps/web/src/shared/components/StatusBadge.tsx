@@ -2,10 +2,12 @@ import classNames from "classnames";
 
 interface StatusBadgeProps {
   status: "VALIDATING" | "PAID" | "UNPAID";
+
+  className?: string;
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = (props) => {
-  const { status } = props;
+  const { status, className } = props;
 
   return (
     <div
@@ -14,6 +16,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = (props) => {
         status === "VALIDATING" && "bg-yellow-50 text-yellow-500",
         status === "PAID" && "bg-green-50 text-green-500",
         status === "UNPAID" && "bg-red-50 text-red-500",
+        className,
       )}
     >
       <p className="text-sm font-medium">

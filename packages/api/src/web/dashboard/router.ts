@@ -1,7 +1,8 @@
 import { router } from "../../trpc";
 
-import { getCompanies } from "./useCases";
+import { getCompanies, getPayouts } from "./useCases";
 
 export const dashboardRouter = router({
   getCompanies,
+  getPayouts,
 });

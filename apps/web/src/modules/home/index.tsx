@@ -1,4 +1,3 @@
-import { DefaultHead } from "@/shared/components";
 import { trpc } from "@/utils/trpc";
 
 import Loading from "./components/Loading";
@@ -18,22 +17,14 @@ const Home: React.FC = () => {
 
   if (data?.result.length === 0) {
     return (
-      <>
-        <DefaultHead title="Home" />
-        <div className="flex w-full sm:justify-center sm:py-10">
-          <CreateCompany onCreated={() => refetch()} />
-        </div>
-      </>
+      <div className="flex w-full sm:justify-center sm:py-10">
+        <CreateCompany onCreated={() => refetch()} />
+      </div>
     );
   }
 
   if (data?.result.length > 0) {
-    return (
-      <>
-        <DefaultHead title="Home" />
-        <CompanyScreen companies={data.result} />
-      </>
-    );
+    return <CompanyScreen companies={data.result} />;
   }
 
   return <></>;

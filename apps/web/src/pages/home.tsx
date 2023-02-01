@@ -32,6 +32,7 @@ const HomePage: NextPage = () => {
   if (user) {
     return (
       <>
+        <DefaultHead title="Home" />
         <Header />
         <HomeScreen />
       </>

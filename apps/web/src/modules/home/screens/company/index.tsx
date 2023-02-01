@@ -3,7 +3,9 @@ import Image from "next/image";
 import { Card, Metric, Text as TremorText } from "@tremor/react";
 import { Banknote } from "lucide-react";
 
-import { Text, Button } from "@/shared/components";
+import { Dayjs } from "@agotao/utils";
+
+import { Text, Button, Dots } from "@/shared/components";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,8 +20,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared/components/Tabs";
-
-import { Dayjs } from "@agotao/utils";
+import Payouts from "./components/Payouts";
 
 interface CompanyScreenProps {
   companies: {
@@ -38,11 +39,15 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
   const [selectedCompany, setSelectedCompany] = useState(companies[0]);
 
   if (!selectedCompany) {
-    return <div>Something went wrong</div>;
+    return (
+      <div className="mt-10 flex w-full justify-center">
+        <Dots />
+      </div>
+    );
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-7xl flex-col gap-4 p-6 md:p-8">
+    <main className="mx-auto flex min-h-screen max-w-7xl flex-col gap-4 px-4 py-6 md:p-8">
       <div className="flex flex-wrap justify-between gap-2">
         <div className="flex items-center gap-2">
           <Image
@@ -76,17 +81,19 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
         </Card>
       </div>
 
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList>
-          <TabsTrigger value="account">Account</TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+      <Tabs defaultValue="payouts">
+        <TabsList className="bg-white">
+          <TabsTrigger value="payouts">Depósitos</TabsTrigger>
+          <TabsTrigger value="developers">Desarrolladores</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">
-          <p className="text-sm text-slate-500 dark:text-slate-400">
-            Make changes to your account here. Click save when you&apos;re done.
-          </p>
+        <TabsContent value="payouts" className="border-0 p-0">
+          <Payouts
+            company_id={selectedCompany.id}
+            company_name={selectedCompany.name}
+            company_image={selectedCompany.image}
+          />
         </TabsContent>
-        <TabsContent value="password">
+        <TabsContent value="developers">
           <p className="text-sm text-slate-500 dark:text-slate-400">
             Change your password here. After saving, you&apos;ll be logged out.
           </p>

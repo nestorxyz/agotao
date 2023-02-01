@@ -4,6 +4,7 @@ import classNames from "classnames";
 import {
   H1 as H1Component,
   H2 as H2Component,
+  H3 as H3Component,
   Subtitle as SubtitleComponent,
 } from "./names";
 
@@ -27,6 +28,7 @@ type TextComponent<
 > = React.ForwardRefExoticComponent<PropsWithoutRef<P> & RefAttributes<T>> & {
   H1: typeof H1Component;
   H2: typeof H2Component;
+  H3: typeof H3Component;
   Subtitle: typeof SubtitleComponent;
 };
 
