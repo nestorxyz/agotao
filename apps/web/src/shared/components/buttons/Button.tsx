@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { cn } from "@agotao/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -34,8 +35,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
     <button
       {...rest}
       disabled={disabled || loading}
-      className={classNames(
-        className,
+      className={cn(
         disabled && "cursor-default opacity-50",
         filled &&
           color === "primary" &&
@@ -62,6 +62,7 @@ export const Button: React.FC<ButtonProps> = (props) => {
         size === "medium" && "h-12 text-base",
         size === "large" && "h-14 text-lg",
         "flex items-center justify-center whitespace-nowrap rounded-full px-4 font-semibold transition-all active:scale-[0.99]",
+        className,
       )}
     >
       {children}

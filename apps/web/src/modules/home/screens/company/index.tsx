@@ -12,6 +12,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/shared/components/DropdownMenu";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/components/Tabs";
+
+import { Dayjs } from "@agotao/utils";
 
 interface CompanyScreenProps {
   companies: {
@@ -34,25 +42,25 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-7xl flex-col p-6 md:flex-row md:p-8">
-      <div>
-        <div className="flex gap-2">
+    <main className="mx-auto flex min-h-screen max-w-7xl flex-col gap-4 p-6 md:p-8">
+      <div className="flex flex-wrap justify-between gap-2">
+        <div className="flex items-center gap-2">
           <Image
             src={selectedCompany.image}
             alt={selectedCompany.name}
-            width={100}
-            height={100}
-            className="rounded-full"
+            width={50}
+            height={50}
+            className="rounded-md"
           />
           <Text.H2>{selectedCompany.name}</Text.H2>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button color="black" outline>
-              <Banknote /> Acciones
+          <DropdownMenuTrigger className="sm:hidden">
+            <Button color="black" outline className="w-12 space-x-2 p-0">
+              <Banknote /> <span className="hidden sm:block">Acciones</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="mr-4 w-full">
             <DropdownMenuLabel>Puedes</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Agregar saldo</DropdownMenuItem>
@@ -64,9 +72,26 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
       <div>
         <Card>
           <TremorText>Balance</TremorText>
-          <Metric>{selectedCompany.balance}</Metric>
+          <Metric>{Dayjs.formatMoney(selectedCompany.balance)}</Metric>
         </Card>
       </div>
+
+      <Tabs defaultValue="account" className="w-[400px]">
+        <TabsList>
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Make changes to your account here. Click save when you&apos;re done.
+          </p>
+        </TabsContent>
+        <TabsContent value="password">
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Change your password here. After saving, you&apos;ll be logged out.
+          </p>
+        </TabsContent>
+      </Tabs>
     </main>
   );
 };

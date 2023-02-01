@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "@acme/db": "*",
-    "dayjs": "^1.11.7"
+    "clsx": "^1.2.1",
+    "dayjs": "^1.11.7",
+    "tailwind-merge": "^1.9.0"
   }
 }
