@@ -67,7 +67,7 @@ const Payouts: React.FC<PayoutsProps> = (props) => {
         <div className="flex flex-col gap-2">
           <div className="flex items-center justify-between">
             <Text.H3>Depósitos</Text.H3>
-            <div className="flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
               <Badge
                 text={`Número: ${data.result.reduce(
                   (acc, cur) => acc + cur.items.length,

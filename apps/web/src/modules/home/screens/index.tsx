@@ -1,27 +1,17 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Card, Metric, Text as TremorText } from "@tremor/react";
-import { Banknote } from "lucide-react";
 
 import { Dayjs } from "@agotao/utils";
 
-import { Text, Button, Dots } from "@/shared/components";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "@/shared/components/DropdownMenu";
+import { Text, Dots } from "@/shared/components";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/shared/components/Tabs";
-import Payouts from "./components/Payouts";
-import AddBalanceModal from "./components/AddBalanceModal";
+import Payouts from "./payouts";
 
 interface CompanyScreenProps {
   companies: {
@@ -38,7 +28,6 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
   const { companies } = props;
 
   const [selectedCompany, setSelectedCompany] = useState(companies[0]);
-  const [showAddBalanceModal, setShowAddBalanceModal] = useState(false);
 
   if (!selectedCompany) {
     return (
@@ -49,8 +38,8 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
   }
 
   return (
-    <>
-      <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-4 px-4 py-6 md:px-0 md:py-8">
+    <main className="px-4 py-6 md:py-8">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-4">
         <div className="flex flex-wrap justify-between gap-2">
           <div className="flex items-center gap-2">
             <Image
@@ -62,20 +51,6 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
             />
             <Text.H2>{selectedCompany.name}</Text.H2>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="sm:hidden">
-              <Button color="black" outline className="w-12 space-x-2 p-0">
-                <Banknote /> <span className="hidden sm:block">Acciones</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="mr-4 w-full">
-              <DropdownMenuLabel>Puedes</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setShowAddBalanceModal(true)}>
-                Agregar saldo
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
 
         <div className="flex w-full max-w-xs justify-start">
@@ -86,7 +61,7 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
         </div>
 
         <Tabs defaultValue="payouts">
-          <TabsList className="bg-white">
+          <TabsList className="mb-4 w-full justify-start rounded-none border-b border-gray-100 bg-white">
             <TabsTrigger value="payouts">Depósitos</TabsTrigger>
             <TabsTrigger value="developers">Desarrolladores</TabsTrigger>
           </TabsList>
@@ -97,21 +72,9 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
               company_image={selectedCompany.image}
             />
           </TabsContent>
-          <TabsContent value="developers">
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              Change your password here. After saving, you&apos;ll be logged
-              out.
-            </p>
-          </TabsContent>
         </Tabs>
-      </main>
-
-      <AddBalanceModal
-        isOpen={showAddBalanceModal}
-        setIsOpen={setShowAddBalanceModal}
-        currentBalance={selectedCompany.balance}
-      />
-    </>
+      </div>
+    </main>
   );
 };
 

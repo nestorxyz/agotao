@@ -2,7 +2,7 @@ import { trpc } from "@/utils/trpc";
 
 import Loading from "./components/Loading";
 import CreateCompany from "./components/CreateCompany";
-import CompanyScreen from "./screens/company";
+import CompanyScreen from "./screens";
 
 const Home: React.FC = () => {
   const { data, error, refetch } = trpc.web.dashboard.getCompanies.useQuery();

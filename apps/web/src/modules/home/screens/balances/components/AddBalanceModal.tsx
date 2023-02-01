@@ -67,7 +67,7 @@ const AddBalanceModal: React.FC<AddBalanceModalProps> = (props) => {
             </div>
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label>Método</Label>
             {isInitialLoading && <p>Cargando...</p>}
             <RadioGroup.Root
@@ -113,7 +113,7 @@ const AddBalanceModal: React.FC<AddBalanceModalProps> = (props) => {
             {errors.payment_method_id?.message && (
               <ErrorMessage>{errors.payment_method_id?.message}</ErrorMessage>
             )}
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-4 flex flex-col-reverse justify-center gap-2 sm:flex-row sm:justify-end">

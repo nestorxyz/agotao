@@ -49,7 +49,7 @@ export const Header: React.FC<HeaderProps> = (props) => {
               {user.email}
             </p>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="mr-4 sm:m-0 sm:min-w-[192px]">
+          <DropdownMenuContent align="end" className="sm:m-0 sm:min-w-[192px]">
             <DropdownMenuItem
               onClick={async () => {
                 await signOut();
