@@ -1,7 +1,7 @@
 import { trpc } from "@/utils/trpc";
 
 import Loading from "./components/Loading";
-import CreateCompany from "./components/CreateCompany";
+import Onboarding from "./screens/onboarding";
 import CompanyScreen from "./screens";
 
 const Home: React.FC = () => {
@@ -18,7 +18,7 @@ const Home: React.FC = () => {
   if (data?.result.length === 0) {
     return (
       <div className="flex w-full sm:justify-center sm:py-10">
-        <CreateCompany onCreated={() => refetch()} />
+        <Onboarding onCreated={() => refetch()} />
       </div>
     );
   }

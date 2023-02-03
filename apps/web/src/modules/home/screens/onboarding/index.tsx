@@ -27,7 +27,6 @@ interface CreateCompanyButtonProps {
 const CreateCompany: React.FC<CreateCompanyButtonProps> = (props) => {
   const { onCreated } = props;
 
-  const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,6 @@ const CreateCompany: React.FC<CreateCompanyButtonProps> = (props) => {
       onCreated?.();
       setLoading(false);
       toast.success(data.message);
-      setOpen(false);
     },
     onError(error) {
       setLoading(false);
