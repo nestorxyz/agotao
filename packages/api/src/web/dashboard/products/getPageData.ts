@@ -18,6 +18,7 @@ const getPageData = protectedProcedure
         id: true,
         name: true,
         price: true,
+        image: true,
         createdAt: true,
         updatedAt: true,
       },

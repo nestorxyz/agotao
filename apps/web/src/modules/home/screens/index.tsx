@@ -13,6 +13,7 @@ import {
 } from "@/shared/components/Tabs";
 import Payouts from "./payouts";
 import Developers from "./developers";
+import Products from "./products";
 
 interface CompanyScreenProps {
   companies: {
@@ -62,10 +63,14 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
         </div>
 
         <Tabs defaultValue="payouts">
-          <TabsList className="mb-4 w-full justify-start rounded-none border-b border-gray-100 bg-white">
+          <TabsList className="mb-4 w-full justify-start overflow-x-auto rounded-none border-b border-gray-100 bg-white">
+            <TabsTrigger value="products">Productos</TabsTrigger>
             <TabsTrigger value="payouts">Depósitos</TabsTrigger>
             <TabsTrigger value="developers">Desarrolladores</TabsTrigger>
           </TabsList>
+          <TabsContent value="products" className="border-0 p-0">
+            <Products company_id={selectedCompany.id} />
+          </TabsContent>
           <TabsContent value="payouts" className="border-0 p-0">
             <Payouts
               company_id={selectedCompany.id}

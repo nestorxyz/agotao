@@ -21,15 +21,13 @@ import {
 } from "@/shared/components";
 import mixpanel from "@/shared/lib/mixpanel";
 
-export interface CreateProductButtonProps {
+interface CreateProductButtonProps {
   onCreated?: () => void;
 
   companyId: string;
 }
 
-export const CreateProductButton: React.FC<CreateProductButtonProps> = (
-  props,
-) => {
+const CreateProductButton: React.FC<CreateProductButtonProps> = (props) => {
   const { companyId, onCreated } = props;
 
   const [open, setOpen] = useState(false);
@@ -144,16 +142,12 @@ export const CreateProductButton: React.FC<CreateProductButtonProps> = (
           </form>
         </div>
       </Modal>
-      <Button
-        outline
-        color="black"
-        size="small"
-        light
-        onClick={() => setOpen(true)}
-      >
+      <Button color="primary" size="small" filled onClick={() => setOpen(true)}>
         <PlusIcon className="mr-2" />
         Crear producto
       </Button>
     </>
   );
 };
+
+export default CreateProductButton;
