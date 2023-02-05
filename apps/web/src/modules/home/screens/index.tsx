@@ -14,6 +14,7 @@ import {
 import Payouts from "./payouts";
 import Developers from "./developers";
 import Products from "./products";
+import Payments from "./payments";
 
 interface CompanyScreenProps {
   companies: {
@@ -62,12 +63,16 @@ const CompanyScreen: React.FC<CompanyScreenProps> = (props) => {
           </Card>
         </div>
 
-        <Tabs defaultValue="payouts">
+        <Tabs defaultValue="payments">
           <TabsList className="mb-4 w-full justify-start overflow-x-auto rounded-none border-b border-gray-100 bg-white">
+            <TabsTrigger value="payments">Ventas</TabsTrigger>
             <TabsTrigger value="products">Productos</TabsTrigger>
             <TabsTrigger value="payouts">Depósitos</TabsTrigger>
             <TabsTrigger value="developers">Desarrolladores</TabsTrigger>
           </TabsList>
+          <TabsContent value="payments" className="border-0 p-0">
+            <Payments company_id={selectedCompany.id} />
+          </TabsContent>
           <TabsContent value="products" className="border-0 p-0">
             <Products company_id={selectedCompany.id} />
           </TabsContent>

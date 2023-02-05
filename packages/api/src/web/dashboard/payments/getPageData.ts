@@ -26,6 +26,7 @@ const getPageData = protectedProcedure
           select: {
             order_items: {
               select: {
+                id: true,
                 quantity: true,
                 product: {
                   select: {

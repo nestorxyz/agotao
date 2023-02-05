@@ -67,7 +67,7 @@ const Products: React.FC<ProductsProps> = (props) => {
                         alt={product.name}
                         width={100}
                         height={100}
-                        className="max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] rounded-sm object-cover"
+                        className="max-h-[40px] min-h-[40px] min-w-[40px] max-w-[40px] rounded object-cover"
                       />
                       <div>
                         <p className="w-full">{product.name}</p>
