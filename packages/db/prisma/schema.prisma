@@ -129,7 +129,7 @@ model PayoutItem {
 model CheckoutSession {
     id             String         @id @default(cuid())
     company_id     String
-    success_url    String
+    success_url    String?
     cancel_url     String?
     customer_name  String?
     customer_email String?
