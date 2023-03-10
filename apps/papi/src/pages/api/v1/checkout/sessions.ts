@@ -13,7 +13,7 @@ const bodySchema = Joi.object({
       quantity: Joi.number().required(),
     }),
   ),
-  success_url: Joi.string().required(),
+  success_url: Joi.string().optional(),
   cancel_url: Joi.string().optional(),
   customer_name: Joi.string().optional(),
   customer_email: Joi.string().optional(),
