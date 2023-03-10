@@ -93,7 +93,7 @@ const Payments: React.FC<PaymentProps> = (props) => {
                           });
                         }}
                       >
-                        <Image
+                        <img
                           src={
                             payment.checkout_session.order_items[0]?.product
                               .image || ""

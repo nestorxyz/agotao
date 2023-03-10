@@ -62,7 +62,7 @@ const Products: React.FC<ProductsProps> = (props) => {
                 <TableRow key={product.id}>
                   <TableCell>
                     <div className="flex gap-4">
-                      <Image
+                      <img
                         src={product.image}
                         alt={product.name}
                         width={100}

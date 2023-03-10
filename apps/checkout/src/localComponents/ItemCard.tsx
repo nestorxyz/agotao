@@ -13,7 +13,7 @@ export const ItemCard: React.FC<ItemCardProps> = (props) => {
 
   return (
     <article className="flex gap-4">
-      <Image
+      <img
         src={image}
         alt={name}
         width={100}

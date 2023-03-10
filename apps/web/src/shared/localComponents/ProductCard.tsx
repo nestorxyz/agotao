@@ -18,7 +18,7 @@ export const ProductCard: React.FC<ProductCardProps> = (props) => {
       className={classNames(className, "flex items-center justify-between p-4")}
     >
       <div className="flex items-center space-x-2">
-        <Image
+        <img
           src={image}
           alt={name}
           width={200}

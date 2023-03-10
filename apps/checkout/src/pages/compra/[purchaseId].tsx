@@ -144,7 +144,7 @@ const PurchasePage: NextPage<
             </header>
 
             <div className="relative flex flex-col items-center lg:hidden">
-              <Image
+              <img
                 src={
                   // eslint-disable-next-line
                   payment_intent.checkout_session.order_items[0]!.product.image

@@ -242,7 +242,7 @@ export const SquareFileInput = (props: SquareFileInputProps) => {
       {inputState == "showFile" && fileUrl && (
         <div className={"h-full w-full rounded-md bg-gray-100"}>
           {
-            <Image
+            <img
               alt={""}
               src={fileUrl}
               width={400}
@@ -253,7 +253,7 @@ export const SquareFileInput = (props: SquareFileInputProps) => {
         </div>
       )}
       {inputState == "showUrl" && url && (
-        <Image
+        <img
           alt={""}
           width={400}
           height={400}

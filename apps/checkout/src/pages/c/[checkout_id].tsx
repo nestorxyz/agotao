@@ -141,7 +141,7 @@ const CheckoutPage: NextPage<
               </button>
             </header>
             <div className="relative flex flex-col items-center lg:hidden">
-              <Image
+              <img
                 src={checkout.order_items[0]!.product.image} // eslint-disable-line
                 alt={checkout.order_items[0]!.product.name} // eslint-disable-line
                 width={300}
