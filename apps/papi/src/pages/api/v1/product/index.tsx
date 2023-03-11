@@ -17,7 +17,7 @@ interface ValidatedRequest extends NextApiRequest {
     name: string;
     price: number;
     image: string;
-    metadata: Record<string, unknown>;
+    metadata: any; // eslint-disable-line
   };
 }
 
@@ -60,6 +60,7 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
           price,
           image,
           created_by: company.admin_id,
+          metadata,
         },
         select: {
           id: true,
