@@ -67,6 +67,7 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
           name: true,
           price: true,
           image: true,
+          metadata: true,
         },
       });
 
