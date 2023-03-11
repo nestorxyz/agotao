@@ -71,6 +71,20 @@ const handler = async (req: ValidatedRequest, res: NextApiResponse) => {
         metadata,
       } = req.body;
 
+      // Validate items are from the company
+      const products = await prisma.product.findMany({
+        where: {
+          company_id: company.id,
+          id: {
+            in: items.map((item) => item.product_id),
+          },
+        },
+      });
+
+      if (products.length !== items.length) {
+        throw boom.badRequest("Invalid Product");
+      }
+
       const session = await prisma.checkoutSession.create({
         data: {
           company_id: company.id,
