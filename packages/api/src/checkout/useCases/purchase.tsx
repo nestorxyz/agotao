@@ -157,7 +157,18 @@ export const purchase = publicProcedure
       },
     );
 
-    await Promise.all([paymentIntentMail, adminMustVerifyTelegram]);
+    try {
+      await Promise.all([paymentIntentMail, adminMustVerifyTelegram]);
+    } catch (error) {
+      console.error("Error at checkout purchase: ", error);
+
+      return {
+        message: "Compra exitosa",
+        result: {
+          ...purchase,
+        },
+      };
+    }
 
     return {
       message: "Compra exitosa",
