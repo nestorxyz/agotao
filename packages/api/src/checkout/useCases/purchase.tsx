@@ -1,6 +1,6 @@
 // Libraries
 import { TRPCError } from "@trpc/server";
-import { sendMail, Whatever, PaymentIntentMail } from "@acme/emails";
+import { sendMail, PaymentIntentMail } from "@acme/emails";
 import { checkoutPurchaseDTO } from "@acme/validations";
 
 // tRPC
