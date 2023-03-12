@@ -151,9 +151,26 @@ export const purchase = publicProcedure
       *Nombre:* ${name}
       *Email:* ${email}
       *Monto:* ${Dayjs.formatMoney(total_to_pay)}
-      *Método de pago:* ${purchase.payment_method.name}`,
+      *Método de pago:* ${purchase.payment_method.name}
+      *Expira:* ${Dayjs.dayjs
+        .tz(purchase.checkout_session.expires_at)
+        .format("DD [de] MMMM [de] YYYY, h:mm a")}`,
       {
         parse_mode: "Markdown",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "Validar",
+                callback_data: `validate_payment_intent:${purchase.id}`,
+              },
+              {
+                text: "Rechazar",
+                callback_data: `reject_payment_intent:${purchase.id}`,
+              },
+            ],
+          ],
+        },
       },
     );
 
