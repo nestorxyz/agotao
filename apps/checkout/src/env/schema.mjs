@@ -12,8 +12,8 @@ export const serverSchema = z.object({
   EMAIL_PORT: z.string(),
   EMAIL_AUTH_USER: z.string(),
   EMAIL_AUTH_PASSWORD: z.string(),
-  BOT_TOKEN: z.string(),
-  ADMIN_CHAT_ID: z.string(),
+  TELEGRAM_BOT_TOKEN: z.string(),
+  TELEGRAM_ADMIN_CHAT_ID: z.string(),
 });
 
 /**

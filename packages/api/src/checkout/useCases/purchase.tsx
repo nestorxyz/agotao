@@ -6,8 +6,9 @@ import { checkoutPurchaseDTO } from "@acme/validations";
 // tRPC
 import { publicProcedure } from "../../trpc";
 
-import { calculateComission } from "../../utils/pricing";
 import { Dayjs } from "@agotao/utils";
+import { calculateComission } from "../../utils/pricing";
+import { TelegramBotSingleton } from "../../utils/agotao-admin-bot";
 
 export const purchase = publicProcedure
   .input(checkoutPurchaseDTO)
@@ -139,22 +140,24 @@ export const purchase = publicProcedure
       ),
     });
 
-    const adminMustVerifyEmail = sendMail({
-      subject: `Compra realizada por ${name}`,
-      to: "nmamanipantoja@gmail.com",
-      component: (
-        <Whatever>
-          name={name}
-          email={email}
-          {/* eslint-disable-next-line */}
-          product_name={checkoutSession.order_items[0]!.product.name} price=
-          {total_to_pay}
-          payment_method={purchase.payment_method.name}
-        </Whatever>
-      ),
-    });
+    const telegramAdminBot = TelegramBotSingleton.getInstance(
+      process.env.TELEGRAM_BOT_TOKEN as string,
+    ).getBot();
 
-    await Promise.all([paymentIntentMail, adminMustVerifyEmail]);
+    const adminMustVerifyTelegram = telegramAdminBot.sendMessage(
+      process.env.TELEGRAM_ADMIN_CHAT_ID as string,
+      `🛒 *Nueva compra* 🛒
+
+      *Nombre:* ${name}
+      *Email:* ${email}
+      *Monto:* ${Dayjs.formatMoney(total_to_pay)}
+      *Método de pago:* ${purchase.payment_method.name}`,
+      {
+        parse_mode: "Markdown",
+      },
+    );
+
+    await Promise.all([paymentIntentMail, adminMustVerifyTelegram]);
 
     return {
       message: "Compra exitosa",
